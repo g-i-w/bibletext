@@ -8,10 +8,13 @@ public class BibleSearch {
 
 	private Bible bible;
 	private int minWordSize;
+	private Alphabet alphabet;
 	
 	private Tree wordCompounds;
 
 	public BibleSearch ( Bible bible, int minWordSize ) {
+		alphabet = new Alphabet();
+	
 		if (minWordSize<1) minWordSize = 1;
 	
 		this.bible = bible;
@@ -50,6 +53,7 @@ public class BibleSearch {
 	}
 	
 	public Tree search ( String word ) {
+		word = alphabet.filter(word);
 		if (wordCompounds.keys().contains(word)) {
 			return wordCompounds.get(word);
 		} else {

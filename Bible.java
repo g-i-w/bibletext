@@ -9,7 +9,7 @@ import creek.*;
 public class Bible {
 
 	String wordRegex;
-	Set<Character> basicChars;
+	Alphabet alphabet = new Alphabet();
 	
 	int wordCount = 0;
 	
@@ -28,19 +28,11 @@ public class Bible {
 	
 	
 	public Bible () {
-		this( "(\\S+)", "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789" );
+		this( "(\\S+)" );
 	}
 	
-	public Bible ( String basicAlphabet ) {
-		this( "(\\S+)", basicAlphabet );
-	}
-	
-	public Bible ( String wordRegex, String basicAlphabet ) {
+	public Bible ( String wordRegex ) {
 		this.wordRegex = wordRegex;
-		if (basicAlphabet != null) {
-			basicChars = new HashSet<>();
-			for (Character c : basicAlphabet.toCharArray()) basicChars.add( c ); 
-		}
 		bibleText = new JSON( JSON.RETAIN_ORDER );
 		wordLookup = new JSON( JSON.RETAIN_ORDER );
 		wordData = new JSON( JSON.RETAIN_ORDER );
@@ -59,12 +51,12 @@ public class Bible {
 	public void importVerse ( String book, String chap, String verse, String text ) throws Exception {
 		Tree chapObj = bibleText.auto( book ).auto( chap ).add( verse, text );
 		for (String word : Regex.groups( text, wordRegex )) {
-			String basic = basicWord( word );
+			String basic = alphabet.filter( word );
 			if (basic.length()>0) {
 				wordLookup.auto( basic ).auto( book ).auto( chap ).add( verse, chapObj.get( verse ) );
 				if (!wordData.keys().contains(basic)) wordData.auto( basic ).auto( "id" ).add( String.valueOf(wordCount++) );
 				//wordData.auto( basic ).add( "bytes", base16( basic ) );
-				wordData.auto( basic ).auto( "chars" ).add( base16List( basic ) );
+				if (!wordData.auto( basic ).keys().contains("chars")) wordData.auto( basic ).auto( "chars" ).add( base16List( basic ) );
 				increment( wordData.auto( basic ).auto( "full" ).auto( word ) );
 			}
 		}
@@ -133,17 +125,6 @@ public class Bible {
 		}
 		return list;
 	}
-	
-	public String basicWord ( String word ) {
-		if (basicChars == null) return word;
-		
-		int length = word.length();
-		StringBuilder build = new StringBuilder();
-		for (Character c : word.toCharArray()) {
-			if (basicChars.contains(c)) build.append( c );
-		}
-		return build.toString();
-	}	
 	
 	public Tree fullWord ( String word ) {
 		if (wordData.keys().contains( word )) return wordData.get(word).get("full");
