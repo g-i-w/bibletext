@@ -4,10 +4,11 @@ import java.io.*;
 import java.util.*;
 import creek.*;
 
-public class STEPBibleData {
+public class STEPBibleData extends AbstractStrongs {
 
-	public static void links ( Strongs strongs, String path ) throws Exception {
-		Alphabet alpha = new Alphabet();
+	Map<String,String> unparsables = new LinkedHashMap<>();
+
+	public Strongs load ( String path ) throws Exception {
 		for (File file : FileActions.recurse(path)) {
 			Table table = new CSV( FileActions.read(file), "\t" );
 			for (int rowNum=0; rowNum<table.rowCount(); rowNum++) {
@@ -20,41 +21,53 @@ public class STEPBibleData {
 				
 					//System.out.println( row.get(11) );
 					if (Regex.exists( row.get(11), "\\{[HA]\\d+" )) {
-						List<String> groups = Regex.groups( row.get(11), "\\{([HA]\\d+).*?=([^=]+)=([\\w\\s]*)" );
+						List<String> groups = Regex.groups( row.get(11), "\\{([HA]\\d+).*?=([^= ,\\[\\]\\+\\.\\/:@_\\}»]+)=([\\w\\s]*)" );
+						//if (groups.size()!=3) groups = Regex.groups( row.get(11), "\\{([HA]\\d+).*?=([^=]+)=([\\w\\s]*)" );
 						if (groups.size()>=3) {
 							//System.out.println( groups );
-							String code = groups.get(0);
-							String original = groups.get(1);
-							String replacement = groups.get(2);
+							String code = groups.get(0).trim();
+							String original = groups.get(1).trim();
+							String replacement = groups.get(2).trim();
 
-							if (original.length()>0) strongs.link( code, original, book, chap, verse, replacement );
-							//if (replacement.length()>0) strongs.replacement( code, replacement );
+							if (original.length()>0) {
+								link( code, original );
+								lookup( code, original, book, chap, verse );
+							}
+							if (replacement.length()>0) replacement( code, "english", replacement );
 						} else {
-							System.out.println( "Couldn't parse: "+row.get(11) );
-							throw new RuntimeException( "Stopped at line "+rowNum+" in "+file+" -> "+groups );
+							groups = Regex.groups( row.get(11), "\\{([HA]\\d+).*?=([^=]+)=([\\w\\s]*)" );
+							if (groups.size()>=3) unparsables.put( groups.get(1).trim(), groups.get(2) );
+							else unparsables.put( row.get(11), null );
+							//System.out.println( "Couldn't parse: "+row.get(11) );
+							//throw new RuntimeException( "Stopped at line "+rowNum+" in "+file+" -> "+groups );
 						}
 					} else {
-						String code = Regex.first( row.get(3), "(G\\d+)" );
-						String original = Regex.first( row.get(1), "(\\S+)" );
-						String replacement = Regex.first( row.get(4), "=([\\/\\w\\s]+)" );
+						String code = Regex.first( row.get(3).trim(), "(G\\d+)" );
+						String original = Regex.first( row.get(1).trim(), "([^\\s,.¶ͅ;·\\[]+)" );
+						String replacement = Regex.first( row.get(4).trim(), "=([\\/\\w\\s]+)" );
 						//System.out.println( row );
 						//String filtered = alpha.filter(original);
 						//System.out.println( code+", "+original+"/"+filtered+", "+replacement );
 
 						if (original!=null) {
-							if (original.length()>0) strongs.link( code, original, book, chap, verse, replacement );
-							//if (replacement.length()>0) strongs.replacement( code, replacement );
+							if (original.length()>0) {
+								link( code, original );
+								lookup( code, original, book, chap, verse );
+							}
+							if (replacement.length()>0) replacement( code, "english", replacement );
 						}
 					}
 				}
 			}
 		}
+		System.err.println( "Couldn't parse:\n"+unparsables );
+		return this;
 	}
 	
 	public static void main ( String[] args ) throws Exception {
-		Strongs s = new Strongs();
-		STEPBibleData.links( s, args[0] );
-		System.out.println( s.data().serialize() );
+		Strongs s = new STEPBibleData().load( args[0] );
+		//System.out.println( s.data().get("strongs").serialize() );
+		System.out.println( s.filtered() );
 	}
 	
 }

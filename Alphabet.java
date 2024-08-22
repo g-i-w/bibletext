@@ -84,7 +84,10 @@ public class Alphabet {
 		StringBuilder build = new StringBuilder();
 		for (Character c : word.toCharArray()) {
 			// convert if necessary
-			if (convertChars.containsKey(c)) c = convertChars.get(c);
+			if (convertChars.containsKey(c)) {
+				filteredChars.add(c);
+				c = convertChars.get(c);
+			}
 			// verify it's part of the basicChars set
 			if (basicChars.contains(c)) build.append( c );
 			else filteredChars.add(c);
@@ -96,8 +99,12 @@ public class Alphabet {
 		return basicChars;
 	}
 	
-	public Set<Character> filtered () {
-		return filteredChars;
+	public String filtered () {
+		StringBuilder sb = new StringBuilder();
+		for (Character c : filteredChars) {
+			sb.append( c );
+		}
+		return sb.toString();
 	}
 	
 	public Map<Character,Character> conversion () {
@@ -105,13 +112,9 @@ public class Alphabet {
 	}
 	
 	// use a table column for a character set
-	public static void main ( String[] args ) throws Exception {
-		//Table table = new CSVFile( args[0] ).table();
-		//Alphabet alpha = new Alphabet( table, Integer.parseInt(args[1]) );
-		Alphabet alpha = new Alphabet();
-		alpha.filter( Alphabet.EXT_GREEK );
-		System.out.println( alpha.conversion() );
-		System.out.println( alpha.basic() );
-		System.out.println( alpha.filtered() );
+	public static void main ( String[] args ) {
+		Alphabet a = new Alphabet();
+		System.out.println( "basic: "+a.filter( args[0] ) );
+		System.out.println( "filtered: "+a.filtered() );
 	}
 }

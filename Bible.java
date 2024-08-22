@@ -23,7 +23,7 @@ public interface Bible {
 	public Tree words ();
 	/* {
 		basic_word:{
-			"id":    id_str,
+			"id":    id,
 			"chars": [ AAAABBBB, CCCCDDDD ... ],
 			"full":  { full_word:qty_str }
 		}
@@ -31,16 +31,17 @@ public interface Bible {
 	
 	public Tree compressed ();
 	/* {
-		"text":{ book:{ chap:{ verse:[ id_0, id_1 ... ] }}},  },
-		"words":{ id:basic_word },
-		"lookup":{ basic_word:{ book:{ chap:[ verse_0, verse_1 ... ] }}}
+		"text":   { book: { chap:{ verse:[ id_0, id_1 ... ] }}             },
+		"words":  { id: basic_word                                         },
+		"lookup": { basic_word: { book:{ chap:[ verse_0, verse_1 ... ] }}  }
 	} */
 	
 	public Tree search ();
 	/* {
 		basic_word:{
-			"super": { super_basic_word:qty_str },
-			"sub":   { sub_basic_word:qty_str }
+			"super": { super_basic_word: lookup().get(super_basic_word) },
+			"sub":   { sub_basic_word:   lookup().get(sub_basic_word)   },
+			"this":  { basic_word:       lookup().get(basic_word)       }
 		}
 	} */
 	

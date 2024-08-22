@@ -3,53 +3,46 @@ package bibletext;
 import java.util.*;
 import creek.*;
 
-public class Strongs {
+public interface Strongs {
 
-	private Tree data = new JSON( JSON.AUTO_ORDER );
-	private Alphabet alphabet = new Alphabet();
+	public Strongs load ( String path ) throws Exception;
 	
-	private void increment ( Tree leaf ) {
-		if (leaf==null) return;
-		String valStr = leaf.value();
-		int val = ( valStr!=null ? Integer.parseInt( valStr ) : 0 );
-		leaf.value( String.valueOf( ++val ) );
-	}
+	public Strongs data ( Strongs strongs );
 	
-	public void link ( String strongs, String original ) {
-		link( strongs, original, null, null, null, null );
-	}
 
-	public void link ( String strongs, String original, String book, String chap, String verse, String replacement ) {
-		// Strongs
-		Tree strongsObj = data.auto( strongs );
-		
-		// Strongs -> original
-		Tree originalObj = strongsObj.auto( "original" ).auto( original );
-		if (book!=null && chap!=null && verse!=null ) originalObj.auto( book ).auto( chap ).add( verse );
-		
-		// Strongs -> basic
-		String basic = alphabet.filter( original );
-		if (basic!=null && basic.length()>0) increment( strongsObj.auto( "basic" ).auto( basic ) );
-		if (replacement!=null && replacement.length()>0) increment( strongsObj.auto( "english" ).auto( replacement ) );
+	public void link ( String strongs, String full_word );
 
-		// basic -> Strongs
-		data.auto( basic ).add( strongs, strongsObj );
-	}
+	public void lookup ( String strongs, String full_word, String book, String chap, String verse );
 	
-	public void definition ( String strongs, String definition ) {
-		data.auto( strongs ).add( "definition", definition );
-	}
+	public void definition ( String strongs, String language, String definition );
 	
-	public void replacement ( String strongs, String replacement ) {
-		data.auto( strongs ).auto( "replacement" ).auto( replacement );
-	}
+	public void replacement ( String strongs, String language, String replacement );
 	
-	public Tree data () {
-		return data;
-	}
 	
-	public Tree data ( String word ) {
-		return data.get( word );
-	}
+	public Tree data ();
+	/* {
+		"strongs":{ strongs: {
+			"basic":  { basic_word: qty },
+			"definition":    { language:   { definition:null }},
+			"replacement":    { language:   { replacement:null }}
+		}},
+		"basic":{ 
+			basic_word: { strongs: data().get("strongs").get(strongs) }
+		},
+	} */
+	
+	public Tree lookup ();
+	/* {
+		"strongs":{ strongs: {
+			full_word:{ book: { chap:[ verse ] }},
+		}},
+		"basic":{ basic_word: {
+			full_word:{ book: { chap:[ verse ] }}
+		}},
+	} */
+	
+	public Tree search ( String basic_or_full_word );
+	
+	public String filtered (); // list of characters filtered out
 	
 }
