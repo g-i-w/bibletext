@@ -48,7 +48,7 @@ public abstract class AbstractBible implements Bible {
 				//wordData.auto( basic ).add( "bytes", base16( basic ) );
 				
 				// add the byte hex-string LIST for the word
-				if (!wordData.auto( basic ).keys().contains("chars")) wordData.auto( basic ).auto( "chars" ).add( base16List( basic ) );
+				//if (!wordData.auto( basic ).keys().contains("chars")) wordData.auto( basic ).auto( "chars" ).add( base16List( basic ) );
 				
 				// also add the "full" word
 				wordData.auto( basic ).auto( "full" ).auto( word ).auto( book ).increment();

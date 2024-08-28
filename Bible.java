@@ -24,7 +24,7 @@ public interface Bible {
 	/* {
 		basic_word:{
 			"id":    id,
-			"chars": [ AAAABBBB, CCCCDDDD ... ],
+			//"chars": [ AAAABBBB, CCCCDDDD ... ],
 			"full":  { full_word:qty_str }
 		}
 	} */

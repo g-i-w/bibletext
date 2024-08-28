@@ -28,7 +28,7 @@ public abstract class AbstractStrongs implements Strongs {
 	
 	public Strongs data ( Strongs strongs ) {
 		data = strongs.data();
-		lookup = strongs.lookup();
+		//lookup = strongs.lookup();
 		return this;
 	}
 	
@@ -39,32 +39,33 @@ public abstract class AbstractStrongs implements Strongs {
 		//System.out.println( "full:"+original+", basic:"+basic );
 		
 		//data().auto( "strongs" ).auto( strongs  ).auto( "full"    ).auto( original ).increment();
-		data().auto( "strongs" ).auto( strongs  ).auto( "basic"   ).auto( basic    ).increment();
+		//data().auto( "strongs" ).auto( strongs  ).auto( "basic"   ).auto( basic    ).increment();
+		data().auto( "strongs" ).auto( strongs  ).auto( basic    ).increment();
 
 		//data().auto( "basic"   ).auto( basic    ).auto( "full"    ).auto( original ).increment();
 		//data().auto( "basic"   ).auto( basic    ).auto( "strongs" ).auto( strongs  ).increment();
 		data().auto( "basic"   ).auto( basic    ).add( strongs, data().get("strongs").get(strongs) );
 	}
 
-	public void lookup ( String strongs, String original, String book, String chap, String verse ) {
+	/*public void lookup ( String strongs, String original, String book, String chap, String verse ) {
 		if (strongs==null || original==null || book==null || chap==null || verse==null) return;
 		
 		String basic = basic(original);
 		
 		lookup().auto( "strongs" ).auto( strongs  ).auto( original ).auto( book ).auto( chap ).add( verse );
 		lookup().auto( "basic"   ).auto( basic    ).auto( original ).auto( book ).auto( chap ).add( verse );
-	}
+	}*/
 	
-	public void definition ( String strongs, String language, String definition ) {
+	/*public void definition ( String strongs, String language, String definition ) {
 		if (strongs==null || language==null || definition==null) return;
 	
 		data().auto( "strongs" ).auto( strongs ).auto( "definition" ).auto( language ).auto( definition );
-	}
+	}*/
 	
 	public void replacement ( String strongs, String language, String replacement ) {
 		if (strongs==null || language==null || replacement==null) return;
 	
-		data().auto( "strongs" ).auto( strongs ).auto( "replacement" ).auto( language ).auto( replacement );
+		data().auto( "strongs" ).auto( strongs ).auto( replacement ).increment();
 	}
 	
 	public Tree data () {
@@ -72,10 +73,10 @@ public abstract class AbstractStrongs implements Strongs {
 		return data;
 	}
 	
-	public Tree lookup () {
+	/*public Tree lookup () {
 		if (lookup==null) lookup = new JSON( JSON.RETAIN_ORDER );
 		return lookup;
-	}
+	}*/
 	
 	public Tree search ( String word ) {
 		if (data().keys().contains(word)) return data().get(word);

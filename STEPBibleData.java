@@ -31,7 +31,7 @@ public class STEPBibleData extends AbstractStrongs {
 
 							if (original.length()>0) {
 								link( code, original );
-								lookup( code, original, book, chap, verse );
+								//lookup( code, original, book, chap, verse );
 							}
 							if (replacement.length()>0) replacement( code, "english", replacement );
 						} else {
@@ -52,7 +52,7 @@ public class STEPBibleData extends AbstractStrongs {
 						if (original!=null) {
 							if (original.length()>0) {
 								link( code, original );
-								lookup( code, original, book, chap, verse );
+								//lookup( code, original, book, chap, verse );
 							}
 							if (replacement.length()>0) replacement( code, "english", replacement );
 						}
