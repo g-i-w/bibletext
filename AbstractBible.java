@@ -51,13 +51,13 @@ public abstract class AbstractBible implements Bible {
 				//if (!wordData.auto( basic ).keys().contains("chars")) wordData.auto( basic ).auto( "chars" ).add( base16List( basic ) );
 				
 				// also add the "full" word
-				wordData.auto( basic ).auto( "full" ).auto( word ).auto( book ).increment();
+				wordData.auto( basic ).auto( "original" ).auto( word ).auto( book ).increment();
 				
 				// add the verse ID to the compressed structure
 				String wordId = wordData.get(basic).get("id").value();
 				bibleCompressed.auto( "text" ).auto( book ).auto( chap ).auto( verse ).add( wordId );
-				bibleCompressed.auto( "words" ).add( wordId, basic );
-				bibleCompressed.auto( "lookup" ).auto( basic ).auto( book ).auto( chap ).add( verse );
+				bibleCompressed.auto( "basic" ).add( wordId, basic );
+				bibleCompressed.auto( "lookup" ).auto( wordId ).auto( book ).auto( chap ).add( verse );
 			}
 		}
 	}
@@ -122,7 +122,7 @@ public abstract class AbstractBible implements Bible {
 	}
 	
 	public Tree fullWord ( String word ) {
-		if (wordData.keys().contains( word )) return wordData.get(word).get("full");
+		if (wordData.keys().contains( word )) return wordData.get(word).get("original");
 		else return null;
 	}
 
@@ -153,9 +153,11 @@ public abstract class AbstractBible implements Bible {
 	public void buildSearch () {
 		wordSearch = new JSON( JSON.AUTO_ORDER );
 		for (String word : wordLookup.keys()) {
+			word = word.intern();
 			wordSearch.auto( word ).auto( "this" ).add( word, wordLookup.get( word ) );
 			for (String subWord : StringFunctions.substrings( word, 2 )) {
 				if (wordLookup.keys().contains( subWord )) {
+					subWord = subWord.intern();
 					wordSearch.auto( word ).auto( "sub" ).add( subWord, wordLookup.get(subWord) );
 					wordSearch.auto( subWord ).auto( "super" ).add( word, wordLookup.get(word) );
 				}

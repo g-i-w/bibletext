@@ -92,7 +92,7 @@ public class Alphabet {
 			if (basicChars.contains(c)) build.append( c );
 			else filteredChars.add(c);
 		}
-		return build.toString();
+		return build.toString().intern();
 	}
 	
 	public Set<Character> basic () {

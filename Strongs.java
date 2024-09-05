@@ -12,35 +12,17 @@ public interface Strongs {
 
 	public void link ( String strongs, String full_word );
 
-	//public void lookup ( String strongs, String full_word, String book, String chap, String verse );
+	public void replacement ( String strongs, String replacement );
 	
-	//public void definition ( String strongs, String language, String definition );
-	
-	public void replacement ( String strongs, String language, String replacement );
-	
-	
+		
 	public Tree data ();
 	/* {
-		"strongs":{ strongs: {
-			//"basic":  { basic_word: qty },
-			//"definition":    { language:   { definition:null }},
-			//"replacement":    { language:   { replacement:null }}
-			basic_word:{ replacement }
-		}},
+		"strongs":{ strongs: { replacement }},
 		"basic":{ 
 			basic_word: { strongs: data().get("strongs").get(strongs) }
 		},
 	} */
 	
-	//public Tree lookup ();
-	/* {
-		"strongs":{ strongs: {
-			full_word:{ book: { chap:[ verse ] }},
-		}},
-		"basic":{ basic_word: {
-			full_word:{ book: { chap:[ verse ] }}
-		}},
-	} */
 	
 	public Tree search ( String basic_or_full_word );
 	

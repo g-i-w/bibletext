@@ -17,9 +17,11 @@ public class BibleServer extends ServerState {
 	String htmlEnd = "</body></html>";
 
 
-	public BibleServer ( int port, Interlinear interlinear, List<Bible> parallel ) {
+	public BibleServer ( int port, Interlinear interlinear, List<Bible> translations ) {
 		this.interlinear = interlinear;
-		this.parallel = parallel;
+		parallel = new ArrayList<Bible>();
+		parallel.add( interlinear.bible() );
+		for (Bible bible : translations) parallel.add( bible );
 		new ServerHTTP (
 			this,
 			port,
@@ -62,10 +64,10 @@ public class BibleServer extends ServerState {
 			
 		} else if (httpQuery( session, "type", "where-used" )) {
 			try {
-				String basicWord = interlinear.bible().compressed().get("words").get( word ).value();
+				//String basicWord = interlinear.bible().compressed().get("words").get( word ).value();
 				html = Tables.html(
 					new SimpleTable().data(
-						interlinear.bible().lookup().get( basicWord ).paths()
+						interlinear.bible().compressed().get("lookup").get( word ).paths()
 					)
 				);
 			} catch (Exception e) {
@@ -82,17 +84,13 @@ public class BibleServer extends ServerState {
 	
 	public static void main ( String[] args ) throws Exception {
 		List<Bible> bibles = new ArrayList<>();
-		for (int arg=3; arg<args.length; arg++) {
-			bibles.add( new EBibleOrgText().load( args[arg] ) );
+		for (String arg : args) {
+			bibles.add( new EBibleOrgText().load( arg ) );
 			Stats.displayMemory();
 		}
 		new BibleServer(
 			7077,
-			new Interlinear(
-				args[0], // Hebrew path
-				args[1], // Greek path
-				args[2]  // Strongs path (bridge to other languages, like English)
-			),
+			new Interlinear(),
 			bibles
 		);
 	}
