@@ -48,7 +48,7 @@ public abstract class AbstractStrongs implements Strongs {
 		
 		//data().auto( "strongs" ).auto( strongs  ).auto( basic    ).increment();
 
-		data().auto( "basic"   ).auto( basic    ).add( strongs, data().auto("strongs").auto(strongs) );
+		data().auto( "basic" ).auto( basic ).add( strongs, data().auto("strongs").auto(strongs) );
 	}
 
 	// depricated; provides compatibility
@@ -70,17 +70,7 @@ public abstract class AbstractStrongs implements Strongs {
 	}
 	
 	public Tree search ( String word ) {
-		if (data().keys().contains(word)) return data().get(word);
-		else {
-			String basicWord = basic(word);
-			if (data().keys().contains(basicWord)) return data().get(basicWord);
-			else {
-				for (String subStr : StringFunctions.substrings( basicWord, 2 )) {
-					if (data().keys().contains(subStr)) return data().get(subStr);
-				}
-				return null;
-			}
-		}
+		return data().get( "basic" ).get( basic(word) );
 	}
 	
 	public String filtered () {

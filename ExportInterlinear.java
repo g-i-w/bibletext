@@ -5,75 +5,120 @@ import creek.*;
 
 public class ExportInterlinear {
 
-	private Bible bible;
-	private Strongs strongs;
+	// interlinear structure:
+	/* {
+		"aliases": {
+			alias: book
+		}
+		"translations": [
+			{ book:{ chap:{ verse:text }} }, ...
+		],
+		"text": {
+			book: { chap:{ verse:text }}
+		},
+		"data": {
+			"text":         { book: { chap:{ verse:[ basicIds... ] }} },
+			"words":        { basicId: basicWord },
+			"lookup":       { basicId: { book:{ chap:[ verses... ] }} }
+			"strongs":      { basicId: [ strongsCodes... ] },
+			"translations": { strongsCode: [ replacements... ] }
+		}
+	} */
+
 	private Tree interlinear;
 	
-	public ExportInterlinear ( String exportPath, String[] parallelBiblePaths ) throws Exception {
-		bible = new EBibleOrgText();
-		//strongs = new STEPBibleData();
+	public ExportInterlinear ( String exportPath ) throws Exception {
+	
+		interlinear = new JSON( JSON.RETAIN_ORDER );
 
-		System.err.println( "*** ExportInterlinear ***" );
-		Stats.displayMemory();
+		System.err.println( "*** Original ***" );
+		
+		Bible original = new EBibleOrgText();
 
 		System.err.println( "Loading Hebrew..." );
-		bible.load( "biblesd/bibles/ebible.org/Hebrew/text/hbo" );
-		System.err.println( "done." );
+		original.load( "biblesd/bibles/ebible.org/Hebrew/text/hbo" );
 		Stats.displayMemory();
 
 		System.err.println( "Loading Greek..." );
-		bible.load( "biblesd/bibles/ebible.org/Greek-Ancient/text/grctr" );
-		System.err.println( "done." );
+		original.load( "biblesd/bibles/ebible.org/Greek-Ancient/text/grctr" );
 		Stats.displayMemory();
+		
+		System.err.println( "Adding to interlinear object..." );
+		interlinear.add( "text", original.text() );
+		interlinear.add( "data", original.compressed() );
+		
+		Stats.displayMemory();
+
+		System.err.println( "Reducing memory..." );
+		original = null;
+		System.gc();
+		Thread.sleep(1000);
+		Stats.displayMemory();
+
+		System.err.println( "*** Translations ***" );
+
+		System.err.println( "Adding English..." );
+		Bible english = new EBibleOrgText().load( "biblesd/bibles/ebible.org/English/text/eng-web/" );
+		interlinear.auto( "aliases" ).add( english.aliases() );
+		interlinear.auto( "translations" ).add( english.text() );
+		Stats.displayMemory();
+
+		System.err.println( "Adding Chinese..." );
+		Bible chinese = new EBibleOrgText().load( "biblesd/bibles/ebible.org/Chinese/text/cmn-cu89s/" );
+		interlinear.auto( "aliases" ).add( chinese.aliases() );
+		interlinear.auto( "translations" ).add( chinese.text() );
+		Stats.displayMemory();
+
+		System.err.println( "Reducing memory..." );
+		english = null;
+		chinese = null;
+		System.gc();
+		Thread.sleep(1000);
+		Stats.displayMemory();
+
+		System.err.println( "*** Strongs ***" );
 
 		System.err.println( "Loading Strongs..." );
 		//Strongs msb = new StrongsMsbNt().load( "biblelookup/majoritybible.com/msb_nt_tables.csv" );
 		Strongs bsb = new StrongsBSB().load( "biblelookup/openbible.org/csv/" );
-		strongs = new StrongsSwordProject().data( bsb ).load( "biblelookup/SwordProject/" );
-		System.err.println( "done." );
+		Strongs strongs = new StrongsSwordProject().data( bsb ).load( "biblelookup/SwordProject/" );
 		Stats.displayMemory();
 		
-		// interlinear structure:
-		/* {
-			"aliases": {
-				alias: book
+		System.err.println( "Adding Strongs..." );
+		Set<String> notFound = new LinkedHashSet<>();
+		Set<String> noTranslation = new LinkedHashSet<>();
+		Set<String> strongsUsed = new TreeSet<>();
+		for (String id : interlinear.get( "data" ).get( "words" ).keys()) {
+			String basicWord = interlinear.get( "data" ).get( "words" ).get( id ).value();
+			Tree strongsCodes = strongs.data().get( "basic" ).get( basicWord );
+			if (strongsCodes==null) {
+				notFound.add( basicWord );
+				continue;
 			}
-			"original": {
-				book:{ chap:{ verse:text }}
-			},
-			"translations": [
-				{ book:{ chap:{ verse:text }} }, ...
-			],
-			"data": {
-				"text":     { book: { chap:{ verse:[ basicIds... ] }} },
-				"basic":    { basicId: basicWord },
-				"lookup":   { basicId: { book:{ chap:[ verses... ] }} }
-			},
-			"strongs": {
-				"basic":     { basicId: [ strongsCodes... ] },
-				"translate": { strongsCode: [ replacements... ] }
-			}
-		} */
-
-		System.err.println( "Adding Bible data..." );
-		interlinear = new JSON( JSON.RETAIN_ORDER )
-			.add( "original", bible.text() )
-			.add( "data", bible.compressed() )
-		;
-		Stats.displayMemory();
-		
-		System.err.println( "Adding Strongs data..." );
-		for (String basicId : bible.compressed().get("basic").keys()) {
-			String basicWord = bible.compressed().get("basic").get(basicId).value();
-			for (String strongsCode : strongs.data().get("basic").get(basicWord).keys()) {
-				interlinear.auto( "strongs" ).auto( "basic" ).auto( basicId ).add( strongsCode );
-				for (String replacement : strongs.data().get("strongs").get( strongsCode ).keys()) {
-					interlinear.auto( "strongs" ).auto( "translate" ).auto( strongsCode ).add( replacement );
-				}
+			for (String strongsCode : strongsCodes.keys()) {
+				interlinear.auto( "data" ).auto( "strongs" ).auto( id ).add( strongsCode );
+				strongsUsed.add( strongsCode );
 			}
 		}
-		Stats.displayMemory();		
+		for (String strongsCode : strongsUsed) {
+			Tree replacements = strongs.data().get("strongs").get( strongsCode );
+			if (replacements==null) {
+				noTranslation.add( strongsCode );
+				continue;
+			}
+			for (String replacement : replacements.keys()) {
+				interlinear.auto( "data" ).auto( "translations" ).auto( strongsCode ).add( replacement );
+			}
+		}
+		Stats.displayMemory();
 		
+		System.out.println( "basic words not found in Strongs: "+notFound.size() );
+		Thread.sleep(1000);
+		System.out.println( "strongs codes with no translation: "+noTranslation.size() );
+		Thread.sleep(1000);
+
+		System.err.println( "*** Writing... ***" );
+
 		FileActions.write( exportPath, interlinear.serialize(), "UTF-8" );
 		
 	}

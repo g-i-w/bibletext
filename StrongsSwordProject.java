@@ -6,6 +6,8 @@ import creek.*;
 
 public class StrongsSwordProject extends AbstractStrongs {
 	
+	Alphabet alpha = new Alphabet( Alphabet.WESTERN+" ()," );
+	
 	public Strongs load ( String path ) throws Exception {
 		for (File f : FileActions.recurse(path)) {
 			System.out.println( "Loading "+f.getName()+"..." );
@@ -20,7 +22,7 @@ public class StrongsSwordProject extends AbstractStrongs {
 				String strongs = prefix+definitions.get(i);
 				String definition = definitions.get(i+1);
 				String replacement = Regex.first( definition, "--([^\\.]+)\\." );
-				if (replacement!=null) replacement = replacement.trim();
+				if (replacement!=null) replacement = alpha.filter( replacement.trim() ).replaceAll( "X ", "" );
 				else replacement = definition;
 				//replacement( strongs, definition );
 				replacement( strongs, replacement );

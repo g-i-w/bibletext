@@ -36,7 +36,7 @@ public class Interlinear {
 		List<String> idList = bible.compressed().get("text").get(book).get(chap).get(verse).values();
 		Table table = new SimpleTable();
 		for (String id : idList) {
-			String basicWord = bible.compressed().get("basic").get(id).value();
+			String basicWord = bible.compressed().get("words").get(id).value();
 			
 			Tree strongsObj = strongs.data().get("basic").get(basicWord);
 			
@@ -68,7 +68,7 @@ public class Interlinear {
 	
 	public static void main ( String[] args ) throws Exception {
 		Interlinear i = new Interlinear();
-		//System.out.println( i.strongs().data().get("basic").serialize() );
+		//System.out.println( i.strongs().data().get("words").serialize() );
 		System.out.println( i.bible().books() );
 		System.out.println( i.verse( args[0], args[1], args[2] ) );
 	}

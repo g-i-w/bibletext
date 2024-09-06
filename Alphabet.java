@@ -9,7 +9,7 @@ public class Alphabet {
 	private Set<Character> basicChars = new TreeSet<>();
 	private Set<Character> filteredChars = new TreeSet<>();
 	
-	public static Tree CONVERSION;
+
 	public static String HEBREW = "אבגדהוזחטיךכלםמןנסעףפץצקרשתװױײ׳״־׀׃׆";
 	public static String GREEK = "᾽’ΑαΒβΓγΔδΕεΖζΗηΘθΙιΚκΛλΜμΝνΞξΟοΠπΡρΣσςΤτΥυΦφΧχΨψΩω";
 	public static String EXT_GREEK = "ΐΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩάέήίΰαβγδεζηθικλμνξοπρςστυφχψωϊϋόύώἀἁἂἃἄἅἆἈἉἋἌἍἎἐἑἓἔἕἘἙἛἜἝἠἡἢἣἤἥἦἧἨἩἪἫἬἭἮἰἱἳἴἵἶἷἸἹἼἽὀὁὂὃὄὅὈὉὋὌὍὐὑὒὓὔὕὖὗὙὝὟὠὡὢὤὥὦὧὨὩὪὬὭὮὯᾯὰάὲέὴήὶίὸόὺύὼώᾄᾅᾐᾑᾔᾖᾗᾠᾧᾳᾴᾶᾷ᾽ῃῄῆῇῒΐῖῢῥῦῬῳῴῶῷ’";

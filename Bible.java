@@ -32,8 +32,8 @@ public interface Bible {
 	public Tree compressed ();
 	/* {
 		"text":     { book: { chap:{ verse:[ id_0, id_1 ... ] }}             },
-		"basic":    { id: basic_word                                         },
-		"lookup":   { basic_word: { book:{ chap:[ verse_0, verse_1 ... ] }}  }
+		"words":    { id: basic_word                                         },
+		"lookup":   { id: { book:{ chap:[ verse_0, verse_1 ... ] }}  }
 	} */
 	
 	public Tree search ();

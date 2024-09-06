@@ -56,7 +56,7 @@ public abstract class AbstractBible implements Bible {
 				// add the verse ID to the compressed structure
 				String wordId = wordData.get(basic).get("id").value();
 				bibleCompressed.auto( "text" ).auto( book ).auto( chap ).auto( verse ).add( wordId );
-				bibleCompressed.auto( "basic" ).add( wordId, basic );
+				bibleCompressed.auto( "words" ).add( wordId, basic );
 				bibleCompressed.auto( "lookup" ).auto( wordId ).auto( book ).auto( chap ).add( verse );
 			}
 		}
