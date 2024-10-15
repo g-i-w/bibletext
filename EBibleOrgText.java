@@ -15,7 +15,7 @@ public class EBibleOrgText extends AbstractBible {
 				String book = ref.get(0);
 				String chap = Regex.first( ref.get(1), "([^0]\\d*)" ); // trim leading zeros
 				List<String> lines = FileActions.readLines( file, FileActions.UTF8 );
-				String fullBookName = basic( lines.get(0) );
+				String fullBookName = lines.get(0).trim();
 				//System.out.println( book+","+fullBookName+","+(new Bytes(fullBookName.getBytes( FileActions.UTF16BE )).toString()) );
 				// no longer needed because of basic( ): //fullBookName = fullBookName.replace("\uFEFF", ""); // see https://stackoverflow.com/questions/54247407/why-utf-8-bom-bytes-efbbbf-can-be-replaced-by-ufeff, previously I found EF BB BF at the beginning, which is UTF8-speak for FE FF (UTF-16)
 				aliases().put( fullBookName, book );
