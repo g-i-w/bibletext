@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>////title////</title>
+	<meta charset='utf-8' />
+	<style type="text/css">
+		body{font-size:8px;font-family:sans-serif;border:0;padding:0;margin:0;}
+		input{font-size:12px;}
+		table{border-collapse:collapse;/*break-before:page;*/margin:0 2px 32px 2px;}
+		th,td{border:0;padding:0;}
+		th{font-size:10px;}
+		thead{border-bottom:solid white 4px;}
+		/*@page{margin:  ;}*/
+	</style>
+	<style type="text/css" media="print">
+		#controls{display:none;}
+	</style>
+</head>
+<body id="body">
+	<div id="controls" style="background-color:gray;font-size:12px;padding:4px;margin-bottom:4px;color:white;font-weight:bold;">
+		Font size: <input value='8' onchange="setFontSize(this.value);" style="width:16px;">px
+		&nbsp;&nbsp;
+		<select id="margins-select" onchange="selectMargins(this.value);">
+			<option value="inkjet">Basic margins</option>
+			<option value="zero">Zero margins</option>
+			<option value="holeSingle">Binding (single sided)</option>
+			<option value="holeDouble">Binding (double sided)</option>
+		</select>
+		&nbsp;&nbsp;
+		Margin: <input value='0.4cm' id="min-margin" onchange="selectMargins(document.getElementById('margins-select').value);" style="width:32px;">
+		Binding: <input value='3cm' id="punch-margin" onchange="selectMargins(document.getElementById('margins-select').value);" style="width:32px;">
+		&nbsp;&nbsp;
+		<input type='button' value="&#x1F5B6; Print" onclick='print()'>
+	</div>
+	<script>
+	function setFontSize(size) {
+		var larger = Number(size)+2;
+		const style=document.createElement('style');
+		style.innerHTML=`body{font-size:${size}px;}th{font-size:${larger}px;}`;
+		document.head.appendChild(style);
+	}
+	function selectMargins(type) {
+		var min = document.getElementById('min-margin').value; console.log('min: '+min);
+		var holePunch = document.getElementById('punch-margin').value; console.log('holePunch: '+holePunch);
+		const style=document.createElement('style');
+		if      (type==='inkjet')     {style.innerHTML='@page{margin:'+min+';}';}
+		else if (type==='zero')       {style.innerHTML='@page{margin:0cm;}';}
+		else if (type==='holeSingle') {style.innerHTML='@page{margin:'+min+' '+min+' '+min+' '+holePunch+';}';}
+		else if (type==='holeDouble') {style.innerHTML='@page:left{margin:'+min+' '+holePunch+' '+min+' '+min+';}@page:right{margin:'+min+' '+min+' '+min+' '+holePunch+';}';}
+		document.head.appendChild(style);
+	}
+	</script>
+	////html////
+	<!--<script src="paged.polyfill.js"></script>-->
+</body>
+</html>
+
