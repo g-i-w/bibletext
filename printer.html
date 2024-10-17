@@ -4,33 +4,1230 @@
 	<title>////title////</title>
 	<meta charset='utf-8' />
 	<style type="text/css">
-		body{font-size:8px;font-family:sans-serif;border:0;padding:0;margin:0;}
-		input{font-size:12px;}
-		table{border-collapse:collapse;/*break-before:page;*/margin:0 2px 32px 2px;}
-		th,td{border:0;padding:0;}
-		th{font-size:10px;}
-		thead{border-bottom:solid white 4px;}
-		/*@page{margin:  ;}*/
+		body {
+			font-size:8px;
+			font-family:sans-serif;
+			border:0;
+			padding:0;
+			margin:0;
+			color:black;
+		}
+		input {
+			font-size:12px;
+			margin-top:4px;
+			margin-bottom:4px;
+		}
+		table {
+			border-collapse:collapse;
+			/*break-before:page;*/
+			margin:0 2px 32px 2px;
+		}
+		th, td {
+			border:0;padding:0;}
+		th {
+			font-size:10px;
+		}
+		h3 {
+			color:gray;
+			margin:8px;
+		}
+		thead {
+			border-bottom:solid white 4px;
+		}
+		.compact-table {
+			font-size:12px;
+			max-width:230px;
+			display:inline-block;
+			vertical-align:top;
+			margin-bottom:24px;
+		}
+		.compact-table td {
+			padding:4px 4px 0 0;
+			vertical-align:top;
+		}
+		.content {
+			display:inline-block;
+			border-bottom:none;
+			vertical-align:top;
+			padding: 0;
+			margin: 0 8px 0 8px;
+			overflow:auto;
+		}
+		.scroll-box {
+			overflow:auto;
+			max-height:350px;
+			max-width:300px;
+			background-color:rgb(246,246,246);
+			margin:0 0 16px 0;
+
+		}
+		.controls {
+			background-color:lightgray;
+			font-size:14px;
+			margin-bottom:4px;
+		}
 	</style>
 	<style type="text/css" media="print">
-		#controls{display:none;}
+		.controls{
+			display:none;
+		}
 	</style>
 </head>
 <body id="body">
-	<div id="controls" style="background-color:gray;font-size:12px;padding:4px;margin-bottom:4px;color:white;font-weight:bold;">
-		Font size: <input value='8' onchange="setFontSize(this.value);" style="width:16px;">px
-		&nbsp;&nbsp;
-		<select id="margins-select" onchange="selectMargins(this.value);">
-			<option value="inkjet">Basic margins</option>
-			<option value="zero">Zero margins</option>
-			<option value="holeSingle">Binding (single sided)</option>
-			<option value="holeDouble">Binding (double sided)</option>
-		</select>
-		&nbsp;&nbsp;
-		Margin: <input value='0.4cm' id="min-margin" onchange="selectMargins(document.getElementById('margins-select').value);" style="width:32px;">
-		Binding: <input value='3cm' id="punch-margin" onchange="selectMargins(document.getElementById('margins-select').value);" style="width:32px;">
-		&nbsp;&nbsp;
-		<input type='button' value="&#x1F5B6; Print" onclick='print()'>
+	<div class="controls">
+		<div style="width:100%;background-color:gray;color:white;">
+			<div style="font-weight:bold;font-size:14px;padding:8px;">Print the Bible in 1,300 languages</div>
+		</div>
+		<div class="content">
+			<h3>Africa</h3>
+			<div class="scroll-box">
+				<table class="compact-table">
+				<tr><td rowspan=7><img src='flags/bj.png'><br>Benin</td><td><a href='/?type=text&lang=Baatonum&ver=bba'>Bariba Bible</a></td><td><a href='/?type=cover&lang=Baatonum&ver=bba'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Ditammari&ver=tbzsim'>Ditammari Bible</a></td><td><a href='/?type=cover&lang=Ditammari&ver=tbzsim'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Fulfulde-Borgu&ver=fue'>Fulfulde Borgu NT</a></td><td><a href='/?type=cover&lang=Fulfulde-Borgu&ver=fue'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Fulfulde-Western-Niger&ver=fuhbkf'>Fulfulde Burkina NT</a></td><td><a href='/?type=cover&lang=Fulfulde-Western-Niger&ver=fuhbkf'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Lukpa&ver=dop'>Lokpa Bible</a></td><td><a href='/?type=cover&lang=Lukpa&ver=dop'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Miyobe&ver=soy'>Sola NT</a></td><td><a href='/?type=cover&lang=Miyobe&ver=soy'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Mokole&ver=mkl'>Monkole NT</a></td><td><a href='/?type=cover&lang=Mokole&ver=mkl'>Cover</a></td></tr>
+				<tr><td rowspan=2><img src='flags/bw.png'><br>Botswana</td><td><a href='/?type=text&lang=Naro&ver=nhr'>Naro NT</a></td><td><a href='/?type=cover&lang=Naro&ver=nhr'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Setswana&ver=tsn'>Open Tswana Living NT</a></td><td><a href='/?type=cover&lang=Setswana&ver=tsn'>Cover</a></td></tr>
+				<tr><td rowspan=3><img src='flags/bf.png'><br>Burkina Faso</td><td><a href='/?type=text&lang=Buamu&ver=boxNT'>Buamu NT</a></td><td><a href='/?type=cover&lang=Buamu&ver=boxNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Gourmanch_ma&ver=gux'>Gourmanchéma NT</a></td><td><a href='/?type=cover&lang=Gourmanch_ma&ver=gux'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Gourmanch_ma&ver=guxg'>Gourmanchéma NT</a></td><td><a href='/?type=cover&lang=Gourmanch_ma&ver=guxg'>Cover</a></td></tr>
+				<tr><td rowspan=9><img src='flags/cm.png'><br>Cameroon</td><td><a href='/?type=text&lang=Akoose&ver=bssNT'>Akoose NT</a></td><td><a href='/?type=cover&lang=Akoose&ver=bssNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Denya&ver=anvNT'>New Testament in Denya (CM:anv:Denya)</a></td><td><a href='/?type=cover&lang=Denya&ver=anvNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Hdi&ver=xed'>Hdi NT</a></td><td><a href='/?type=cover&lang=Hdi&ver=xed'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Kenyang&ver=kenNT'>Kenyang NT</a></td><td><a href='/?type=cover&lang=Kenyang&ver=kenNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Makaa&ver=mcp'>Makaa NT</a></td><td><a href='/?type=cover&lang=Makaa&ver=mcp'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Mbuko&ver=mqbNT'>Mbuko NT</a></td><td><a href='/?type=cover&lang=Mbuko&ver=mqbNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Merey&ver=meq'>Merey NT</a></td><td><a href='/?type=cover&lang=Merey&ver=meq'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Muyang&ver=muy'>Muyang NT</a></td><td><a href='/?type=cover&lang=Muyang&ver=muy'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Noone&ver=nhuNT'>Noone NT</a></td><td><a href='/?type=cover&lang=Noone&ver=nhuNT'>Cover</a></td></tr>
+				<tr><td rowspan=3><img src='flags/td.png'><br>Chad</td><td><a href='/?type=text&lang=Bedjond&ver=bjvNT'>Bedjond NT</a></td><td><a href='/?type=cover&lang=Bedjond&ver=bjvNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Dangal_at&ver=daaNT'>Dangaléat NT</a></td><td><a href='/?type=cover&lang=Dangal_at&ver=daaNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Kenga&ver=kyq'>Kenga NT</a></td><td><a href='/?type=cover&lang=Kenga&ver=kyq'>Cover</a></td></tr>
+				<tr><td rowspan=2><img src='flags/cd.png'><br>Democratic Republic of the Congo</td><td><a href='/?type=text&lang=Kiyombi&ver=yom'>Yombe: Biblica® Open Nkanda wu Moyo, Nguizani Yimona ayi Minkunga 2002 (Bible)</a></td><td><a href='/?type=cover&lang=Kiyombi&ver=yom'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Ling_la&ver=lin'>Lingala Bible</a></td><td><a href='/?type=cover&lang=Ling_la&ver=lin'>Cover</a></td></tr>
+				<tr><td rowspan=4><img src='flags/eg.png'><br>Egypt</td><td><a href='/?type=text&lang=Arabic-Standard&ver=arbnav'>New Arabic Version (Book of Life)</a></td><td><a href='/?type=cover&lang=Arabic-Standard&ver=arbnav'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Coptic&ver=copbhc'>Coptic Boharic NT</a></td><td><a href='/?type=cover&lang=Coptic&ver=copbhc'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Coptic&ver=copcnt'>Coptic NT</a></td><td><a href='/?type=cover&lang=Coptic&ver=copcnt'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Coptic&ver=copshc'>Coptic Sahidic NT</a></td><td><a href='/?type=cover&lang=Coptic&ver=copshc'>Cover</a></td></tr>
+				<tr><td rowspan=14><img src='flags/et.png'><br>Ethiopia</td><td><a href='/?type=text&lang=Amharic&ver=amh'>Amharic NT</a></td><td><a href='/?type=cover&lang=Amharic&ver=amh'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Borna&ver=bwo'>Borna NT Latin Version</a></td><td><a href='/?type=cover&lang=Borna&ver=bwo'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Dawro&ver=dwrENT'>Dawro NT (Ethoipic script)</a></td><td><a href='/?type=cover&lang=Dawro&ver=dwrENT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Dawro&ver=dwrNT'>Dawro NT (Latin script)</a></td><td><a href='/?type=cover&lang=Dawro&ver=dwrNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Gamo&ver=gmvNT'>Gamo NT</a></td><td><a href='/?type=cover&lang=Gamo&ver=gmvNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Gamo&ver=gmvRNT'>Gamo NT</a></td><td><a href='/?type=cover&lang=Gamo&ver=gmvRNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Gamotso&ver=gmvggm'>Gamo NT</a></td><td><a href='/?type=cover&lang=Gamotso&ver=gmvggm'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Gofa&ver=gofENT'>Gofa NT (Ethiopic script)</a></td><td><a href='/?type=cover&lang=Gofa&ver=gofENT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Gofa&ver=gofRNT'>Gofa NT (Latin script)</a></td><td><a href='/?type=cover&lang=Gofa&ver=gofRNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Gofa&ver=gofwftw'>Gofa NT</a></td><td><a href='/?type=cover&lang=Gofa&ver=gofwftw'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Hamer-Banna&ver=amf'>Banna NT</a></td><td><a href='/?type=cover&lang=Hamer-Banna&ver=amf'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Male&ver=mdyeth'>Maale Bible (Ethiopic script)</a></td><td><a href='/?type=cover&lang=Male&ver=mdyeth'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Oromo-West-Central&ver=gaz'>New Orormo Contemporary Version</a></td><td><a href='/?type=cover&lang=Oromo-West-Central&ver=gaz'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Wolaytta&ver=wal'>Wolaytta Bible</a></td><td><a href='/?type=cover&lang=Wolaytta&ver=wal'>Cover</a></td></tr>
+				<tr><td rowspan=6><img src='flags/gh.png'><br>Ghana</td><td><a href='/?type=text&lang=Chumburung&ver=ncuNT'>Chumburung NT</a></td><td><a href='/?type=cover&lang=Chumburung&ver=ncuNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=e_egbe&ver=ewe'>Éwé Bible</a></td><td><a href='/?type=cover&lang=e_egbe&ver=ewe'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Konkomba&ver=xon'>Konkomba</a></td><td><a href='/?type=cover&lang=Konkomba&ver=xon'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Twi&ver=aka'>Asante Twi Bible</a></td><td><a href='/?type=cover&lang=Twi&ver=aka'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Twi&ver=twi'>Akuapem Twi Bible</a></td><td><a href='/?type=cover&lang=Twi&ver=twi'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Twi&ver=twiasante'>Asante Twi Bible</a></td><td><a href='/?type=cover&lang=Twi&ver=twiasante'>Cover</a></td></tr>
+				<tr><td rowspan=7><img src='flags/gn.png'><br>Guinea</td><td><a href='/?type=text&lang=Baga-Sitemu&ver=bsp'>Baga Sitemu Bible Portions</a></td><td><a href='/?type=cover&lang=Baga-Sitemu&ver=bsp'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Pular&ver=fuf'>Pular Fuuta-Jallon New Testament</a></td><td><a href='/?type=cover&lang=Pular&ver=fuf'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Sankaran-Maninka&ver=msc'>Sankaran Maninka Bible Portions</a></td><td><a href='/?type=cover&lang=Sankaran-Maninka&ver=msc'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Susu&ver=sus'>Susu Bible</a></td><td><a href='/?type=cover&lang=Susu&ver=sus'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Susu&ver=susa'>Susu Bible (Arabic script)</a></td><td><a href='/?type=cover&lang=Susu&ver=susa'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Toma&ver=tod'>Toma Bible Portions</a></td><td><a href='/?type=cover&lang=Toma&ver=tod'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Yalunka&ver=yal'>Yalunka Bible</a></td><td><a href='/?type=cover&lang=Yalunka&ver=yal'>Cover</a></td></tr>
+				<tr><td rowspan=1><img src='flags/gy.png'><br>Guyana</td><td><a href='/?type=text&lang=Akawaio&ver=akeNT'>Akawaio NT</a></td><td><a href='/?type=cover&lang=Akawaio&ver=akeNT'>Cover</a></td></tr>
+				<tr><td rowspan=2><img src='flags/ci.png'><br>Ivory Coast</td><td><a href='/?type=text&lang=Kouya&ver=kyf'>Kouya NT</a></td><td><a href='/?type=cover&lang=Kouya&ver=kyf'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Yaour_&ver=yreNT'>Yaouré NT</a></td><td><a href='/?type=cover&lang=Yaour_&ver=yreNT'>Cover</a></td></tr>
+				<tr><td rowspan=4><img src='flags/ke.png'><br>Kenya</td><td><a href='/?type=text&lang=Dholuo&ver=luo'>Dholuo Bible</a></td><td><a href='/?type=cover&lang=Dholuo&ver=luo'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Gikuyu&ver=kik'>Kikuyu Bible</a></td><td><a href='/?type=cover&lang=Gikuyu&ver=kik'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Sabaot&ver=spyNT'>Sabaot NT</a></td><td><a href='/?type=cover&lang=Sabaot&ver=spyNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Suba&ver=sxbNT'>Suba NT</a></td><td><a href='/?type=cover&lang=Suba&ver=sxbNT'>Cover</a></td></tr>
+				<tr><td rowspan=1><img src='flags/mg.png'><br>Madagascar</td><td><a href='/?type=text&lang=Malagasy-Tandroy-Mahafaly&ver=tdx'>Tandroy Bible</a></td><td><a href='/?type=cover&lang=Malagasy-Tandroy-Mahafaly&ver=tdx'>Cover</a></td></tr>
+				<tr><td rowspan=2><img src='flags/mw.png'><br>Malawi</td><td><a href='/?type=text&lang=Chichewa&ver=nya'>Chichewa Bible</a></td><td><a href='/?type=cover&lang=Chichewa&ver=nya'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Chiyawo&ver=yao'>Yao NT</a></td><td><a href='/?type=cover&lang=Chiyawo&ver=yao'>Cover</a></td></tr>
+				<tr><td rowspan=3><img src='flags/ml.png'><br>Mali</td><td><a href='/?type=text&lang=Fulfulde-Maasina&ver=ffm'>Maasina Fulfulde NT</a></td><td><a href='/?type=cover&lang=Fulfulde-Maasina&ver=ffm'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=S_noufo-Mamara&ver=myk'>Mamara Sénoufo NT and portions of the OT</a></td><td><a href='/?type=cover&lang=S_noufo-Mamara&ver=myk'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=S_noufo-Supyire&ver=spp'>Supyire Sénoufo NT</a></td><td><a href='/?type=cover&lang=S_noufo-Supyire&ver=spp'>Cover</a></td></tr>
+				<tr><td rowspan=7><img src='flags/mz.png'><br>Mozambique</td><td><a href='/?type=text&lang=Kote&ver=eko'>Kote Bible</a></td><td><a href='/?type=cover&lang=Kote&ver=eko'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Makhuwa-Meetto&ver=mgh'>Makhuwa-Meetto NT</a></td><td><a href='/?type=cover&lang=Makhuwa-Meetto&ver=mgh'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Makhuwa-Meetto&ver=mgh2016'>Makhuwa-Meetto: Makua New Testament 2015 New Testament</a></td><td><a href='/?type=cover&lang=Makhuwa-Meetto&ver=mgh2016'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Makonde&ver=kde'>Makonde Bible</a></td><td><a href='/?type=cover&lang=Makonde&ver=kde'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Mwani&ver=wmw'>Mwani NT</a></td><td><a href='/?type=cover&lang=Mwani&ver=wmw'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Sena&ver=seh'>Sena NT</a></td><td><a href='/?type=cover&lang=Sena&ver=seh'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Takwane&ver=tke'>Takwane NT</a></td><td><a href='/?type=cover&lang=Takwane&ver=tke'>Cover</a></td></tr>
+				<tr><td rowspan=1><img src='flags/na.png'><br>Namibia</td><td><a href='/?type=text&lang=Kuhane&ver=sbs'>Kuhane NT</a></td><td><a href='/?type=cover&lang=Kuhane&ver=sbs'>Cover</a></td></tr>
+				<tr><td rowspan=17><img src='flags/ng.png'><br>Nigeria</td><td><a href='/?type=text&lang=Amo&ver=amo'>Amo NT</a></td><td><a href='/?type=cover&lang=Amo&ver=amo'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Bangwinji&ver=bsj'>Bangwinji NT</a></td><td><a href='/?type=cover&lang=Bangwinji&ver=bsj'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Boko&ver=bqcsim'>Boko (Benin) Bible</a></td><td><a href='/?type=cover&lang=Boko&ver=bqcsim'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Bokobaru&ver=bus'>Bokobaru Bible</a></td><td><a href='/?type=cover&lang=Bokobaru&ver=bus'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Bu&ver=jid'>Bu NT</a></td><td><a href='/?type=cover&lang=Bu&ver=jid'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Busa&ver=bqp'>Bisa Bible</a></td><td><a href='/?type=cover&lang=Busa&ver=bqp'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Hausa&ver=hausa'>Hausa Contemporary Bible</a></td><td><a href='/?type=cover&lang=Hausa&ver=hausa'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Hausa&ver=hauulb'>Hausa NT</a></td><td><a href='/?type=cover&lang=Hausa&ver=hauulb'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Igbo&ver=ibo'>Igbo Bible</a></td><td><a href='/?type=cover&lang=Igbo&ver=ibo'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Ika&ver=ikkNT'>Ika NT</a></td><td><a href='/?type=cover&lang=Ika&ver=ikkNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Ikwere&ver=ikwNT'>Ikwere NT</a></td><td><a href='/?type=cover&lang=Ikwere&ver=ikwNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Ivbie-North-Okpela-Arhe&ver=atgNT'>Ivbie North-Okpela-Arhe NT</a></td><td><a href='/?type=cover&lang=Ivbie-North-Okpela-Arhe&ver=atgNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Janji&ver=jni'>Janji NT</a></td><td><a href='/?type=cover&lang=Janji&ver=jni'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Ninzo&ver=ninNT'>Ninzo NT</a></td><td><a href='/?type=cover&lang=Ninzo&ver=ninNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Tsikimba&ver=kdlNT'>Tsikimba NT</a></td><td><a href='/?type=cover&lang=Tsikimba&ver=kdlNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Tsishingini&ver=tswNT'>Tsishingini NT</a></td><td><a href='/?type=cover&lang=Tsishingini&ver=tswNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Yor_b_&ver=yor'>Yoruba Bible</a></td><td><a href='/?type=cover&lang=Yor_b_&ver=yor'>Cover</a></td></tr>
+				<tr><td rowspan=3><img src='flags/sn.png'><br>Senegal</td><td><a href='/?type=text&lang=Mankanya&ver=knf'>Mankanya NT and partial OT</a></td><td><a href='/?type=cover&lang=Mankanya&ver=knf'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Wolof&ver=wol2010'>Wolof NT 2010</a></td><td><a href='/?type=cover&lang=Wolof&ver=wol2010'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Wolof&ver=wolKYG'>Wolof Bible 2020</a></td><td><a href='/?type=cover&lang=Wolof&ver=wolKYG'>Cover</a></td></tr>
+				<tr><td rowspan=1><img src='flags/so.png'><br>Somalia</td><td><a href='/?type=text&lang=Somali&ver=som'>Somali Bible</a></td><td><a href='/?type=cover&lang=Somali&ver=som'>Cover</a></td></tr>
+				<tr><td rowspan=1><img src='flags/ss.png'><br>South Sudan</td><td><a href='/?type=text&lang=Morokodo&ver=mgc'>Morokodo Bible Portions</a></td><td><a href='/?type=cover&lang=Morokodo&ver=mgc'>Cover</a></td></tr>
+				<tr><td rowspan=3><img src='flags/sd.png'><br>Sudan</td><td><a href='/?type=text&lang=Dinka-Southwestern&ver=dikNT'>Southwestern Dinka NT</a></td><td><a href='/?type=cover&lang=Dinka-Southwestern&ver=dikNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Shatt&ver=shj'>Caning Bible Translation</a></td><td><a href='/?type=cover&lang=Shatt&ver=shj'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Uduk&ver=udu'>Uduk Bible</a></td><td><a href='/?type=cover&lang=Uduk&ver=udu'>Cover</a></td></tr>
+				<tr><td rowspan=23><img src='flags/tz.png'><br>Tanzania</td><td><a href='/?type=text&lang=Isanzu&ver=isn'>Isanzu NT</a></td><td><a href='/?type=cover&lang=Isanzu&ver=isn'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Kara&ver=reg'>Kara NT</a></td><td><a href='/?type=cover&lang=Kara&ver=reg'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Kinga&ver=zgam'>Mahanji NT</a></td><td><a href='/?type=cover&lang=Kinga&ver=zgam'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Kisi&ver=kiz'>Kisi NT</a></td><td><a href='/?type=cover&lang=Kisi&ver=kiz'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Kiswahili&ver=swhonen'>Kiswahili Contemporary Version</a></td><td><a href='/?type=cover&lang=Kiswahili&ver=swhonen'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Kutu&ver=kdc'>Kutu NT</a></td><td><a href='/?type=cover&lang=Kutu&ver=kdc'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Kwere&ver=cwe'>Kwere NT</a></td><td><a href='/?type=cover&lang=Kwere&ver=cwe'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Luguru&ver=ruf'>Luguru NT</a></td><td><a href='/?type=cover&lang=Luguru&ver=ruf'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Matumbi&ver=mgw'>Matumbi: Injili ya Yesu Mwaiandikilwe na Luka Portions</a></td><td><a href='/?type=cover&lang=Matumbi&ver=mgw'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Mwera&ver=mwe'>Mwera Bible</a></td><td><a href='/?type=cover&lang=Mwera&ver=mwe'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Ndamba&ver=ndj'>Ndamba New Testament</a></td><td><a href='/?type=cover&lang=Ndamba&ver=ndj'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Ndengereko&ver=ndg'>Ndengereko NT</a></td><td><a href='/?type=cover&lang=Ndengereko&ver=ndg'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Ngindo&ver=nnq'>Ngindo New Testament</a></td><td><a href='/?type=cover&lang=Ngindo&ver=nnq'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Ngoni&ver=xnj'>Ngoni NT</a></td><td><a href='/?type=cover&lang=Ngoni&ver=xnj'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Nguu&ver=ngp'>Nguu New Testament</a></td><td><a href='/?type=cover&lang=Nguu&ver=ngp'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Pogolo&ver=poy'>The New Testament in Pogoro</a></td><td><a href='/?type=cover&lang=Pogolo&ver=poy'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Safwa&ver=sbk'>Safwa NT</a></td><td><a href='/?type=cover&lang=Safwa&ver=sbk'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Swahili&ver=swh1850'>Swahili Bible</a></td><td><a href='/?type=cover&lang=Swahili&ver=swh1850'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Swahili&ver=swhulb'>Swahili Unlocked Literal Bible</a></td><td><a href='/?type=cover&lang=Swahili&ver=swhulb'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Vidunda&ver=vid'>Vidunda NT+</a></td><td><a href='/?type=cover&lang=Vidunda&ver=vid'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Vwanji&ver=wbi'>Vwanji NT</a></td><td><a href='/?type=cover&lang=Vwanji&ver=wbi'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Zaramo&ver=zaj'>Zaramo Bible</a></td><td><a href='/?type=cover&lang=Zaramo&ver=zaj'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Zigua&ver=ziw'>Zigua New Testament</a></td><td><a href='/?type=cover&lang=Zigua&ver=ziw'>Cover</a></td></tr>
+				<tr><td rowspan=1><img src='flags/tg.png'><br>Togo</td><td><a href='/?type=text&lang=Ngangam&ver=gngNT'>Ngangam NT</a></td><td><a href='/?type=cover&lang=Ngangam&ver=gngNT'>Cover</a></td></tr>
+				<tr><td rowspan=1><img src='flags/ug.png'><br>Uganda</td><td><a href='/?type=text&lang=Luganda&ver=lug'>Luganda Bible</a></td><td><a href='/?type=cover&lang=Luganda&ver=lug'>Cover</a></td></tr>
+				<tr><td rowspan=1><img src='flags/zm.png'><br>Zambia</td><td><a href='/?type=text&lang=Soli&ver=sby'>Soli NT</a></td><td><a href='/?type=cover&lang=Soli&ver=sby'>Cover</a></td></tr>
+				<tr><td rowspan=3><img src='flags/zw.png'><br>Zimbabwe</td><td><a href='/?type=text&lang=chiShona&ver=sna'>Shona Bible: Biblica® Bhaibheri Dzvene Rakasununguka MuChiShona Chanhasi 2017</a></td><td><a href='/?type=cover&lang=chiShona&ver=sna'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Dombe&ver=dov'>Dombe NT</a></td><td><a href='/?type=cover&lang=Dombe&ver=dov'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Ndebele&ver=nde'>Ndebele Bible</a></td><td><a href='/?type=cover&lang=Ndebele&ver=nde'>Cover</a></td></tr>
+				</table>
+			</div>
+		</div>	
+		<div class="content">
+			<h3>Americas</h3>
+			<div class="scroll-box">
+				<table class="compact-table">
+				<tr><td rowspan=1><img src='flags/bh.png'><br>Belize</td><td><a href='/?type=text&lang=Maya-Mop_n&ver=mopNT'>Mopán Maya NT</a></td><td><a href='/?type=cover&lang=Maya-Mop_n&ver=mopNT'>Cover</a></td></tr>
+				<tr><td rowspan=13><img src='flags/bo.png'><br>Bolivia</td><td><a href='/?type=text&lang=Cavine_a&ver=cavNT'>Cavineña NT</a></td><td><a href='/?type=cover&lang=Cavine_a&ver=cavNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Ch_cobo&ver=caoNT'>Chácobo NT</a></td><td><a href='/?type=cover&lang=Ch_cobo&ver=caoNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Chipaya&ver=capNT'>Chipaya NT</a></td><td><a href='/?type=cover&lang=Chipaya&ver=capNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Chiquitano&ver=caxNT'>Chiquitano NT</a></td><td><a href='/?type=cover&lang=Chiquitano&ver=caxNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Ese-Ejja&ver=eseNT'>Ese Ejja NT</a></td><td><a href='/?type=cover&lang=Ese-Ejja&ver=eseNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Guaran_-Eastern-Bolivian&ver=guiNT'>Eastern Bolivian Guaraní NT</a></td><td><a href='/?type=cover&lang=Guaran_-Eastern-Bolivian&ver=guiNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Guaran_-Western-Bolivian&ver=gnwNT'>Western Bolivian Guaraní NT</a></td><td><a href='/?type=cover&lang=Guaran_-Western-Bolivian&ver=gnwNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Guarayu&ver=gyrNT'>Guarayu NT</a></td><td><a href='/?type=cover&lang=Guarayu&ver=gyrNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Ignaciano&ver=ignNT'>Ignaciano NT</a></td><td><a href='/?type=cover&lang=Ignaciano&ver=ignNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Quechua-North-Bolivian&ver=qulNT'>North Bolivian Quechua NT</a></td><td><a href='/?type=cover&lang=Quechua-North-Bolivian&ver=qulNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Quechua-South-Bolivian&ver=quhNT'>South Bolivian Quechua NT</a></td><td><a href='/?type=cover&lang=Quechua-South-Bolivian&ver=quhNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Sirion_&ver=srqNT'>Sirionó NT</a></td><td><a href='/?type=cover&lang=Sirion_&ver=srqNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Tacana&ver=tnaNT'>Tacana NT</a></td><td><a href='/?type=cover&lang=Tacana&ver=tnaNT'>Cover</a></td></tr>
+				<tr><td rowspan=31><img src='flags/br.png'><br>Brazil</td><td><a href='/?type=text&lang=Apinay_&ver=apnNT'>Apinayé NT</a></td><td><a href='/?type=cover&lang=Apinay_&ver=apnNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Apurin_&ver=apuNT'>Apurinã NT</a></td><td><a href='/?type=cover&lang=Apurin_&ver=apuNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Bakair_&ver=bkqNT'>Bakairí NT</a></td><td><a href='/?type=cover&lang=Bakair_&ver=bkqNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Guajaj_ra&ver=gubBl'>Guajajára Bible</a></td><td><a href='/?type=cover&lang=Guajaj_ra&ver=gubBl'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Guaran_-Mby_&ver=gun'>Mbyá Guaraní NT</a></td><td><a href='/?type=cover&lang=Guaran_-Mby_&ver=gun'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Hixkary_na&ver=hixNT'>Hixkaryána NT</a></td><td><a href='/?type=cover&lang=Hixkary_na&ver=hixNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Kaapor&ver=urbNT'>Kaapor NT</a></td><td><a href='/?type=cover&lang=Kaapor&ver=urbNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Kadiw_u&ver=kbcNT'>Kadiwéu NT</a></td><td><a href='/?type=cover&lang=Kadiw_u&ver=kbcNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Kaingang&ver=kgpNT'>Kaingang NT</a></td><td><a href='/?type=cover&lang=Kaingang&ver=kgpNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Kaiw_&ver=kgkNT'>Kaiwá NT</a></td><td><a href='/?type=cover&lang=Kaiw_&ver=kgkNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Karaj_&ver=kpjNT'>Karajá NT</a></td><td><a href='/?type=cover&lang=Karaj_&ver=kpjNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Kayab_&ver=kyzNT'>Kayabí NT</a></td><td><a href='/?type=cover&lang=Kayab_&ver=kyzNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Kayap_&ver=txuNT'>Kayapó NT</a></td><td><a href='/?type=cover&lang=Kayap_&ver=txuNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Macushi&ver=mbcNT'>Macushi NT</a></td><td><a href='/?type=cover&lang=Macushi&ver=mbcNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Maxakal_&ver=mblNT'>Maxakalí NT</a></td><td><a href='/?type=cover&lang=Maxakal_&ver=mblNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Munduruk_&ver=myu'>Mundurukú NT</a></td><td><a href='/?type=cover&lang=Munduruk_&ver=myu'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Nadeb&ver=mbjNT'>Nadëb NT</a></td><td><a href='/?type=cover&lang=Nadeb&ver=mbjNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Nambiku_ra-Southern&ver=nabNT'>Southern Nambikuára NT</a></td><td><a href='/?type=cover&lang=Nambiku_ra-Southern&ver=nabNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Palik_r&ver=plu'>Palikúr NT</a></td><td><a href='/?type=cover&lang=Palik_r&ver=plu'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Parec_s&ver=pabNT'>Parecís NT</a></td><td><a href='/?type=cover&lang=Parec_s&ver=pabNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Paumar_&ver=padNT'>Paumarí NT</a></td><td><a href='/?type=cover&lang=Paumar_&ver=padNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Portugu_s&ver=porblt'>Portuguese Free Bible for All</a></td><td><a href='/?type=cover&lang=Portugu_s&ver=porblt'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Portuguese&ver=porbr2018'>Portuguese Bíblia Livre</a></td><td><a href='/?type=cover&lang=Portuguese&ver=porbr2018'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Portuguese&ver=porbrbsl'>World Portuguese Bible</a></td><td><a href='/?type=cover&lang=Portuguese&ver=porbrbsl'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Portuguese&ver=portft'>Portuguese Translation for Translators</a></td><td><a href='/?type=cover&lang=Portuguese&ver=portft'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Rikbaktsa&ver=rkbNT'>Rikbaktsa NT</a></td><td><a href='/?type=cover&lang=Rikbaktsa&ver=rkbNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Sater_-Maw_&ver=mavNT'>Sateré-Mawé NT</a></td><td><a href='/?type=cover&lang=Sater_-Maw_&ver=mavNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Tenharim&ver=pahNT'>Tenharim NT</a></td><td><a href='/?type=cover&lang=Tenharim&ver=pahNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Ter_na&ver=terNT'>Terêna NT</a></td><td><a href='/?type=cover&lang=Ter_na&ver=terNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Tucano&ver=tuoNT'>Tucano NT</a></td><td><a href='/?type=cover&lang=Tucano&ver=tuoNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Xav_nte&ver=xavNT'>Xavánte NT</a></td><td><a href='/?type=cover&lang=Xav_nte&ver=xavNT'>Cover</a></td></tr>
+				<tr><td rowspan=7><img src='flags/ca.png'><br>Canada</td><td><a href='/?type=text&lang=Algonquin&ver=alqALGNT'>Algonquin NT</a></td><td><a href='/?type=cover&lang=Algonquin&ver=alqALGNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Beaver&ver=bea'>Beaver Mark</a></td><td><a href='/?type=cover&lang=Beaver&ver=bea'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Blackfoot&ver=bla'>Blackfoot Matthew</a></td><td><a href='/?type=cover&lang=Blackfoot&ver=bla'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Carrier&ver=crxNTpo'>Carrier NT</a></td><td><a href='/?type=cover&lang=Carrier&ver=crxNTpo'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Carrier-Southern&ver=cafNT'>Southern Carrier NT</a></td><td><a href='/?type=cover&lang=Carrier-Southern&ver=cafNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Dogrib&ver=dgrDOGNT'>Dogrib Bible</a></td><td><a href='/?type=cover&lang=Dogrib&ver=dgrDOGNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Mi_kmaq&ver=micMIQNT'>Mi'kmaq NT</a></td><td><a href='/?type=cover&lang=Mi_kmaq&ver=micMIQNT'>Cover</a></td></tr>
+				<tr><td rowspan=1><img src='flags/cl.png'><br>Chile</td><td><a href='/?type=text&lang=Mapudungun&ver=arnNT'>Mapudungun NT</a></td><td><a href='/?type=cover&lang=Mapudungun&ver=arnNT'>Cover</a></td></tr>
+				<tr><td rowspan=26><img src='flags/co.png'><br>Colombia</td><td><a href='/?type=text&lang=Awa-Cuaiquer&ver=kwi'>Awa-Cuaiquer NT</a></td><td><a href='/?type=cover&lang=Awa-Cuaiquer&ver=kwi'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Barasana-Eduria&ver=bsnNT'>Barasana-Eduria NT</a></td><td><a href='/?type=cover&lang=Barasana-Eduria&ver=bsnNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Cacua&ver=cbv'>Cacua NT</a></td><td><a href='/?type=cover&lang=Cacua&ver=cbv'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Cams_&ver=kbh'>Camsá NT</a></td><td><a href='/?type=cover&lang=Cams_&ver=kbh'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Carapana&ver=cbcNT'>Carapana NT</a></td><td><a href='/?type=cover&lang=Carapana&ver=cbcNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Cubeo&ver=cubNT'>Cubeo NT</a></td><td><a href='/?type=cover&lang=Cubeo&ver=cubNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Cuiba&ver=cui'>Cuiba NT</a></td><td><a href='/?type=cover&lang=Cuiba&ver=cui'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Epena&ver=sjaNT'>Epena NT</a></td><td><a href='/?type=cover&lang=Epena&ver=sjaNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Guahibo&ver=guh'>Guahibo NT</a></td><td><a href='/?type=cover&lang=Guahibo&ver=guh'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Guambiano&ver=gum'>Guambiano NT</a></td><td><a href='/?type=cover&lang=Guambiano&ver=gum'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Guanano&ver=gvc'>Guanano NT</a></td><td><a href='/?type=cover&lang=Guanano&ver=gvc'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Guayabero&ver=guoNT'>Guayabero NT</a></td><td><a href='/?type=cover&lang=Guayabero&ver=guoNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Huitoto-Minica&ver=hto'>Minica Huitoto NT</a></td><td><a href='/?type=cover&lang=Huitoto-Minica&ver=hto'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Inga&ver=inb'>Inga NT</a></td><td><a href='/?type=cover&lang=Inga&ver=inb'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Macuna&ver=myy'>New Testament in Macuna</a></td><td><a href='/?type=cover&lang=Macuna&ver=myy'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Muinane&ver=bmrNT'>Muinane NT</a></td><td><a href='/?type=cover&lang=Muinane&ver=bmrNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Piapoco&ver=pioNT'>Piapoco NT</a></td><td><a href='/?type=cover&lang=Piapoco&ver=pioNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Piratapuyo&ver=pirNT'>Piratapuyo NT</a></td><td><a href='/?type=cover&lang=Piratapuyo&ver=pirNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Siona&ver=snnNT'>Siona NT</a></td><td><a href='/?type=cover&lang=Siona&ver=snnNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Siriano&ver=sri'>Siriano NT</a></td><td><a href='/?type=cover&lang=Siriano&ver=sri'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Tanimuca-Retuar_&ver=tnc'>Tanimuca-Retuarã NT portions</a></td><td><a href='/?type=cover&lang=Tanimuca-Retuar_&ver=tnc'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Tunebo-Central&ver=tuf'>Central Tunebo NT</a></td><td><a href='/?type=cover&lang=Tunebo-Central&ver=tuf'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Tuyuca&ver=tue'>Tuyuca NT</a></td><td><a href='/?type=cover&lang=Tuyuca&ver=tue'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Woun-Meu&ver=noaE'>Woun Meu NT</a></td><td><a href='/?type=cover&lang=Woun-Meu&ver=noaE'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Woun-Meu&ver=noaH'>Woun Meu NT</a></td><td><a href='/?type=cover&lang=Woun-Meu&ver=noaH'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Yucuna&ver=ycn'>Yucuna NT</a></td><td><a href='/?type=cover&lang=Yucuna&ver=ycn'>Cover</a></td></tr>
+				<tr><td rowspan=1><img src='flags/cr.png'><br>Costa Rica</td><td><a href='/?type=text&lang=Bribri&ver=bzdNTpo'>Bribri Bible</a></td><td><a href='/?type=cover&lang=Bribri&ver=bzdNTpo'>Cover</a></td></tr>
+				<tr><td rowspan=7><img src='flags/ec.png'><br>Ecuador</td><td><a href='/?type=text&lang=Chachi&ver=cbiNTpo'>Chachi Bible</a></td><td><a href='/?type=cover&lang=Chachi&ver=cbiNTpo'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Cof_n&ver=conNTpo'>Cofán Bible</a></td><td><a href='/?type=cover&lang=Cof_n&ver=conNTpo'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Colorado&ver=cofNT'>Colorado NT</a></td><td><a href='/?type=cover&lang=Colorado&ver=cofNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Quichua-Northern-Pastaza&ver=qvzNT'>Northern Pastaza Quichua NT</a></td><td><a href='/?type=cover&lang=Quichua-Northern-Pastaza&ver=qvzNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Secoya&ver=seyNT'>Secoya NT</a></td><td><a href='/?type=cover&lang=Secoya&ver=seyNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Shuar&ver=jivNT'>New Testament in Shuar</a></td><td><a href='/?type=cover&lang=Shuar&ver=jivNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Waorani&ver=aucNT'>Waorani NT</a></td><td><a href='/?type=cover&lang=Waorani&ver=aucNT'>Cover</a></td></tr>
+				<tr><td rowspan=28><img src='flags/gt.png'><br>Guatemala</td><td><a href='/?type=text&lang=Achi&ver=acr-acc'>New Testament in Achi</a></td><td><a href='/?type=cover&lang=Achi&ver=acr-acc'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Achi&ver=acrNNT'>Achi Rabinal NT (new orthography)</a></td><td><a href='/?type=cover&lang=Achi&ver=acrNNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Achi&ver=acrTNT'>Achi Rabinal NT (traditional orthography)</a></td><td><a href='/?type=cover&lang=Achi&ver=acrTNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Aguacateco&ver=aguBl'>Aguacateco Bible</a></td><td><a href='/?type=cover&lang=Aguacateco&ver=aguBl'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Akateko&ver=knjNT'>Akateko NT</a></td><td><a href='/?type=cover&lang=Akateko&ver=knjNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Chorti&ver=caa'>Chorti Bible</a></td><td><a href='/?type=cover&lang=Chorti&ver=caa'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Chuj&ver=cac'>Chuj San Mateo Bible</a></td><td><a href='/?type=cover&lang=Chuj&ver=cac'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Ixil&ver=ixlCNT'>Ixil Cotzal NT</a></td><td><a href='/?type=cover&lang=Ixil&ver=ixlCNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Ixil&ver=ixlNNT'>Ixil Nebaj NT</a></td><td><a href='/?type=cover&lang=Ixil&ver=ixlNNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Jakalteko&ver=jacNT'>Eastern Jakalteko NT</a></td><td><a href='/?type=cover&lang=Jakalteko&ver=jacNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=K_iche_&ver=qucNNT'>K'iche' Cantel NT, new spelling</a></td><td><a href='/?type=cover&lang=K_iche_&ver=qucNNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=K_iche_&ver=qucTNT'>K'iche' Cantel NT, traditional spelling</a></td><td><a href='/?type=cover&lang=K_iche_&ver=qucTNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=K_iche_&ver=quctt'>K’iche’ of Totonicapan NT</a></td><td><a href='/?type=cover&lang=K_iche_&ver=quctt'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Kaqchikel&ver=cak'>Kaqchikel Chimaltenango NT</a></td><td><a href='/?type=cover&lang=Kaqchikel&ver=cak'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Kaqchikel&ver=cakCNT'>Kaqchikel NT</a></td><td><a href='/?type=cover&lang=Kaqchikel&ver=cakCNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Kaqchikel&ver=cakENT'>Eastern Kaqchikel NT</a></td><td><a href='/?type=cover&lang=Kaqchikel&ver=cakENT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Kaqchikel&ver=cakNT'>Kaqchikel Sur de Sacatepequez NT</a></td><td><a href='/?type=cover&lang=Kaqchikel&ver=cakNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Kaqchikel&ver=cakSNT'>Santa Maria de Jesus Kaqchikel NT</a></td><td><a href='/?type=cover&lang=Kaqchikel&ver=cakSNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Kaqchikel&ver=cakWNT'>Western Solola Kaqchikel NT</a></td><td><a href='/?type=cover&lang=Kaqchikel&ver=cakWNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Kaqchikel&ver=cakYNT'>SW Yepocapa and Acatenango Kaqchikel NT</a></td><td><a href='/?type=cover&lang=Kaqchikel&ver=cakYNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Mam&ver=mamC'>Mam Comitancillo NT</a></td><td><a href='/?type=cover&lang=Mam&ver=mamC'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Mam&ver=mamNT'>Mam Todos Santos NT</a></td><td><a href='/?type=cover&lang=Mam&ver=mamNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Poqomchi_&ver=pohNT'>Poqomchi' Occidental NT</a></td><td><a href='/?type=cover&lang=Poqomchi_&ver=pohNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Q_eqchi_&ver=kekNT'>Q'eqchi' Bible</a></td><td><a href='/?type=cover&lang=Q_eqchi_&ver=kekNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Tektiteko&ver=ttcNT'>Tektiteko NT</a></td><td><a href='/?type=cover&lang=Tektiteko&ver=ttcNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Tz_utujil&ver=tzjE'>Eastern Tz'utujil NT</a></td><td><a href='/?type=cover&lang=Tz_utujil&ver=tzjE'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Tz_utujil&ver=tzjNT'>Western Tz'utujil NT</a></td><td><a href='/?type=cover&lang=Tz_utujil&ver=tzjNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Uspanteko&ver=uspNT'>Uspanteko NT</a></td><td><a href='/?type=cover&lang=Uspanteko&ver=uspNT'>Cover</a></td></tr>
+				<tr><td rowspan=1><img src='flags/gy.png'><br>Guyana</td><td><a href='/?type=text&lang=Wapishana&ver=wapNT'>Wapishana NT</a></td><td><a href='/?type=cover&lang=Wapishana&ver=wapNT'>Cover</a></td></tr>
+				<tr><td rowspan=2><img src='flags/ht.png'><br>Haiti</td><td><a href='/?type=text&lang=Haitian&ver=hat'>Haitian Creole Bible 1985</a></td><td><a href='/?type=cover&lang=Haitian&ver=hat'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Haitian&ver=hatbsa'>Haitian Creole Bible 2023</a></td><td><a href='/?type=cover&lang=Haitian&ver=hatbsa'>Cover</a></td></tr>
+				<tr><td rowspan=2><img src='flags/hn.png'><br>Honduras</td><td><a href='/?type=text&lang=Garifuna&ver=cabNT'>Suau Bible</a></td><td><a href='/?type=cover&lang=Garifuna&ver=cabNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Tol&ver=jicNT'>Tol NT</a></td><td><a href='/?type=cover&lang=Tol&ver=jicNT'>Cover</a></td></tr>
+				<tr><td rowspan=119><img src='flags/mx.png'><br>Mexico</td><td><a href='/?type=text&lang=Amuzgo-Guerrero&ver=amuNT'>New Testament in Amuzgo, Guerrero (MX:amu:Amuzgo, Guerrero)</a></td><td><a href='/?type=cover&lang=Amuzgo-Guerrero&ver=amuNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Amuzgo-San-Pedro-Amuzgos&ver=azgNT'>San Pedro Amuzgos NT</a></td><td><a href='/?type=cover&lang=Amuzgo-San-Pedro-Amuzgos&ver=azgNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Chatino-Nopala&ver=cya'>Nopala Chatino NT</a></td><td><a href='/?type=cover&lang=Chatino-Nopala&ver=cya'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Chatino-Tataltepec&ver=ctaNT'>Tataltepec Chatino NT</a></td><td><a href='/?type=cover&lang=Chatino-Tataltepec&ver=ctaNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Chatino-Western-Highland&ver=ctpNT'>Western Highland Chatino NT</a></td><td><a href='/?type=cover&lang=Chatino-Western-Highland&ver=ctpNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Chinantec-Comaltepec&ver=ccoNT'>Comaltepec Chinantec NT</a></td><td><a href='/?type=cover&lang=Chinantec-Comaltepec&ver=ccoNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Chinantec-Lalana&ver=cnlNT'>Lalana Chinantec NT</a></td><td><a href='/?type=cover&lang=Chinantec-Lalana&ver=cnlNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Chinantec-Lealao&ver=cleNT'>Lealao Chinantec NT</a></td><td><a href='/?type=cover&lang=Chinantec-Lealao&ver=cleNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Chinantec-Ozumac_n&ver=chzNTps'>Ozumacín Chinantec NT</a></td><td><a href='/?type=cover&lang=Chinantec-Ozumac_n&ver=chzNTps'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Chinantec-Palantla&ver=cpaNT'>Palantla Chinantec NT</a></td><td><a href='/?type=cover&lang=Chinantec-Palantla&ver=cpaNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Chinantec-Quiotepec&ver=chqNT'>Quiotepec Chinantec NT</a></td><td><a href='/?type=cover&lang=Chinantec-Quiotepec&ver=chqNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Chinantec-Sochiapam&ver=csoNT'>Sochiapam Chinantec NT</a></td><td><a href='/?type=cover&lang=Chinantec-Sochiapam&ver=csoNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Chinantec-Tepetotutla&ver=cntNT'>Tepetotutla Chinantec NT</a></td><td><a href='/?type=cover&lang=Chinantec-Tepetotutla&ver=cntNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Chinantec-Usila&ver=cucNT'>Usila Chinantec NT</a></td><td><a href='/?type=cover&lang=Chinantec-Usila&ver=cucNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Chol&ver=ctu76'>Chol NT</a></td><td><a href='/?type=cover&lang=Chol&ver=ctu76'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Chol&ver=ctuBl'>Chol Tumbala Bible</a></td><td><a href='/?type=cover&lang=Chol&ver=ctuBl'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Chol&ver=ctucti'>Chol de Tila Bible</a></td><td><a href='/?type=cover&lang=Chol&ver=ctucti'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Chontal-Highland-Oaxaca&ver=chdNT'>Highland Oaxaca Chontal NT</a></td><td><a href='/?type=cover&lang=Chontal-Highland-Oaxaca&ver=chdNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Chontal-Tabasco&ver=chfNT'>Tabasco Chontal NT</a></td><td><a href='/?type=cover&lang=Chontal-Tabasco&ver=chfNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Cora-El-Nayar&ver=crnNT'>El Nayar Presidio De Los Reyes Cora NT</a></td><td><a href='/?type=cover&lang=Cora-El-Nayar&ver=crnNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Cuicatec-Tepeuxila&ver=cuxNT'>Tepeuxila Cuicatec NT</a></td><td><a href='/?type=cover&lang=Cuicatec-Tepeuxila&ver=cuxNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Cuicatec-Teutila&ver=cutNT'>Teutila NT</a></td><td><a href='/?type=cover&lang=Cuicatec-Teutila&ver=cutNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Huastec&ver=husNT1971'>Huastec San Luis Potosi NT</a></td><td><a href='/?type=cover&lang=Huastec&ver=husNT1971'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Huastec&ver=husNT2005'>Huastec Aquiche NT</a></td><td><a href='/?type=cover&lang=Huastec&ver=husNT2005'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Huave-San-Mateo-Del-Mar&ver=huvNT'>San Mateo Del Mar Huave NT</a></td><td><a href='/?type=cover&lang=Huave-San-Mateo-Del-Mar&ver=huvNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Huichol&ver=hchNT'>Huichol NT</a></td><td><a href='/?type=cover&lang=Huichol&ver=hchNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Lacandon&ver=lacNT'>Lacandon NT</a></td><td><a href='/?type=cover&lang=Lacandon&ver=lacNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Mazahua-Central&ver=mazNT'>Central Mazahua NT</a></td><td><a href='/?type=cover&lang=Mazahua-Central&ver=mazNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Mazatec-Chiquihuitl_n&ver=maqNT'>Chiquihuitlán Mazatec NT</a></td><td><a href='/?type=cover&lang=Mazatec-Chiquihuitl_n&ver=maqNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Mazatec-Huautla&ver=mauNT'>Huautla Mazatec NT</a></td><td><a href='/?type=cover&lang=Mazatec-Huautla&ver=mauNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Mazatec-Jalapa-de-D_az&ver=majNT'>Jalapa de Díaz Mazatec NT</a></td><td><a href='/?type=cover&lang=Mazatec-Jalapa-de-D_az&ver=majNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Mazatec-San-Jer_nimo-Tec_atl&ver=maaNT'>San Jerónimo Tecóatl Mazatec NT</a></td><td><a href='/?type=cover&lang=Mazatec-San-Jer_nimo-Tec_atl&ver=maaNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Mazateco-Ayautla&ver=vmyNT'>NT in Ayautla Mazateco</a></td><td><a href='/?type=cover&lang=Mazateco-Ayautla&ver=vmyNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Mixe-Coatl_n&ver=mcoNT'>Coatlán Mixe NT</a></td><td><a href='/?type=cover&lang=Mixe-Coatl_n&ver=mcoNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Mixe-Isthmus&ver=mirNT'>Isthmus Mixe NT</a></td><td><a href='/?type=cover&lang=Mixe-Isthmus&ver=mirNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Mixe-Juquila&ver=mxqNT'>Juquila Mixe NT</a></td><td><a href='/?type=cover&lang=Mixe-Juquila&ver=mxqNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Mixe-Tlahuitoltepec&ver=mxpNT'>Tlahuitoltepec Mixe NT</a></td><td><a href='/?type=cover&lang=Mixe-Tlahuitoltepec&ver=mxpNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Mixe-Totontepec&ver=mtoNT'>Totontepec Mixe NT</a></td><td><a href='/?type=cover&lang=Mixe-Totontepec&ver=mtoNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Mixtec-Atatl_huca&ver=mibNT'>Atatláhuca Mixtec</a></td><td><a href='/?type=cover&lang=Mixtec-Atatl_huca&ver=mibNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Mixtec-Chayuco&ver=mihNT'>Chayuco Mixtec NT</a></td><td><a href='/?type=cover&lang=Mixtec-Chayuco&ver=mihNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Mixtec-Coatzospan&ver=mizNT'>Coatzospan Mixtec NT</a></td><td><a href='/?type=cover&lang=Mixtec-Coatzospan&ver=mizNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Mixtec-Diuxi-tilantongo&ver=xtdNT'>Diuxi-tilantongo Mixtec NT</a></td><td><a href='/?type=cover&lang=Mixtec-Diuxi-tilantongo&ver=xtdNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Mixtec-Jamiltepec&ver=mxtNT'>Jamiltepec Mixtec NT</a></td><td><a href='/?type=cover&lang=Mixtec-Jamiltepec&ver=mxtNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Mixtec-Magdalena-Pe_asco&ver=xtmNTpp'>Magdalena Peñasco Mixtec Bible</a></td><td><a href='/?type=cover&lang=Mixtec-Magdalena-Pe_asco&ver=xtmNTpp'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Mixtec-Ocotepec&ver=mieNT'>Ocotepec Mixtec</a></td><td><a href='/?type=cover&lang=Mixtec-Ocotepec&ver=mieNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Mixtec-Pe_oles&ver=milNT'>Peñoles Mixtec NT</a></td><td><a href='/?type=cover&lang=Mixtec-Pe_oles&ver=milNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Mixtec-Pinotepa-Nacional&ver=mioNT'>Pinotepa Nacional Mixtec NT</a></td><td><a href='/?type=cover&lang=Mixtec-Pinotepa-Nacional&ver=mioNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Mixtec-San-Juan-Colorado&ver=mjcNT'>San Juan Colorado Mixtec NT</a></td><td><a href='/?type=cover&lang=Mixtec-San-Juan-Colorado&ver=mjcNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Mixtec-San-Miguel-el-Grande&ver=migNT'>San Miguel el Grande Mixtec NT</a></td><td><a href='/?type=cover&lang=Mixtec-San-Miguel-el-Grande&ver=migNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Mixtec-Silacayoapan&ver=mksNT'>Silacayoapan Mixtec NT</a></td><td><a href='/?type=cover&lang=Mixtec-Silacayoapan&ver=mksNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Mixtec-Southern-Puebla&ver=mitNT'>New Testament in Mixtec, Southern Puebla (MX:mit:Mixtec, Southern Puebla)</a></td><td><a href='/?type=cover&lang=Mixtec-Southern-Puebla&ver=mitNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Mixtec-Tezoatl_n&ver=mxbNT'>Tezoatlán Mixtec NT</a></td><td><a href='/?type=cover&lang=Mixtec-Tezoatl_n&ver=mxbNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Mixtec-Yosond_a&ver=mpmNT'>Yosondúa Mixtec NT</a></td><td><a href='/?type=cover&lang=Mixtec-Yosond_a&ver=mpmNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Nahuatl-Guerrero&ver=nguNT'>Guerrero Nahuatl NT</a></td><td><a href='/?type=cover&lang=Nahuatl-Guerrero&ver=nguNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Nahuatl-Highland-Puebla&ver=azzNT'>Highland Puebla Nahuatl NT</a></td><td><a href='/?type=cover&lang=Nahuatl-Highland-Puebla&ver=azzNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Nahuatl-Huasteca-Central&ver=nchBl'>Huasteca Central Nahuatl Bible</a></td><td><a href='/?type=cover&lang=Nahuatl-Huasteca-Central&ver=nchBl'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Nahuatl-Huasteca-Occidental&ver=nhwBl'>Huasteca Occidental Nahuatl Bible</a></td><td><a href='/?type=cover&lang=Nahuatl-Huasteca-Occidental&ver=nhwBl'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Nahuatl-Huasteca-Oriental&ver=nheBl'>Huasteca Oriental Nahuatl Bible 2005</a></td><td><a href='/?type=cover&lang=Nahuatl-Huasteca-Oriental&ver=nheBl'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Nahuatl-Huasteca-Oriental&ver=nheNT'>Huasteca Oriental Nahuatl NT 2009</a></td><td><a href='/?type=cover&lang=Nahuatl-Huasteca-Oriental&ver=nheNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Nahuatl-Michoac_n&ver=nclNT'>Michoacán Nahuatl NT</a></td><td><a href='/?type=cover&lang=Nahuatl-Michoac_n&ver=nclNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Nahuatl-Northern-Oaxaca&ver=nhyNT'>Northern Oaxaca Nahuatl NT</a></td><td><a href='/?type=cover&lang=Nahuatl-Northern-Oaxaca&ver=nhyNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Nahuatl-Northern-Puebla&ver=ncjNT'>Northern Puebla Nahuatl NT</a></td><td><a href='/?type=cover&lang=Nahuatl-Northern-Puebla&ver=ncjNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Nahuatl-Southeastern-Puebla&ver=nplNT'>Southeastern Puebla Nahuatl NT</a></td><td><a href='/?type=cover&lang=Nahuatl-Southeastern-Puebla&ver=nplNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Nahuatl-Tetelcingo&ver=nhgNT'>Tetelcingo Nahuatl NT</a></td><td><a href='/?type=cover&lang=Nahuatl-Tetelcingo&ver=nhgNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Nahuatl-Zacatl_n-Ahuacatl_n-Tepetzintla&ver=nhiNT'>Zacatlán-Ahuacatlán-Tepetzintla Nahuatl NT</a></td><td><a href='/?type=cover&lang=Nahuatl-Zacatl_n-Ahuacatl_n-Tepetzintla&ver=nhiNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Otomi-Eastern-Highland&ver=otmNT'>Eastern Highland Otomi NT</a></td><td><a href='/?type=cover&lang=Otomi-Eastern-Highland&ver=otmNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Otomi-Estado-de-M_xico&ver=otsNT'>Estado de México Otomi NT</a></td><td><a href='/?type=cover&lang=Otomi-Estado-de-M_xico&ver=otsNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Otomi-Mezquital&ver=oteNT'>Mezquital Otomi NT</a></td><td><a href='/?type=cover&lang=Otomi-Mezquital&ver=oteNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Otomi-Quer_taro&ver=otqNT'>Querétaro Otomi NT</a></td><td><a href='/?type=cover&lang=Otomi-Quer_taro&ver=otqNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Otomi-Tenango&ver=otnNT'>Tenango Otomi NT</a></td><td><a href='/?type=cover&lang=Otomi-Tenango&ver=otnNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Popoloca-San-Juan-Atzingo&ver=poeNT'>San Juan Atzingo Popoloca NT</a></td><td><a href='/?type=cover&lang=Popoloca-San-Juan-Atzingo&ver=poeNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Popoloca-San-Marcos-Tlalcoyalco&ver=plsNT'>San Marcos Tlalcoyalco Popoloca NT</a></td><td><a href='/?type=cover&lang=Popoloca-San-Marcos-Tlalcoyalco&ver=plsNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Popoluca-Highland&ver=poiNT'>Highland Popoluca NT</a></td><td><a href='/?type=cover&lang=Popoluca-Highland&ver=poiNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Spanish&ver=spabes'>La Biblia en Español Sencillo</a></td><td><a href='/?type=cover&lang=Spanish&ver=spabes'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Spanish&ver=spapddpt'>Spanish Bible (God's Word for You)</a></td><td><a href='/?type=cover&lang=Spanish&ver=spapddpt'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Tarahumara-Western&ver=tacNT'>Western Tarahumara NT</a></td><td><a href='/?type=cover&lang=Tarahumara-Western&ver=tacNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Tepehua-Huehuetla&ver=teeNT'>Huehuetla Tepehua NT</a></td><td><a href='/?type=cover&lang=Tepehua-Huehuetla&ver=teeNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Tepehua-Tlachichilco&ver=tptNT'>Tlachichilco Tepehua NT</a></td><td><a href='/?type=cover&lang=Tepehua-Tlachichilco&ver=tptNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Tepehuan-Northern&ver=ntpNT'>Northern Tepehuan NT</a></td><td><a href='/?type=cover&lang=Tepehuan-Northern&ver=ntpNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Tepehuan-Southeastern&ver=stpNT'>Southeastern Tepehuan NT</a></td><td><a href='/?type=cover&lang=Tepehuan-Southeastern&ver=stpNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Tojolabal&ver=tojNT'>Tojolabal NT</a></td><td><a href='/?type=cover&lang=Tojolabal&ver=tojNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Totonac-Coyutla&ver=tocNT'>Coyutla Totonac NT</a></td><td><a href='/?type=cover&lang=Totonac-Coyutla&ver=tocNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Totonac-Highland&ver=tosNT'>Highland Totonac NT</a></td><td><a href='/?type=cover&lang=Totonac-Highland&ver=tosNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Totonac-Papantla&ver=topNT'>Papantla Totonac NT</a></td><td><a href='/?type=cover&lang=Totonac-Papantla&ver=topNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Totonac-Upper-Necaxa&ver=tkuNT'>Upper Necaxa Totonac</a></td><td><a href='/?type=cover&lang=Totonac-Upper-Necaxa&ver=tkuNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Totonac-Xicotepec-De-Ju_rez&ver=tooNT'>Xicotepec De Juárez Totonac NT</a></td><td><a href='/?type=cover&lang=Totonac-Xicotepec-De-Ju_rez&ver=tooNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Triqui-Copala&ver=trcNT'>Copala Triqui NT</a></td><td><a href='/?type=cover&lang=Triqui-Copala&ver=trcNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Tzotzil&ver=tzoNT'>Tzotzil Huixtan NT</a></td><td><a href='/?type=cover&lang=Tzotzil&ver=tzoNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Tzotzil&ver=tzoSA'>Tzotzil San Andres NT</a></td><td><a href='/?type=cover&lang=Tzotzil&ver=tzoSA'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Tzotzil&ver=tzotzc'>Tzotzil de Chamula NT</a></td><td><a href='/?type=cover&lang=Tzotzil&ver=tzotzc'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Tzotzil&ver=tzotze'>Tzotzil de Chenalhó NT</a></td><td><a href='/?type=cover&lang=Tzotzil&ver=tzotze'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Tzotzil&ver=tzoZNT'>Tzotzil Zinacantan NT</a></td><td><a href='/?type=cover&lang=Tzotzil&ver=tzoZNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Yaqui&ver=yaqNT'>Yaqui NT</a></td><td><a href='/?type=cover&lang=Yaqui&ver=yaqNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Zapotec-Amatl_n&ver=zpoNT'>Amatlán Zapotec NT</a></td><td><a href='/?type=cover&lang=Zapotec-Amatl_n&ver=zpoNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Zapotec-Cajonos&ver=zadNT'>Cajonos Zapotec NT</a></td><td><a href='/?type=cover&lang=Zapotec-Cajonos&ver=zadNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Zapotec-Chichicapan&ver=zpvNT'>Chichicapan Zapotec NT</a></td><td><a href='/?type=cover&lang=Zapotec-Chichicapan&ver=zpvNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Zapotec-Choapan&ver=zpcNT'>Choapan Zapotec NT</a></td><td><a href='/?type=cover&lang=Zapotec-Choapan&ver=zpcNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Zapotec-Coatecas-Altas&ver=zcaNT'>Coatecas Altas Zapotec</a></td><td><a href='/?type=cover&lang=Zapotec-Coatecas-Altas&ver=zcaNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Zapotec-Isthmus&ver=zaiNT'>Isthmus Zapotec NT</a></td><td><a href='/?type=cover&lang=Zapotec-Isthmus&ver=zaiNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Zapotec-Lachix_o&ver=zplNT'>Lachixío Zapotec NT</a></td><td><a href='/?type=cover&lang=Zapotec-Lachix_o&ver=zplNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Zapotec-Miahuatl_n&ver=zamNT'>Miahuatlán Zapotec NT</a></td><td><a href='/?type=cover&lang=Zapotec-Miahuatl_n&ver=zamNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Zapotec-Mitla&ver=zawNT'>Mitla Zapotec NT</a></td><td><a href='/?type=cover&lang=Zapotec-Mitla&ver=zawNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Zapotec-Mixtepec&ver=zpmNT'>Mixtepec Zapotec NT</a></td><td><a href='/?type=cover&lang=Zapotec-Mixtepec&ver=zpmNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Zapotec-Ocotl_n&ver=zacNT'>Ocotlán Zapotec</a></td><td><a href='/?type=cover&lang=Zapotec-Ocotl_n&ver=zacNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Zapotec-Ozolotepec&ver=zaoNT'>Ozolotepec Zapotec NT</a></td><td><a href='/?type=cover&lang=Zapotec-Ozolotepec&ver=zaoNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Zapotec-Quioquitani-Quier_&ver=ztqNT'>Quioquitani-Quierí Zapotec NT</a></td><td><a href='/?type=cover&lang=Zapotec-Quioquitani-Quier_&ver=ztqNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Zapotec-Rinc_n&ver=zarNT'>Rincón Zapotec NT</a></td><td><a href='/?type=cover&lang=Zapotec-Rinc_n&ver=zarNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Zapotec-San-Juan-Guelav_a&ver=zabNT'>San Juan Guelavía Zapotec</a></td><td><a href='/?type=cover&lang=Zapotec-San-Juan-Guelav_a&ver=zabNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Zapotec-Santa-Mar_a-Quiegolani&ver=zapNT'>Santa María Quiegolani Zapotec NT</a></td><td><a href='/?type=cover&lang=Zapotec-Santa-Mar_a-Quiegolani&ver=zapNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Zapotec-Santo-Domingo-Albarradas&ver=zasNT'>Santo Domingo Albarradas Zapotec NT</a></td><td><a href='/?type=cover&lang=Zapotec-Santo-Domingo-Albarradas&ver=zasNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Zapotec-Sierra-de-Ju_rez&ver=zaaNT'>Sierra de Juárez Zapotec NT</a></td><td><a href='/?type=cover&lang=Zapotec-Sierra-de-Ju_rez&ver=zaaNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Zapotec-Southern-Rincon&ver=zsrNT'>Southern Rincon Zapotec NT</a></td><td><a href='/?type=cover&lang=Zapotec-Southern-Rincon&ver=zsrNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Zapotec-Tabaa&ver=zatNTps'>Tabaa Zapotec NT & Psalms</a></td><td><a href='/?type=cover&lang=Zapotec-Tabaa&ver=zatNTps'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Zapotec-Texmelucan&ver=zpzNTpp'>Texmelucan Zapotec Bible</a></td><td><a href='/?type=cover&lang=Zapotec-Texmelucan&ver=zpzNTpp'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Zapotec-Yal_lag&ver=zpuNT'>Yalálag Zapotec NT</a></td><td><a href='/?type=cover&lang=Zapotec-Yal_lag&ver=zpuNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Zapotec-Yatee&ver=ztyNTps'>Yatee Zapotec NT & Psalms</a></td><td><a href='/?type=cover&lang=Zapotec-Yatee&ver=ztyNTps'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Zapotec-Yatzachi&ver=zavNT'>Yatzachi Zapotec NT</a></td><td><a href='/?type=cover&lang=Zapotec-Yatzachi&ver=zavNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Zapotec-Zoogocho&ver=zpqNT'>Zoogocho Zapotec NT</a></td><td><a href='/?type=cover&lang=Zapotec-Zoogocho&ver=zpqNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Zoque-Francisco-Le_n&ver=zosNT'>Francisco León Zoque NT</a></td><td><a href='/?type=cover&lang=Zoque-Francisco-Le_n&ver=zosNT'>Cover</a></td></tr>
+				<tr><td rowspan=7><img src='flags/pm.png'><br>Panama</td><td><a href='/?type=text&lang=Buglere&ver=sabNT'>Buglere NT</a></td><td><a href='/?type=cover&lang=Buglere&ver=sabNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Ember_-Northern&ver=empNTpo'>Northern Emberá NT</a></td><td><a href='/?type=cover&lang=Ember_-Northern&ver=empNTpo'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Kuna-Border&ver=kvnNT'>Border Kuna NT</a></td><td><a href='/?type=cover&lang=Kuna-Border&ver=kvnNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Kuna-San-Blas&ver=cuk09'>San Blas Kuna NT 2009</a></td><td><a href='/?type=cover&lang=Kuna-San-Blas&ver=cuk09'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Ng_bere&ver=gymNT'>Ngäbere NT</a></td><td><a href='/?type=cover&lang=Ng_bere&ver=gymNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=San-Blas-Kuna&ver=cuk'>San Blas Kuna Bible</a></td><td><a href='/?type=cover&lang=San-Blas-Kuna&ver=cuk'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Teribe&ver=tfrNTpo'>Teribe Bible</a></td><td><a href='/?type=cover&lang=Teribe&ver=tfrNTpo'>Cover</a></td></tr>
+				<tr><td rowspan=1><img src='flags/py.png'><br>Paraguay</td><td><a href='/?type=text&lang=Maka&ver=mca'>Maka NT</a></td><td><a href='/?type=cover&lang=Maka&ver=mca'>Cover</a></td></tr>
+				<tr><td rowspan=44><img src='flags/pe.png'><br>Peru</td><td><a href='/?type=text&lang=Achuar-shiwiar&ver=acuNT'>Achuar-shiwiar Bible</a></td><td><a href='/?type=cover&lang=Achuar-shiwiar&ver=acuNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Aguaruna&ver=agr'>Aguaruna Bible</a></td><td><a href='/?type=cover&lang=Aguaruna&ver=agr'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Ajy_ninka-Apurucayali&ver=cpcNT'>Ajyíninka Apurucayali NT</a></td><td><a href='/?type=cover&lang=Ajy_ninka-Apurucayali&ver=cpcNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Amarakaeri&ver=amrNT'>New Testament in Amarakaeri (PE:amr:Amarakaeri)</a></td><td><a href='/?type=cover&lang=Amarakaeri&ver=amrNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Arabela&ver=arlNT'>Arabela NT</a></td><td><a href='/?type=cover&lang=Arabela&ver=arlNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Ash_ninka&ver=cniNT'>Asháninka NT</a></td><td><a href='/?type=cover&lang=Ash_ninka&ver=cniNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Ash_ninka-Pajonal&ver=cjoNT'>Ashéninka Pajonal NT</a></td><td><a href='/?type=cover&lang=Ash_ninka-Pajonal&ver=cjoNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Ash_ninka-Pichis&ver=cpuNT'>Pichis Ashéninka NT</a></td><td><a href='/?type=cover&lang=Ash_ninka-Pichis&ver=cpuNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Ash_ninka-South-Ucayali&ver=cpy'>South Ucayali Ashéninka Bible</a></td><td><a href='/?type=cover&lang=Ash_ninka-South-Ucayali&ver=cpy'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Ash_ninka-Ucayali-yur_a&ver=cpbNT'>Ucayali-yurúa Ashéninka NT</a></td><td><a href='/?type=cover&lang=Ash_ninka-Ucayali-yur_a&ver=cpbNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Bora&ver=boaNT'>Bora NT</a></td><td><a href='/?type=cover&lang=Bora&ver=boaNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Candoshi-Shapra&ver=cbuNT'>Candoshi-Shapra NT</a></td><td><a href='/?type=cover&lang=Candoshi-Shapra&ver=cbuNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Capanahua&ver=kaqNT'>Capanahua NT</a></td><td><a href='/?type=cover&lang=Capanahua&ver=kaqNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Caquinte&ver=cotNT'>New Testament in Caquinte (PE:cot:Caquinte)</a></td><td><a href='/?type=cover&lang=Caquinte&ver=cotNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Cashibo-Cacataibo&ver=cbrNT'>Cashibo-Cacataibo NT</a></td><td><a href='/?type=cover&lang=Cashibo-Cacataibo&ver=cbrNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Chayahuita&ver=cbtNTpo'>Chayahuita NT</a></td><td><a href='/?type=cover&lang=Chayahuita&ver=cbtNTpo'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Huambisa&ver=hubNT'>Huambisa NT</a></td><td><a href='/?type=cover&lang=Huambisa&ver=hubNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Huitoto-Murui&ver=huuNT'>Murui Huitoto</a></td><td><a href='/?type=cover&lang=Huitoto-Murui&ver=huuNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Kashinawa&ver=cbsNT'>Kashinawa NT</a></td><td><a href='/?type=cover&lang=Kashinawa&ver=cbsNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Machiguenga&ver=mcbNT'>Machiguenga NT</a></td><td><a href='/?type=cover&lang=Machiguenga&ver=mcbNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Mats_s&ver=mcfNT'>Matsés NT</a></td><td><a href='/?type=cover&lang=Mats_s&ver=mcfNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Nomatsiguenga&ver=notNT'>Nomatsiguenga NT</a></td><td><a href='/?type=cover&lang=Nomatsiguenga&ver=notNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Quechua-Cajamarca&ver=qvcNT'>Cajamarca Quechua NT</a></td><td><a href='/?type=cover&lang=Quechua-Cajamarca&ver=qvcNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Quechua-Eastern-Apur_mac&ver=qveNT'>Eastern Apurímac Quechua NT</a></td><td><a href='/?type=cover&lang=Quechua-Eastern-Apur_mac&ver=qveNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Quechua-Huallaga-Hu_nuco&ver=qub'>Huallaga Huánuco Quechua NT</a></td><td><a href='/?type=cover&lang=Quechua-Huallaga-Hu_nuco&ver=qub'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Quechua-Huamal_es-Dos-de-Mayo-Hu_nuco&ver=qvhNT'>Huamalíes-Dos de Mayo Huánuco Quechua NT</a></td><td><a href='/?type=cover&lang=Quechua-Huamal_es-Dos-de-Mayo-Hu_nuco&ver=qvhNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Quechua-Huaylas-Ancash&ver=qwhNT'>Huaylas Ancash Quechua NT</a></td><td><a href='/?type=cover&lang=Quechua-Huaylas-Ancash&ver=qwhNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Quechua-Huaylla-Wanca&ver=qvwNT'>Huaylla Wanca Quechua NT</a></td><td><a href='/?type=cover&lang=Quechua-Huaylla-Wanca&ver=qvwNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Quechua-Lambayeque&ver=qufNT'>Lambayeque Quechua NT</a></td><td><a href='/?type=cover&lang=Quechua-Lambayeque&ver=qufNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Quechua-Margos-Yarowilca-Lauricocha&ver=qvmNT'>Margos-Yarowilca-Lauricocha Quechua NT</a></td><td><a href='/?type=cover&lang=Quechua-Margos-Yarowilca-Lauricocha&ver=qvmNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Quechua-North-Jun_n&ver=qvnNT'>North Junín Quechua NT</a></td><td><a href='/?type=cover&lang=Quechua-North-Jun_n&ver=qvnNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Quechua-Northern-Conchucos-Ancash&ver=qxnNT'>Northern Conchucos Ancash Quechua NT</a></td><td><a href='/?type=cover&lang=Quechua-Northern-Conchucos-Ancash&ver=qxnNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Quechua-Panao-Hu_nuco&ver=qxhNT'>Panao Huánuco Quechua NT</a></td><td><a href='/?type=cover&lang=Quechua-Panao-Hu_nuco&ver=qxhNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Quechua-San-Mart_n&ver=qvsNT'>San Martín Quechua NT</a></td><td><a href='/?type=cover&lang=Quechua-San-Mart_n&ver=qvsNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Quechua-Southern-Conchucos-Ancash&ver=qxoNT'>Southern Conchucos Ancash Quechua NT</a></td><td><a href='/?type=cover&lang=Quechua-Southern-Conchucos-Ancash&ver=qxoNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Quechua-Southern-Pastaza&ver=qupNT'>Southern Pastaza Quechua NT</a></td><td><a href='/?type=cover&lang=Quechua-Southern-Pastaza&ver=qupNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Sharanahua&ver=mcdNT'>Sharanahua NT</a></td><td><a href='/?type=cover&lang=Sharanahua&ver=mcdNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Shipibo-Conibo&ver=shpNTpo'>Shipibo-Conibo Bible</a></td><td><a href='/?type=cover&lang=Shipibo-Conibo&ver=shpNTpo'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Ticuna&ver=tcaNT'>Ticuna NT</a></td><td><a href='/?type=cover&lang=Ticuna&ver=tcaNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Urarina&ver=uraNT'>Urarina NT</a></td><td><a href='/?type=cover&lang=Urarina&ver=uraNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Yagua&ver=yadNT'>Yagua NT</a></td><td><a href='/?type=cover&lang=Yagua&ver=yadNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Yaminahua&ver=yaaNT'>Yaminahua NT</a></td><td><a href='/?type=cover&lang=Yaminahua&ver=yaaNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Yanesha_&ver=ameNT'>Yanesha' NT</a></td><td><a href='/?type=cover&lang=Yanesha_&ver=ameNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Yine&ver=pibNT'>Yine NT</a></td><td><a href='/?type=cover&lang=Yine&ver=pibNT'>Cover</a></td></tr>
+				<tr><td rowspan=1><img src='flags/st.png'><br>Saint Lucia</td><td><a href='/?type=text&lang=Saint-Lucian-Creole-French&ver=acfNT'>Saint Lucian Creole French NT</a></td><td><a href='/?type=cover&lang=Saint-Lucian-Creole-French&ver=acfNT'>Cover</a></td></tr>
+				<tr><td rowspan=6><img src='flags/sr.png'><br>Suriname</td><td><a href='/?type=text&lang=Carib&ver=carNT'>Carib NT</a></td><td><a href='/?type=cover&lang=Carib&ver=carNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Eastern-Maroon-Creole&ver=djkNT'>Eastern Maroon Creole NT</a></td><td><a href='/?type=cover&lang=Eastern-Maroon-Creole&ver=djkNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Hindustani-Caribbean&ver=hnsNT'>Caribbean Hindustani NT</a></td><td><a href='/?type=cover&lang=Hindustani-Caribbean&ver=hnsNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Javanese-Caribbean&ver=jvnNT'>Caribbean Javanese NT</a></td><td><a href='/?type=cover&lang=Javanese-Caribbean&ver=jvnNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Saramaccan&ver=srmNT'>Saramaccan NT</a></td><td><a href='/?type=cover&lang=Saramaccan&ver=srmNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Sranan&ver=srnNT'>Sranan NT</a></td><td><a href='/?type=cover&lang=Sranan&ver=srnNT'>Cover</a></td></tr>
+				<tr><td rowspan=32><img src='flags/us.png'><br>United States</td><td><a href='/?type=text&lang=Apache-Western&ver=apwNT'>Western Apache NT</a></td><td><a href='/?type=cover&lang=Apache-Western&ver=apwNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Arapaho&ver=arp'>Arapaho Luke</a></td><td><a href='/?type=cover&lang=Arapaho&ver=arp'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=English&ver=eng-asv'>American Standard Version (1901)</a></td><td><a href='/?type=cover&lang=English&ver=eng-asv'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=English&ver=eng-glw'>God's Living Word</a></td><td><a href='/?type=cover&lang=English&ver=eng-glw'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=English&ver=eng-lxx2012'>LXX2012 U. S. English</a></td><td><a href='/?type=cover&lang=English&ver=eng-lxx2012'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=English&ver=eng-t4t'>Translation for Translators</a></td><td><a href='/?type=cover&lang=English&ver=eng-t4t'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=English&ver=eng-web'>World English Bible with Deuterocanon</a></td><td><a href='/?type=cover&lang=English&ver=eng-web'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=English&ver=eng-web-c'>World English Bible (Catholic)</a></td><td><a href='/?type=cover&lang=English&ver=eng-web-c'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=English&ver=engasvbt'>ASV Byzantine Text</a></td><td><a href='/?type=cover&lang=English&ver=engasvbt'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=English&ver=engbsb'>English Berean Standard Bible</a></td><td><a href='/?type=cover&lang=English&ver=engbsb'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=English&ver=engf35'>Family 35 NT</a></td><td><a href='/?type=cover&lang=English&ver=engf35'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=English&ver=engfbv'>Free Bible Version</a></td><td><a href='/?type=cover&lang=English&ver=engfbv'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=English&ver=engjps'>JPS TaNaKH 1917</a></td><td><a href='/?type=cover&lang=English&ver=engjps'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=English&ver=englsv'>English LSV</a></td><td><a href='/?type=cover&lang=English&ver=englsv'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=English&ver=englxxup'>Updated Brenton English Septuagint</a></td><td><a href='/?type=cover&lang=English&ver=englxxup'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=English&ver=engnet'>NET Bible</a></td><td><a href='/?type=cover&lang=English&ver=engnet'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=English&ver=engoebus'>Open English Bible (US)</a></td><td><a href='/?type=cover&lang=English&ver=engoebus'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=English&ver=engourb'>One Unity Resource Bible</a></td><td><a href='/?type=cover&lang=English&ver=engourb'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=English&ver=engtcent'>Text-Critical English NT</a></td><td><a href='/?type=cover&lang=English&ver=engtcent'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=English&ver=engULB'>Unlocked Literal Bible</a></td><td><a href='/?type=cover&lang=English&ver=engULB'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=English&ver=engwebp'>World English Bible</a></td><td><a href='/?type=cover&lang=English&ver=engwebp'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=English&ver=engwebster'>Webster Bible</a></td><td><a href='/?type=cover&lang=English&ver=engwebster'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=English&ver=engwebu'>World English Bible Updated</a></td><td><a href='/?type=cover&lang=English&ver=engwebu'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=English&ver=engwmb'>World Messianic Bible</a></td><td><a href='/?type=cover&lang=English&ver=engwmb'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Gwich_in&ver=gwiNT'>Gwich'in NT</a></td><td><a href='/?type=cover&lang=Gwich_in&ver=gwiNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Hawaiian&ver=haw1868'>Hawaiian Bible 1868</a></td><td><a href='/?type=cover&lang=Hawaiian&ver=haw1868'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Hopi&ver=hopNT'>Hopi NT</a></td><td><a href='/?type=cover&lang=Hopi&ver=hopNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Northwest-Alaska-Eskimo&ver=eskNT'>Northwest Alaska Eskimo NT</a></td><td><a href='/?type=cover&lang=Northwest-Alaska-Eskimo&ver=eskNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Paiute-Northern&ver=paoNT'>Northern Paiute NT</a></td><td><a href='/?type=cover&lang=Paiute-Northern&ver=paoNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Sea-Island-Creole-English&ver=gulNT'>Sea Island Creole English NT</a></td><td><a href='/?type=cover&lang=Sea-Island-Creole-English&ver=gulNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Tewa&ver=tew'>Tewa NT</a></td><td><a href='/?type=cover&lang=Tewa&ver=tew'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Tohono-O_odham&ver=oodNT'>Tohono O'odham NT</a></td><td><a href='/?type=cover&lang=Tohono-O_odham&ver=oodNT'>Cover</a></td></tr>
+				</table>
+			</div>
+		</div>
+
+		<div class="content">
+			<h3>Eurasia</h3>
+			<div class="scroll-box">
+				<table class="compact-table">
+				<tr><td rowspan=1><img src='flags/al.png'><br>Albania</td><td><a href='/?type=text&lang=Albanian-Tosk&ver=alsSHQ'>Albanian Bible</a></td><td><a href='/?type=cover&lang=Albanian-Tosk&ver=alsSHQ'>Cover</a></td></tr>
+				<tr><td rowspan=1><img src='flags/az.png'><br>Azerbaijan</td><td><a href='/?type=text&lang=Tsakhur&ver=tkr'>Tsakhur Bible</a></td><td><a href='/?type=cover&lang=Tsakhur&ver=tkr'>Cover</a></td></tr>
+				<tr><td rowspan=2><img src='flags/bd.png'><br>Bangladesh</td><td><a href='/?type=text&lang=Bengali&ver=benirv'>Bengali Indian Revised Version Bible: ইন্ডিয়ান রিভাইজড ভার্সন (IRV) - বেঙ্গলী</a></td><td><a href='/?type=cover&lang=Bengali&ver=benirv'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Bengali&ver=benobcv'>Open Bengali Contemporary Version Bible</a></td><td><a href='/?type=cover&lang=Bengali&ver=benobcv'>Cover</a></td></tr>
+				<tr><td rowspan=2><img src='flags/by.png'><br>Belarus</td><td><a href='/?type=text&lang=Belarusian&ver=bel'>Belarusan Bible</a></td><td><a href='/?type=cover&lang=Belarusian&ver=bel'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=beln&ver=beln'>Belarusian New Testament and Books of Old Testament</a></td><td><a href='/?type=cover&lang=beln&ver=beln'>Cover</a></td></tr>
+				<tr><td rowspan=8><img src='flags/cn.png'><br>China</td><td><a href='/?type=text&lang=Chinese&ver=cmn-cu89s'>Chinese Union Version (simplified)</a></td><td><a href='/?type=cover&lang=Chinese&ver=cmn-cu89s'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Chinese&ver=cmn-cu89t'>Chinese Union Version (traditional)</a></td><td><a href='/?type=cover&lang=Chinese&ver=cmn-cu89t'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Chinese&ver=cmnfeb'>Chinese, Mandarin: 免费的易读圣经 Free Easy-to-read Bible (Bible)</a></td><td><a href='/?type=cover&lang=Chinese&ver=cmnfeb'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Tibetan&ver=bodn'>New Tibetan Bible</a></td><td><a href='/?type=cover&lang=Tibetan&ver=bodn'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Uyghur&ver=uigara'>Uyghur Bible (arabic script)</a></td><td><a href='/?type=cover&lang=Uyghur&ver=uigara'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Uyghur&ver=uigcyr'>Uyghur Bible (cyrillic script)</a></td><td><a href='/?type=cover&lang=Uyghur&ver=uigcyr'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Uyghur&ver=uiglat'>Uyghur Bible (modern latin script)</a></td><td><a href='/?type=cover&lang=Uyghur&ver=uiglat'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Uyghur&ver=uigpin'>Uyghur Bible (former latin script)</a></td><td><a href='/?type=cover&lang=Uyghur&ver=uigpin'>Cover</a></td></tr>
+				<tr><td rowspan=2><img src='flags/hr.png'><br>Croatia</td><td><a href='/?type=text&lang=Croatian&ver=hrv'>Croatian Bible</a></td><td><a href='/?type=cover&lang=Croatian&ver=hrv'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Romanian&ver=ronludari'>Ludari Luke</a></td><td><a href='/?type=cover&lang=Romanian&ver=ronludari'>Cover</a></td></tr>
+				<tr><td rowspan=3><img src='flags/cz.png'><br>Czech Republic</td><td><a href='/?type=text&lang=Czech&ver=ces1613'>Czech Kralická Bible 1613</a></td><td><a href='/?type=cover&lang=Czech&ver=ces1613'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Czech&ver=ceslb'>Czech Living New Testament</a></td><td><a href='/?type=cover&lang=Czech&ver=ceslb'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Czech&ver=cesnkb'>Czech NBK NT</a></td><td><a href='/?type=cover&lang=Czech&ver=cesnkb'>Cover</a></td></tr>
+				<tr><td rowspan=1><img src='flags/dk.png'><br>Denmark</td><td><a href='/?type=text&lang=Danish&ver=dan1931'>Danish Bible 1931</a></td><td><a href='/?type=cover&lang=Danish&ver=dan1931'>Cover</a></td></tr>
+				<tr><td rowspan=1><img src='flags/ee.png'><br>Estonia</td><td><a href='/?type=text&lang=Eestonian&ver=ekkpkp'>Estonian Bible: Piibel Kõigile</a></td><td><a href='/?type=cover&lang=Eestonian&ver=ekkpkp'>Cover</a></td></tr>
+				<tr><td rowspan=5><img src='flags/fr.png'><br>France</td><td><a href='/?type=text&lang=Breton&ver=breBRG'>Breton Gospels</a></td><td><a href='/?type=cover&lang=Breton&ver=breBRG'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=French&ver=fra_fob'>French Ostervald Bible</a></td><td><a href='/?type=cover&lang=French&ver=fra_fob'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=French&ver=fraLSG'>French Louis Segond 1910 Bible</a></td><td><a href='/?type=cover&lang=French&ver=fraLSG'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=French&ver=francl'>French néo-Crampon Libre</a></td><td><a href='/?type=cover&lang=French&ver=francl'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=French&ver=frasbl'>French Free Holy Bible for the World</a></td><td><a href='/?type=cover&lang=French&ver=frasbl'>Cover</a></td></tr>
+				<tr><td rowspan=6><img src='flags/de.png'><br>Germany</td><td><a href='/?type=text&lang=German&ver=deuelbbk'>German ELBBK Bible</a></td><td><a href='/?type=cover&lang=German&ver=deuelbbk'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=German-Standard&ver=deu-f35'>German Theophilus Bible</a></td><td><a href='/?type=cover&lang=German-Standard&ver=deu-f35'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=German-Standard&ver=deu1912'>German Luther Bible 1912</a></td><td><a href='/?type=cover&lang=German-Standard&ver=deu1912'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=German-Standard&ver=deu1951'>German Schlachter Bible 1951</a></td><td><a href='/?type=cover&lang=German-Standard&ver=deu1951'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=German-Standard&ver=deuelo'>German Unrevised Elberfelder Bible</a></td><td><a href='/?type=cover&lang=German-Standard&ver=deuelo'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=German-Standard&ver=deutkw'>German Textbibel</a></td><td><a href='/?type=cover&lang=German-Standard&ver=deutkw'>Cover</a></td></tr>
+				<tr><td rowspan=9><img src='flags/gr.png'><br>Greece</td><td><a href='/?type=text&lang=Greek-Ancient&ver=grc-tisch'>Tischendorf Greek NT</a></td><td><a href='/?type=cover&lang=Greek-Ancient&ver=grc-tisch'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Greek-Ancient&ver=grcbrent'>Brenton Septuagint</a></td><td><a href='/?type=cover&lang=Greek-Ancient&ver=grcbrent'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Greek-Ancient&ver=grcbyz'>Byzantine Greek  NT</a></td><td><a href='/?type=cover&lang=Greek-Ancient&ver=grcbyz'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Greek-Ancient&ver=grcf35'>Greek NT Family 35</a></td><td><a href='/?type=cover&lang=Greek-Ancient&ver=grcf35'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Greek-Ancient&ver=grcmt'>Greek Majority Text NT</a></td><td><a href='/?type=cover&lang=Greek-Ancient&ver=grcmt'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Greek-Ancient&ver=grcsbl'>SBL Greek NT</a></td><td><a href='/?type=cover&lang=Greek-Ancient&ver=grcsbl'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Greek-Ancient&ver=grcsr'>Solid Rock Greek New Testament</a></td><td><a href='/?type=cover&lang=Greek-Ancient&ver=grcsr'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Greek-Ancient&ver=grctcgnt'>Text-Critical Greek NT</a></td><td><a href='/?type=cover&lang=Greek-Ancient&ver=grctcgnt'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Greek-Ancient&ver=grctr'>Textus Receptus</a></td><td><a href='/?type=cover&lang=Greek-Ancient&ver=grctr'>Cover</a></td></tr>
+				<tr><td rowspan=1><img src='flags/hu.png'><br>Hungary</td><td><a href='/?type=text&lang=Magyar&ver=hun'>Hungarian Bible</a></td><td><a href='/?type=cover&lang=Magyar&ver=hun'>Cover</a></td></tr>
+				<tr><td rowspan=1><img src='flags/is.png'><br>Iceland</td><td><a href='/?type=text&lang=Icelandic&ver=isl'>Icelandic: Biblica® Opna Lifandi Orð Nýja testamentið og Sálmarnir™ (New Testament+)</a></td><td><a href='/?type=cover&lang=Icelandic&ver=isl'>Cover</a></td></tr>
+				<tr><td rowspan=59><img src='flags/in.png'><br>India</td><td><a href='/?type=text&lang=Ahirani&ver=ahr'>Ahirani Matthew and Mark</a></td><td><a href='/?type=cover&lang=Ahirani&ver=ahr'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Assamese&ver=asmfb'>Assamese Indian Revised Version Bible</a></td><td><a href='/?type=cover&lang=Assamese&ver=asmfb'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Bareli-Palya&ver=bpx'>Bareli, Palya: भगवान ना खरला बोल (Bible)</a></td><td><a href='/?type=cover&lang=Bareli-Palya&ver=bpx'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Bhadrawahi&ver=bhd'>Bhadrawahi Bible</a></td><td><a href='/?type=cover&lang=Bhadrawahi&ver=bhd'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Bhattiyali&ver=bht'>Bhattiyali Bible</a></td><td><a href='/?type=cover&lang=Bhattiyali&ver=bht'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Bodo-Parja&ver=bdv'>Bodo Parja: BOPO Bible</a></td><td><a href='/?type=cover&lang=Bodo-Parja&ver=bdv'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Bugun&ver=bgg'>Bugun Bible</a></td><td><a href='/?type=cover&lang=Bugun&ver=bgg'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Chin-Thado&ver=tczchongthu'>Chongthu Bible</a></td><td><a href='/?type=cover&lang=Chin-Thado&ver=tczchongthu'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Desiya&ver=dso'>Desiya NT</a></td><td><a href='/?type=cover&lang=Desiya&ver=dso'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Gata_&ver=gaq'>Gata Didayi NT</a></td><td><a href='/?type=cover&lang=Gata_&ver=gaq'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Gujarati&ver=guj2017'>Gujarati Indian Revised Version Bible</a></td><td><a href='/?type=cover&lang=Gujarati&ver=guj2017'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Haryanvi&ver=bgc'>Haryanvi Bible</a></td><td><a href='/?type=cover&lang=Haryanvi&ver=bgc'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Hindi&ver=hin2017'>Hindi Indian Revised Version Bible</a></td><td><a href='/?type=cover&lang=Hindi&ver=hin2017'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Hindi&ver=hincv'>Hindi Contemporary Version Bible</a></td><td><a href='/?type=cover&lang=Hindi&ver=hincv'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Holiya&ver=hoy'>Holiya Bible</a></td><td><a href='/?type=cover&lang=Holiya&ver=hoy'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Juray&ver=juy'>Juray: ଆଜାଡ଼ି ତଙରନ୍‌ (Bible)</a></td><td><a href='/?type=cover&lang=Juray&ver=juy'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Kannada&ver=kan2017'>Kannada Indian Revised Version Bible</a></td><td><a href='/?type=cover&lang=Kannada&ver=kan2017'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Kannada&ver=kanokcv'>Kanada Open Contemporary Version Bible</a></td><td><a href='/?type=cover&lang=Kannada&ver=kanokcv'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Kuvi&ver=kxv'>The New Testament in the Kuvi language of India: ପୁଃନି ମେ଼ରା (Bible)</a></td><td><a href='/?type=cover&lang=Kuvi&ver=kxv'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Lodhi&ver=lbm'>Lodhi NT</a></td><td><a href='/?type=cover&lang=Lodhi&ver=lbm'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Malayalam&ver=mal'>Malayalam Indian Revised Version Bible</a></td><td><a href='/?type=cover&lang=Malayalam&ver=mal'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=malc&ver=malc'>Malayalam Contemporary Bible</a></td><td><a href='/?type=cover&lang=malc&ver=malc'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Marathi&ver=mar'>Marathi Indian Revised Version Bible</a></td><td><a href='/?type=cover&lang=Marathi&ver=mar'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Meitei&ver=mni'>Meitei Bible</a></td><td><a href='/?type=cover&lang=Meitei&ver=mni'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Munda&ver=unx'>Munda NT</a></td><td><a href='/?type=cover&lang=Munda&ver=unx'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Naga-Kharam&ver=kfw'>Kharam NT</a></td><td><a href='/?type=cover&lang=Naga-Kharam&ver=kfw'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Naga-Pidgin&ver=nag'>Nagamese NT</a></td><td><a href='/?type=cover&lang=Naga-Pidgin&ver=nag'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Naga-Tutsa&ver=tvt'>Tutsa Naga NT</a></td><td><a href='/?type=cover&lang=Naga-Tutsa&ver=tvt'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Oriya&ver=ory'>Oriya Indian Revised Version Bible</a></td><td><a href='/?type=cover&lang=Oriya&ver=ory'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Pahari-Mahasu&ver=bfz'>Baghlayani Bible</a></td><td><a href='/?type=cover&lang=Pahari-Mahasu&ver=bfz'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Panjabi-Eastern&ver=pan'>Punjabi Indian Revised Version Bible</a></td><td><a href='/?type=cover&lang=Panjabi-Eastern&ver=pan'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Pengo&ver=peg'>Pengo NT</a></td><td><a href='/?type=cover&lang=Pengo&ver=peg'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Sa_sk_tam&ver=sankan'>Sanskrit NT in Kannada Script</a></td><td><a href='/?type=cover&lang=Sa_sk_tam&ver=sankan'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Sa_sk_tam&ver=sankhm'>Sanskrit NT in Khmer Script</a></td><td><a href='/?type=cover&lang=Sa_sk_tam&ver=sankhm'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Sa_sk_tam&ver=sanmal'>Sanskrit NT in Malayalam Script</a></td><td><a href='/?type=cover&lang=Sa_sk_tam&ver=sanmal'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Sa_sk_tam&ver=sanori'>Sanskrit NT in Oriya Script</a></td><td><a href='/?type=cover&lang=Sa_sk_tam&ver=sanori'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Sa_sk_tam&ver=sanpun'>Sanskrit NT in Punjabi Script</a></td><td><a href='/?type=cover&lang=Sa_sk_tam&ver=sanpun'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Sa_sk_tam&ver=sansin'>Sanskrit NT in Sinhala Script</a></td><td><a href='/?type=cover&lang=Sa_sk_tam&ver=sansin'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Sa_sk_tam&ver=santam'>Sanskrit NT in Tamil Script</a></td><td><a href='/?type=cover&lang=Sa_sk_tam&ver=santam'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Sa_sk_tam&ver=santel'>Sanskrit NT in Telugu Script</a></td><td><a href='/?type=cover&lang=Sa_sk_tam&ver=santel'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Sa_sk_tam&ver=santha'>Sanskrit NT in Thai Script</a></td><td><a href='/?type=cover&lang=Sa_sk_tam&ver=santha'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Sa_sk_tam&ver=santib'>Sanskrit NT in Tibetan Script</a></td><td><a href='/?type=cover&lang=Sa_sk_tam&ver=santib'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Sa_sk_tam&ver=sanurd'>Sanskrit NT in Urdu Script</a></td><td><a href='/?type=cover&lang=Sa_sk_tam&ver=sanurd'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Sa_sk_tam&ver=sanvel'>Sanskrit NT in Velthuis Script</a></td><td><a href='/?type=cover&lang=Sa_sk_tam&ver=sanvel'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Sakachep&ver=sch'>Sakachep NT</a></td><td><a href='/?type=cover&lang=Sakachep&ver=sch'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Sanskrit&ver=sanasm'>Sanskrit New Testament in Assamese Script</a></td><td><a href='/?type=cover&lang=Sanskrit&ver=sanasm'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Sanskrit&ver=sanben'>Sanskrit NT in Bengali Script</a></td><td><a href='/?type=cover&lang=Sanskrit&ver=sanben'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Sanskrit&ver=sanbur'>Sanskrit Language NT in Burmese Script</a></td><td><a href='/?type=cover&lang=Sanskrit&ver=sanbur'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Sanskrit&ver=sancol'>New Testament in Sanskrit Language; printed in Cologne Script</a></td><td><a href='/?type=cover&lang=Sanskrit&ver=sancol'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Sanskrit&ver=sandev'>Sanskrit NT in Devanagari Script</a></td><td><a href='/?type=cover&lang=Sanskrit&ver=sandev'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Sanskrit&ver=sanguj'>Sanskrit NT in Gujarati Script</a></td><td><a href='/?type=cover&lang=Sanskrit&ver=sanguj'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Sanskrit&ver=sanhk'>Sanskrit NT in Harvard-Kyoto Script</a></td><td><a href='/?type=cover&lang=Sanskrit&ver=sanhk'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Sanskrit&ver=sanias'>New Testament in Sanskrit Language; printed in IAST Script</a></td><td><a href='/?type=cover&lang=Sanskrit&ver=sanias'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Sanskrit&ver=saniso'>Sanskrit NT in ISO Script</a></td><td><a href='/?type=cover&lang=Sanskrit&ver=saniso'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Sanskrit&ver=sanitr'>Sanskrit NT in ITRANS Script</a></td><td><a href='/?type=cover&lang=Sanskrit&ver=sanitr'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Tagin&ver=tgj'>Tagin first Bible translation based on TEV (Good News)</a></td><td><a href='/?type=cover&lang=Tagin&ver=tgj'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Tamil&ver=tam2017'>Tamil Indian Revised Version Bible</a></td><td><a href='/?type=cover&lang=Tamil&ver=tam2017'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Tamil&ver=tamtcv'>Biblica® திறந்தநிலை தமிழ் சமகால பதிப்பு</a></td><td><a href='/?type=cover&lang=Tamil&ver=tamtcv'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Telugu&ver=tel2017'>Telugu Indian Revised Version Bible</a></td><td><a href='/?type=cover&lang=Telugu&ver=tel2017'>Cover</a></td></tr>
+				<tr><td rowspan=4><img src='flags/ir.png'><br>Iran</td><td><a href='/?type=text&lang=Azerbaijani-South&ver=azb'>Azerbaijani Bible</a></td><td><a href='/?type=cover&lang=Azerbaijani-South&ver=azb'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Gilaki&ver=glk'>Gilaki John</a></td><td><a href='/?type=cover&lang=Gilaki&ver=glk'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Iranian-Persian&ver=pesopcb'>Open Persian Contemporary Bible</a></td><td><a href='/?type=cover&lang=Iranian-Persian&ver=pesopcb'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Persian&ver=pesOPV'>Old Persion Version Bible</a></td><td><a href='/?type=cover&lang=Persian&ver=pesOPV'>Cover</a></td></tr>
+				<tr><td rowspan=2><img src='flags/iq.png'><br>Iraq</td><td><a href='/?type=text&lang=Assyrian-Neo-Aramaic&ver=aii'>Assyrian Neo-Aramaic NT+Psalms</a></td><td><a href='/?type=cover&lang=Assyrian-Neo-Aramaic&ver=aii'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Central-Kurdish&ver=ckb'>Kurdish Sorani Bible</a></td><td><a href='/?type=cover&lang=Central-Kurdish&ver=ckb'>Cover</a></td></tr>
+				<tr><td rowspan=4><img src='flags/il.png'><br>Israel</td><td><a href='/?type=text&lang=Hebrew&ver=hbo'>Hebrew Masoretic OT</a></td><td><a href='/?type=cover&lang=Hebrew&ver=hbo'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Hebrew&ver=hboWLC'>Westminster Leningrad Codex Hebrew OT</a></td><td><a href='/?type=cover&lang=Hebrew&ver=hboWLC'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Hebrew&ver=heb'>Modern Hebrew Bible</a></td><td><a href='/?type=cover&lang=Hebrew&ver=heb'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Hebrew&ver=heblb'>Hebrew Living NT</a></td><td><a href='/?type=cover&lang=Hebrew&ver=heblb'>Cover</a></td></tr>
+				<tr><td rowspan=2><img src='flags/it.png'><br>Italy</td><td><a href='/?type=text&lang=Italian&ver=ita1885'>Italian Diodati Bible</a></td><td><a href='/?type=cover&lang=Italian&ver=ita1885'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Italian&ver=ita1927'>Italian Riveduta Bible</a></td><td><a href='/?type=cover&lang=Italian&ver=ita1927'>Cover</a></td></tr>
+				<tr><td rowspan=1><img src='flags/jp.png'><br>Japan</td><td><a href='/?type=text&lang=Japanese&ver=jpn1965'>New Japanese NT</a></td><td><a href='/?type=cover&lang=Japanese&ver=jpn1965'>Cover</a></td></tr>
+				<tr><td rowspan=1><img src='flags/lb.png'><br>Lebanon</td><td><a href='/?type=text&lang=Arabic&ver=arb-vd'>Arabic Van Dyck Bible</a></td><td><a href='/?type=cover&lang=Arabic&ver=arb-vd'>Cover</a></td></tr>
+				<tr><td rowspan=1><img src='flags/lt.png'><br>Lithuania</td><td><a href='/?type=text&lang=Lithuanian&ver=lit'>Lithuanian Believers' Heritage Translation</a></td><td><a href='/?type=cover&lang=Lithuanian&ver=lit'>Cover</a></td></tr>
+				<tr><td rowspan=9><img src='flags/mm.png'><br>Myanmar</td><td><a href='/?type=text&lang=Burmese&ver=mya'>Burmese Common Language Bible</a></td><td><a href='/?type=cover&lang=Burmese&ver=mya'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Burmese&ver=myajvb'>Judson Burmese Bible</a></td><td><a href='/?type=cover&lang=Burmese&ver=myajvb'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Chin-Daai&ver=dao'>Daai Chin NT</a></td><td><a href='/?type=cover&lang=Chin-Daai&ver=dao'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Chin-Eastern-Khumi&ver=cekak'>Asang Khongca Bible</a></td><td><a href='/?type=cover&lang=Chin-Eastern-Khumi&ver=cekak'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Chin-Matu&ver=hlt'>Matupi Chin Standard Bible w/ Strongs</a></td><td><a href='/?type=cover&lang=Chin-Matu&ver=hlt'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Chin-Matu&ver=hltmcsb'>Matupi Chin Standard Bible 2019</a></td><td><a href='/?type=cover&lang=Chin-Matu&ver=hltmcsb'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Chin-Matu&ver=hltthb'>Tuivang Matu Chin Bible</a></td><td><a href='/?type=cover&lang=Chin-Matu&ver=hltthb'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Chin-Siyin&ver=csy'>Siyin Chin NT</a></td><td><a href='/?type=cover&lang=Chin-Siyin&ver=csy'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Chin-Thaiphum&ver=cth'>Thai Phum Bible</a></td><td><a href='/?type=cover&lang=Chin-Thaiphum&ver=cth'>Cover</a></td></tr>
+				<tr><td rowspan=2><img src='flags/bm.png'><br>Myanmar </td><td><a href='/?type=text&lang=Chin-Zyphe&ver=zypNT'>Zyphe Chin NT</a></td><td><a href='/?type=cover&lang=Chin-Zyphe&ver=zypNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Zaiwa&ver=atbNT'>Zaiwa NT</a></td><td><a href='/?type=cover&lang=Zaiwa&ver=atbNT'>Cover</a></td></tr>
+				<tr><td rowspan=5><img src='flags/np.png'><br>Nepal</td><td><a href='/?type=text&lang=Limbu&ver=lifNT'>Limbu NT (Limbu Script)</a></td><td><a href='/?type=cover&lang=Limbu&ver=lifNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Limbu&ver=lifNT2'>Limbu NT (Devangari Script)</a></td><td><a href='/?type=cover&lang=Limbu&ver=lifNT2'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Nepali&ver=npiulb'>Nepali Bible</a></td><td><a href='/?type=cover&lang=Nepali&ver=npiulb'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Sunwar&ver=suzBl'>Sunwar Bible</a></td><td><a href='/?type=cover&lang=Sunwar&ver=suzBl'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Tamang-Eastern&ver=taj'>Eastern Tamang NT</a></td><td><a href='/?type=cover&lang=Tamang-Eastern&ver=taj'>Cover</a></td></tr>
+				<tr><td rowspan=2><img src='flags/nl.png'><br>Netherlands</td><td><a href='/?type=text&lang=Dutch&ver=nld'>Dutch Bible 1917</a></td><td><a href='/?type=cover&lang=Dutch&ver=nld'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Dutch&ver=nld1939'>Dutch Bible, Petrus Canisius</a></td><td><a href='/?type=cover&lang=Dutch&ver=nld1939'>Cover</a></td></tr>
+				<tr><td rowspan=1><img src='flags/no.png'><br>Norway</td><td><a href='/?type=text&lang=Norwegian&ver=noblb'>Norwegian Living NT</a></td><td><a href='/?type=cover&lang=Norwegian&ver=noblb'>Cover</a></td></tr>
+				<tr><td rowspan=4><img src='flags/pk.png'><br>Pakistan</td><td><a href='/?type=text&lang=Urdu&ver=urd'>Urdu IRV Bible</a></td><td><a href='/?type=cover&lang=Urdu&ver=urd'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Urdu&ver=urdgvh'>Urdu Geo Bible, Hindi Script</a></td><td><a href='/?type=cover&lang=Urdu&ver=urdgvh'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Urdu&ver=urdgvr'>The Holy Bible in Urdu, Urdu Geo Version, Roman Script</a></td><td><a href='/?type=cover&lang=Urdu&ver=urdgvr'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Urdu&ver=urdgvu'>Urdu Geo Bible (Urdu Script)</a></td><td><a href='/?type=cover&lang=Urdu&ver=urdgvu'>Cover</a></td></tr>
+				<tr><td rowspan=3><img src='flags/pl.png'><br>Poland</td><td><a href='/?type=text&lang=Esperanto&ver=epo'>Esperanto Bible</a></td><td><a href='/?type=cover&lang=Esperanto&ver=epo'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Polish&ver=polubg'>Polish Updated Gdansk Bible</a></td><td><a href='/?type=cover&lang=Polish&ver=polubg'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Polski&ver=polsz'>Polish Słowo Życia, otwarty dostęp NT</a></td><td><a href='/?type=cover&lang=Polski&ver=polsz'>Cover</a></td></tr>
+				<tr><td rowspan=3><img src='flags/ro.png'><br>Romania</td><td><a href='/?type=text&lang=Romanian&ver=ron1924'>Romanian Bible (Cyrillic)</a></td><td><a href='/?type=cover&lang=Romanian&ver=ron1924'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Romanian&ver=ronBayash'>Bayash Bible</a></td><td><a href='/?type=cover&lang=Romanian&ver=ronBayash'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Romanian&ver=ronlsb'>Romanian Free Holy Bible</a></td><td><a href='/?type=cover&lang=Romanian&ver=ronlsb'>Cover</a></td></tr>
+				<tr><td rowspan=2><img src='flags/ru.png'><br>Russian Federation</td><td><a href='/?type=text&lang=Khanty&ver=kca'>Khanty Bible</a></td><td><a href='/?type=cover&lang=Khanty&ver=kca'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Russian&ver=russyn'>Russian Synodal Bible</a></td><td><a href='/?type=cover&lang=Russian&ver=russyn'>Cover</a></td></tr>
+				<tr><td rowspan=4><img src='flags/rs.png'><br>Serbia</td><td><a href='/?type=text&lang=Romani-Vlax&ver=rmyArli'>Arli Luke</a></td><td><a href='/?type=cover&lang=Romani-Vlax&ver=rmyArli'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Romani-Vlax&ver=rmyChergash'>Chergash Luke</a></td><td><a href='/?type=cover&lang=Romani-Vlax&ver=rmyChergash'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Romani-Vlax&ver=rmyGurbet'>Gurbet Luke</a></td><td><a href='/?type=cover&lang=Romani-Vlax&ver=rmyGurbet'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Serbian&ver=srp1865'>Serbian Bible</a></td><td><a href='/?type=cover&lang=Serbian&ver=srp1865'>Cover</a></td></tr>
+				<tr><td rowspan=1><img src='flags/sk.png'><br>Slovakia</td><td><a href='/?type=text&lang=Romani-Carpathian&ver=rmc'>Eastern Slovak Romani Bible</a></td><td><a href='/?type=cover&lang=Romani-Carpathian&ver=rmc'>Cover</a></td></tr>
+				<tr><td rowspan=5><img src='flags/es.png'><br>Spain</td><td><a href='/?type=text&lang=Spanish&ver=spablm'>Spanish Free Bible for the World</a></td><td><a href='/?type=cover&lang=Spanish&ver=spablm'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Spanish&ver=spaRV1909'>Reina Valera 1909</a></td><td><a href='/?type=cover&lang=Spanish&ver=spaRV1909'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Spanish&ver=sparvg'>RVG Spanish Bible</a></td><td><a href='/?type=cover&lang=Spanish&ver=sparvg'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Spanish&ver=sparvp'>Spanish Valera Purificada</a></td><td><a href='/?type=cover&lang=Spanish&ver=sparvp'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Spanish&ver=spavbl'>Spanish Free Bible Version</a></td><td><a href='/?type=cover&lang=Spanish&ver=spavbl'>Cover</a></td></tr>
+				<tr><td rowspan=1><img src='flags/se.png'><br>Sweden</td><td><a href='/?type=text&lang=Swedish&ver=swe'>Swedish NT+</a></td><td><a href='/?type=cover&lang=Swedish&ver=swe'>Cover</a></td></tr>
+				<tr><td rowspan=1><img src='flags/tj.png'><br>Tajikistan</td><td><a href='/?type=text&lang=Tajik&ver=tgk'>Tajik Bible</a></td><td><a href='/?type=cover&lang=Tajik&ver=tgk'>Cover</a></td></tr>
+				<tr><td rowspan=1><img src='flags/th.png'><br>Thailand</td><td><a href='/?type=text&lang=Thai&ver=thaKJV'>Thai KJV Bible</a></td><td><a href='/?type=cover&lang=Thai&ver=thaKJV'>Cover</a></td></tr>
+				<tr><td rowspan=1><img src='flags/tr.png'><br>Turkey</td><td><a href='/?type=text&lang=Turkish&ver=turytc'>Turkish WEB</a></td><td><a href='/?type=cover&lang=Turkish&ver=turytc'>Cover</a></td></tr>
+				<tr><td rowspan=8><img src='flags/ua.png'><br>Ukraine</td><td><a href='/?type=text&lang=Romani&ver=rmylovari'>Romani, Vlax: Библия пэ ловарицко романы щиб (Bible)</a></td><td><a href='/?type=cover&lang=Romani&ver=rmylovari'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Romani&ver=rmyvlakh'>Eastern Vlakh Romani</a></td><td><a href='/?type=cover&lang=Romani&ver=rmyvlakh'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Romani-Balkan&ver=rmn'>Balkan Romani Bible portions</a></td><td><a href='/?type=cover&lang=Romani-Balkan&ver=rmn'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Romani-Carpathian&ver=rmczrb'>Carpathian Romani Luke</a></td><td><a href='/?type=cover&lang=Romani-Carpathian&ver=rmczrb'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Romani-Vlax&ver=rmyservi'>Servi Romani Bible portions</a></td><td><a href='/?type=cover&lang=Romani-Vlax&ver=rmyservi'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Ukrainian&ver=ukr1871'>Ukrainian NT by P. Kulish</a></td><td><a href='/?type=cover&lang=Ukrainian&ver=ukr1871'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Ukrainian&ver=ukr1996'>Ukrainian Bible, BJU 1996</a></td><td><a href='/?type=cover&lang=Ukrainian&ver=ukr1996'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Ukranian&ver=ukronpu'>New Ukranian Translation NT+Psalms</a></td><td><a href='/?type=cover&lang=Ukranian&ver=ukronpu'>Cover</a></td></tr>
+				<tr><td rowspan=24><img src='flags/gb.png'><br>United Kingdom</td><td><a href='/?type=text&lang=English&ver=eng-Brenton'>Brenton English Septuagint</a></td><td><a href='/?type=cover&lang=English&ver=eng-Brenton'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=English&ver=eng-kjv'>King James Version + Apocrypha</a></td><td><a href='/?type=cover&lang=English&ver=eng-kjv'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=English&ver=eng-kjv2006'>King James Version</a></td><td><a href='/?type=cover&lang=English&ver=eng-kjv2006'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=English&ver=eng-rv'>Revised Version</a></td><td><a href='/?type=cover&lang=English&ver=eng-rv'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=English&ver=eng-uk-lxx2012'>British English Septuagint 2012</a></td><td><a href='/?type=cover&lang=English&ver=eng-uk-lxx2012'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=English&ver=eng-webbe'>World English Bible British Edition with Deuterocanon</a></td><td><a href='/?type=cover&lang=English&ver=eng-webbe'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=English&ver=engaoi'>Anindilyakwa English Bible</a></td><td><a href='/?type=cover&lang=English&ver=engaoi'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=English&ver=engBBE'>Bible in Basic English</a></td><td><a href='/?type=cover&lang=English&ver=engBBE'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=English&ver=engDBY'>Darby Translation</a></td><td><a href='/?type=cover&lang=English&ver=engDBY'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=English&ver=engDRA'>Douay-Rheims 1899</a></td><td><a href='/?type=cover&lang=English&ver=engDRA'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=English&ver=engemtv'>English Majority Text Version</a></td><td><a href='/?type=cover&lang=English&ver=engemtv'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=English&ver=enggnv'>Geneva Bible 1599</a></td><td><a href='/?type=cover&lang=English&ver=enggnv'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=English&ver=engkjvcpb'>KJV Cambridge Paragraph</a></td><td><a href='/?type=cover&lang=English&ver=engkjvcpb'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=English&ver=englee'>Leeser Tanakh</a></td><td><a href='/?type=cover&lang=English&ver=englee'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=English&ver=engnoy'>Noyes Bible</a></td><td><a href='/?type=cover&lang=English&ver=engnoy'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=English&ver=engoebcw'>Open English Bible (Commonwealth)</a></td><td><a href='/?type=cover&lang=English&ver=engoebcw'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=English&ver=engoke'>Targum Onkelos Etheridge</a></td><td><a href='/?type=cover&lang=English&ver=engoke'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=English&ver=engtnt'>Tyndale NT</a></td><td><a href='/?type=cover&lang=English&ver=engtnt'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=English&ver=engwebpb'>World English Bible British Edition</a></td><td><a href='/?type=cover&lang=English&ver=engwebpb'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=English&ver=engwmbb'>World Messianic Bible British Edition</a></td><td><a href='/?type=cover&lang=English&ver=engwmbb'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=English&ver=engwyc2017'>English: Wycliffe's Bible Modern Spelling (with Deuterocanon)</a></td><td><a href='/?type=cover&lang=English&ver=engwyc2017'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=English&ver=engwyc2018'>English: Wycliffe's Bible Modern Spelling (Enhanced) (with Deuterocanon)</a></td><td><a href='/?type=cover&lang=English&ver=engwyc2018'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=English&ver=engWycliffe'>Wycliffe Bible portions</a></td><td><a href='/?type=cover&lang=English&ver=engWycliffe'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=English&ver=engylt'>Young's Literal Translation</a></td><td><a href='/?type=cover&lang=English&ver=engylt'>Cover</a></td></tr>
+				<tr><td rowspan=1><img src='flags/va.png'><br>Vatican State</td><td><a href='/?type=text&lang=Latin&ver=latVUC'>Clementine Vulgate 1598</a></td><td><a href='/?type=cover&lang=Latin&ver=latVUC'>Cover</a></td></tr>
+				<tr><td rowspan=2><img src='flags/vn.png'><br>Viet Nam</td><td><a href='/?type=text&lang=Ti_ng-Vi_t&ver=vieovcb'>Vietnamese Contemporary Bible</a></td><td><a href='/?type=cover&lang=Ti_ng-Vi_t&ver=vieovcb'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Vietnamese&ver=vie1934'>Vietnamese Bible 1923</a></td><td><a href='/?type=cover&lang=Vietnamese&ver=vie1934'>Cover</a></td></tr>
+				</table>		
+			</div>
+		</div>
+
+		<div class="content">
+			<h3>Oceania</h3>
+			<div class="scroll-box">
+				<table class="compact-table">
+				<tr><td rowspan=57><img src='flags/au.png'><br>Australia</td><td><a href='/?type=text&lang=Adnyamathanha&ver=adt'>Adnyamathanha Christmas Story</a></td><td><a href='/?type=cover&lang=Adnyamathanha&ver=adt'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Alawa&ver=alh'>Alawa Song Book</a></td><td><a href='/?type=cover&lang=Alawa&ver=alh'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Alyawarr&ver=aly'>Alyawarr Bible</a></td><td><a href='/?type=cover&lang=Alyawarr&ver=aly'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Anindilyakwa&ver=aoi'>Anindilyakwa Bible</a></td><td><a href='/?type=cover&lang=Anindilyakwa&ver=aoi'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Anmatyerre&ver=amx'>Anmatyerr Bible</a></td><td><a href='/?type=cover&lang=Anmatyerre&ver=amx'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Arrarnta-Western&ver=are'>Western Arrarnta NT</a></td><td><a href='/?type=cover&lang=Arrarnta-Western&ver=are'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Arrernte-Eastern&ver=aer'>Eastern Arrente Bible</a></td><td><a href='/?type=cover&lang=Arrernte-Eastern&ver=aer'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Awabakal&ver=awk'>Awabakal Luke</a></td><td><a href='/?type=cover&lang=Awabakal&ver=awk'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Burarra&ver=bvr'>Burarra Scriptures</a></td><td><a href='/?type=cover&lang=Burarra&ver=bvr'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Dhuwal&ver=dwuliv'>Liyagawumirr Luke</a></td><td><a href='/?type=cover&lang=Dhuwal&ver=dwuliv'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Dhuwaya&ver=dwy'>Dhuwaya Mark</a></td><td><a href='/?type=cover&lang=Dhuwaya&ver=dwy'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Dieri&ver=dif'>Dieri NT</a></td><td><a href='/?type=cover&lang=Dieri&ver=dif'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Djambarrpuyngu&ver=djr'>Djambarrpuyngu NT</a></td><td><a href='/?type=cover&lang=Djambarrpuyngu&ver=djr'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Djangu&ver=dhg'>Djangu Mark</a></td><td><a href='/?type=cover&lang=Djangu&ver=dhg'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Djangu&ver=dhgduwadha'>Dhuwa-Dhaŋu'mi Mark</a></td><td><a href='/?type=cover&lang=Djangu&ver=dhgduwadha'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Djeebbana&ver=djj'>Ndjébbana Christmas Story</a></td><td><a href='/?type=cover&lang=Djeebbana&ver=djj'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Djinang&ver=dji'>Djinang Bible Portions</a></td><td><a href='/?type=cover&lang=Djinang&ver=dji'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=English&ver=engnna'>Nyangumarta English Bible</a></td><td><a href='/?type=cover&lang=English&ver=engnna'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=English&ver=engPEV'>Plain English Version</a></td><td><a href='/?type=cover&lang=English&ver=engPEV'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Gamilaraay&ver=kld'>KAMILAROI SAYINGS</a></td><td><a href='/?type=cover&lang=Gamilaraay&ver=kld'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Garrwa&ver=wrk'>Garrwa Shorter New Testament</a></td><td><a href='/?type=cover&lang=Garrwa&ver=wrk'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Gumatj&ver=gnn'>Gumatj Bible</a></td><td><a href='/?type=cover&lang=Gumatj&ver=gnn'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Gunwinggu&ver=gup'>Kunwinjku Bible</a></td><td><a href='/?type=cover&lang=Gunwinggu&ver=gup'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Gunwinggu&ver=gupk'>Kuninjku Gospel Selections</a></td><td><a href='/?type=cover&lang=Gunwinggu&ver=gupk'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Gunwinggu&ver=gupmay'>Mayali Luke 8</a></td><td><a href='/?type=cover&lang=Gunwinggu&ver=gupmay'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Gurinji&ver=gue'>Gurindji Ruth + Luke 2</a></td><td><a href='/?type=cover&lang=Gurinji&ver=gue'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Guugu-Yimidhirr&ver=kky'>Gugu Yimidhirr Matthew Sample</a></td><td><a href='/?type=cover&lang=Guugu-Yimidhirr&ver=kky'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Kala-Lagaw-Ya&ver=mwp'>Kala Lagaw Bible</a></td><td><a href='/?type=cover&lang=Kala-Lagaw-Ya&ver=mwp'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Kitja&ver=gia'>Kitja Jonah</a></td><td><a href='/?type=cover&lang=Kitja&ver=gia'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Kriol&ver=rop'>Kriol Bible</a></td><td><a href='/?type=cover&lang=Kriol&ver=rop'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Kukatja&ver=kux'>Kukatja Bible portions</a></td><td><a href='/?type=cover&lang=Kukatja&ver=kux'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Kuku-Yalanji&ver=gvn'>Kuku-Yalanji Bible</a></td><td><a href='/?type=cover&lang=Kuku-Yalanji&ver=gvn'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Kunbarlang&ver=wlg'>Kunbarlang Christmas Story</a></td><td><a href='/?type=cover&lang=Kunbarlang&ver=wlg'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Kunjen&ver=kjn'>Kunjen Mark Portions</a></td><td><a href='/?type=cover&lang=Kunjen&ver=kjn'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Larrakia&ver=lrg'>Larrakia Christmas Story</a></td><td><a href='/?type=cover&lang=Larrakia&ver=lrg'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Martu-Wangka&ver=mpj'>Martu Wangka Bible</a></td><td><a href='/?type=cover&lang=Martu-Wangka&ver=mpj'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Maung&ver=mph'>Maung Mark</a></td><td><a href='/?type=cover&lang=Maung&ver=mph'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Meriam&ver=ulk'>Meriam Mir Bible</a></td><td><a href='/?type=cover&lang=Meriam&ver=ulk'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Meriam&ver=ulk1902'>Meriam Mir Bible</a></td><td><a href='/?type=cover&lang=Meriam&ver=ulk1902'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Murrinh-Patha&ver=mwf2018'>Murrinhpatha NT</a></td><td><a href='/?type=cover&lang=Murrinh-Patha&ver=mwf2018'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Narrinyeri&ver=nay'>Ngarrindjeri Scriptures</a></td><td><a href='/?type=cover&lang=Narrinyeri&ver=nay'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Ngaanyatjarra&ver=ntj'>Ngaanyatjarra Shorter Bible</a></td><td><a href='/?type=cover&lang=Ngaanyatjarra&ver=ntj'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Nunggubuyu&ver=nuy'>Wubuy Shorter  Bible</a></td><td><a href='/?type=cover&lang=Nunggubuyu&ver=nuy'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Nyangumarta&ver=nna'>Nyangumarta Bible</a></td><td><a href='/?type=cover&lang=Nyangumarta&ver=nna'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Nyunga&ver=nys'>Nyunga Bible</a></td><td><a href='/?type=cover&lang=Nyunga&ver=nys'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Pintupi-Luritja&ver=piu2006'>Luritja Bible</a></td><td><a href='/?type=cover&lang=Pintupi-Luritja&ver=piu2006'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Pitjantjatjara&ver=pjt'>Pitjantjatjara Shorter Bible</a></td><td><a href='/?type=cover&lang=Pitjantjatjara&ver=pjt'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Rembarunga&ver=rmb'>Rembarrnga Christmas Story</a></td><td><a href='/?type=cover&lang=Rembarunga&ver=rmb'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Thayore&ver=thd'>Thayorre Bible Portions</a></td><td><a href='/?type=cover&lang=Thayore&ver=thd'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Tiwi&ver=tiw'>Tiwi Gospels</a></td><td><a href='/?type=cover&lang=Tiwi&ver=tiw'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Torres-Strait-Creole&ver=tcs'>Yumplatok Bible</a></td><td><a href='/?type=cover&lang=Torres-Strait-Creole&ver=tcs'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Walmajarri&ver=wmt'>Walmajarri Bible</a></td><td><a href='/?type=cover&lang=Walmajarri&ver=wmt'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Warlpiri&ver=wbp'>Warlpiri Bible</a></td><td><a href='/?type=cover&lang=Warlpiri&ver=wbp'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Wik-Mungkan&ver=wim'>Wik-Mungkan NT</a></td><td><a href='/?type=cover&lang=Wik-Mungkan&ver=wim'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Worrorra&ver=wro'>Worrorra Mark and Luke</a></td><td><a href='/?type=cover&lang=Worrorra&ver=wro'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Yanyuwa&ver=jao'>Yanyuwa Bible portions</a></td><td><a href='/?type=cover&lang=Yanyuwa&ver=jao'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Yindjibarndi&ver=yij'>Yindjibarndi Luke</a></td><td><a href='/?type=cover&lang=Yindjibarndi&ver=yij'>Cover</a></td></tr>
+				<tr><td rowspan=1><img src='flags/gu.png'><br>Guam</td><td><a href='/?type=text&lang=Chamorro&ver=cha'>Chamorro Gospels, Acts, and Psalms</a></td><td><a href='/?type=cover&lang=Chamorro&ver=cha'>Cover</a></td></tr>
+				<tr><td rowspan=24><img src='flags/id.png'><br>Indonesia</td><td><a href='/?type=text&lang=Alune&ver=alpNT'>Alune NT</a></td><td><a href='/?type=cover&lang=Alune&ver=alpNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Amarasi&ver=aaz'>Amarasi Bible</a></td><td><a href='/?type=cover&lang=Amarasi&ver=aaz'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Ambai&ver=amk'>Ambai NT</a></td><td><a href='/?type=cover&lang=Ambai&ver=amk'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Balantak&ver=blzNT'>Balantak NT</a></td><td><a href='/?type=cover&lang=Balantak&ver=blzNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Bambam&ver=ptu'>Bambam Bible</a></td><td><a href='/?type=cover&lang=Bambam&ver=ptu'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Blagar&ver=beu'>Pura Bible</a></td><td><a href='/?type=cover&lang=Blagar&ver=beu'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Dela-Oenale&ver=row'>Rote Dela Bible</a></td><td><a href='/?type=cover&lang=Dela-Oenale&ver=row'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Dhao&ver=nfa'>Dhao Bible</a></td><td><a href='/?type=cover&lang=Dhao&ver=nfa'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Hawu&ver=hvn'>Hawu Mark</a></td><td><a href='/?type=cover&lang=Hawu&ver=hvn'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Helong&ver=hegNTpo'>Helong Bible</a></td><td><a href='/?type=cover&lang=Helong&ver=hegNTpo'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Indonesian&ver=ind'>Indonesian Bible (TSI)</a></td><td><a href='/?type=cover&lang=Indonesian&ver=ind'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Indonesian&ver=indags'>Indonesian Bible for All</a></td><td><a href='/?type=cover&lang=Indonesian&ver=indags'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Indonesian&ver=indayt'>Indonesian AYT Bible</a></td><td><a href='/?type=cover&lang=Indonesian&ver=indayt'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Kisar&ver=kjeNT'>Kisar NT</a></td><td><a href='/?type=cover&lang=Kisar&ver=kjeNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Kupang-Malay&ver=mkn'>Kupang Malay Bible</a></td><td><a href='/?type=cover&lang=Kupang-Malay&ver=mkn'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Lole&ver=llg'>Rote Lole Bible</a></td><td><a href='/?type=cover&lang=Lole&ver=llg'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Luang&ver=lex'>Luang Bible</a></td><td><a href='/?type=cover&lang=Luang&ver=lex'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Mamasa&ver=mqjNT'>Mamasa NT</a></td><td><a href='/?type=cover&lang=Mamasa&ver=mqjNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Nggem&ver=nbq'>Nggem NT</a></td><td><a href='/?type=cover&lang=Nggem&ver=nbq'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Rikou&ver=rgu'>Rote Rikou Bible</a></td><td><a href='/?type=cover&lang=Rikou&ver=rgu'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Tetun&ver=tet'>Tetun Bible</a></td><td><a href='/?type=cover&lang=Tetun&ver=tet'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Tii&ver=txq'>Rote Tii Bible</a></td><td><a href='/?type=cover&lang=Tii&ver=txq'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Yale-Kosarek&ver=kkl'>Mek Kosarek Bible</a></td><td><a href='/?type=cover&lang=Yale-Kosarek&ver=kkl'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Yawa&ver=yvaNT'>Yawa NT</a></td><td><a href='/?type=cover&lang=Yawa&ver=yvaNT'>Cover</a></td></tr>
+				<tr><td rowspan=1><img src='flags/my.png'><br>Malaysia</td><td><a href='/?type=text&lang=Malay&ver=zlmKSZI'>Contextualized Malay NT</a></td><td><a href='/?type=cover&lang=Malay&ver=zlmKSZI'>Cover</a></td></tr>
+				<tr><td rowspan=10><img src='flags/fm.png'><br>Micronesia</td><td><a href='/?type=text&lang=Chuukese&ver=chk'>Chuukese Bible</a></td><td><a href='/?type=cover&lang=Chuukese&ver=chk'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Kapingamarangi&ver=kpg'>Kapingamarangi Bible</a></td><td><a href='/?type=cover&lang=Kapingamarangi&ver=kpg'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Kosraean&ver=kos'>Kosraean Bible</a></td><td><a href='/?type=cover&lang=Kosraean&ver=kos'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Mokilese&ver=mkj'>Mokilese Bible</a></td><td><a href='/?type=cover&lang=Mokilese&ver=mkj'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Pohnpeian&ver=pon'>Pohnpeian NT & Psalms, old alphabet</a></td><td><a href='/?type=cover&lang=Pohnpeian&ver=pon'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Pohnpeian&ver=pon-pdn'>Pohnpeian NT & Psalms, new alphabet</a></td><td><a href='/?type=cover&lang=Pohnpeian&ver=pon-pdn'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Pohnpeian&ver=pon2006'>Pohnpeian Bible 2006</a></td><td><a href='/?type=cover&lang=Pohnpeian&ver=pon2006'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Pohnpeian&ver=pon2006a'>Pohnpeian Bible with Apocrypha 2006</a></td><td><a href='/?type=cover&lang=Pohnpeian&ver=pon2006a'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Ulithian&ver=uli'>Ulithian NT</a></td><td><a href='/?type=cover&lang=Ulithian&ver=uli'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Yapese&ver=yap'>Yapese Bible</a></td><td><a href='/?type=cover&lang=Yapese&ver=yap'>Cover</a></td></tr>
+				<tr><td rowspan=1><img src='flags/nc.png'><br>New Caledonia</td><td><a href='/?type=text&lang=Paic_&ver=priNT'>Paicî NT</a></td><td><a href='/?type=cover&lang=Paic_&ver=priNT'>Cover</a></td></tr>
+				<tr><td rowspan=289><img src='flags/pg.png'><br>Papua New Guinea</td><td><a href='/?type=text&lang=Abau&ver=aau'>Abau NT</a></td><td><a href='/?type=cover&lang=Abau&ver=aau'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Adzera&ver=adz'>Adzera Bible</a></td><td><a href='/?type=cover&lang=Adzera&ver=adz'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Agarabi&ver=agd'>Agarabi NT</a></td><td><a href='/?type=cover&lang=Agarabi&ver=agd'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Akukem&ver=spm'>Published Mark & Acts</a></td><td><a href='/?type=cover&lang=Akukem&ver=spm'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Alamblak&ver=amp'>Alamblak NT</a></td><td><a href='/?type=cover&lang=Alamblak&ver=amp'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Alekano-or-Gahuku&ver=gah'>Alekano Bible</a></td><td><a href='/?type=cover&lang=Alekano-or-Gahuku&ver=gah'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Ama&ver=amm'>Ama NT</a></td><td><a href='/?type=cover&lang=Ama&ver=amm'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Amanab&ver=amn-amanab'>Amanab NT</a></td><td><a href='/?type=cover&lang=Amanab&ver=amn-amanab'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Amanab&ver=amn-n'>Amanab Naineri NT</a></td><td><a href='/?type=cover&lang=Amanab&ver=amn-n'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Ambulas&ver=abt-maprik'>Ambulas Maprik NT</a></td><td><a href='/?type=cover&lang=Ambulas&ver=abt-maprik'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Amele&ver=aey'>Amele Genesis</a></td><td><a href='/?type=cover&lang=Amele&ver=aey'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Aneme-Wake&ver=aby'>Aneme Wake NT</a></td><td><a href='/?type=cover&lang=Aneme-Wake&ver=aby'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Angaataha&ver=agm'>Angaataha NT</a></td><td><a href='/?type=cover&lang=Angaataha&ver=agm'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Angor&ver=agg'>Angor NT</a></td><td><a href='/?type=cover&lang=Angor&ver=agg'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Anjam&ver=boj'>Anjam NT 2000</a></td><td><a href='/?type=cover&lang=Anjam&ver=boj'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Anjam&ver=boj2014'>Anjam NT 2014</a></td><td><a href='/?type=cover&lang=Anjam&ver=boj2014'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Ankave&ver=aak'>Minaifia NT</a></td><td><a href='/?type=cover&lang=Ankave&ver=aak'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Anuki&ver=aui'>Anuki Bible Portions</a></td><td><a href='/?type=cover&lang=Anuki&ver=aui'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Apal&ver=ena'>Apali NT</a></td><td><a href='/?type=cover&lang=Apal&ver=ena'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Arapesh&ver=aon'>Arapesh NT</a></td><td><a href='/?type=cover&lang=Arapesh&ver=aon'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Are&ver=mwc'>Are Bible</a></td><td><a href='/?type=cover&lang=Are&ver=mwc'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Arop-Lokep&ver=apr'>Arop-Lokep</a></td><td><a href='/?type=cover&lang=Arop-Lokep&ver=apr'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Aruamu&ver=msy'>Aruamu NT</a></td><td><a href='/?type=cover&lang=Aruamu&ver=msy'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Aruamu&ver=msy2020'>Aruamu Bible</a></td><td><a href='/?type=cover&lang=Aruamu&ver=msy2020'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Au&ver=avt'>Au NT</a></td><td><a href='/?type=cover&lang=Au&ver=avt'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Auhelawa&ver=kud'>'Auhelawa NT</a></td><td><a href='/?type=cover&lang=Auhelawa&ver=kud'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Auhelawa&ver=kud2014'>’Auhelawa: Yaubada Yana Walo Yemidi Vauvauna New Testament</a></td><td><a href='/?type=cover&lang=Auhelawa&ver=kud2014'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Awa&ver=awb'>Awa NT</a></td><td><a href='/?type=cover&lang=Awa&ver=awb'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Awara&ver=awx'>Awara Bible portions</a></td><td><a href='/?type=cover&lang=Awara&ver=awx'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Awiyaana&ver=auy'>Awiyaana NT</a></td><td><a href='/?type=cover&lang=Awiyaana&ver=auy'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Barai&ver=bbb'>Barai Bible</a></td><td><a href='/?type=cover&lang=Barai&ver=bbb'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Bargam&ver=mlp'>Bargam NT</a></td><td><a href='/?type=cover&lang=Bargam&ver=mlp'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Bariai&ver=bch'>Bariai Bible</a></td><td><a href='/?type=cover&lang=Bariai&ver=bch'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Barok&ver=bjk'>Barok NT</a></td><td><a href='/?type=cover&lang=Barok&ver=bjk'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Baruga&ver=bjz'>Baruga NT</a></td><td><a href='/?type=cover&lang=Baruga&ver=bjz'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Baruya&ver=byr'>Baruya NT+Genesis</a></td><td><a href='/?type=cover&lang=Baruya&ver=byr'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Bau&ver=bbd'>Bau Bible Story</a></td><td><a href='/?type=cover&lang=Bau&ver=bbd'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Beami&ver=beo'>Bedamuni Bible</a></td><td><a href='/?type=cover&lang=Beami&ver=beo'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Benabena&ver=bef'>Benabena NT</a></td><td><a href='/?type=cover&lang=Benabena&ver=bef'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Biangai&ver=big'>Biangai NT</a></td><td><a href='/?type=cover&lang=Biangai&ver=big'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Biangai&ver=big2013'>New Testament in Biangai</a></td><td><a href='/?type=cover&lang=Biangai&ver=big2013'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Bimin&ver=bhl'>Bimin NT</a></td><td><a href='/?type=cover&lang=Bimin&ver=bhl'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Binandere&ver=bhg'>Binandere NT</a></td><td><a href='/?type=cover&lang=Binandere&ver=bhg'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Bine&ver=bon'>Bine NT</a></td><td><a href='/?type=cover&lang=Bine&ver=bon'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Binumarien&ver=bjr'>Binumarien Bible</a></td><td><a href='/?type=cover&lang=Binumarien&ver=bjr'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Bo-Ung&ver=mux'>Bo-Ung NT</a></td><td><a href='/?type=cover&lang=Bo-Ung&ver=mux'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Bola&ver=bnp'>Bola Bible</a></td><td><a href='/?type=cover&lang=Bola&ver=bnp'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Borei&ver=gai'>New Testament in Mborena Kam language</a></td><td><a href='/?type=cover&lang=Borei&ver=gai'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Borong&ver=ksr'>Borong NT + OT portions</a></td><td><a href='/?type=cover&lang=Borong&ver=ksr'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Buang&ver=bzh'>Buang NT</a></td><td><a href='/?type=cover&lang=Buang&ver=bzh'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Buang-Mangga&ver=mmo'>Mangga Buang NT</a></td><td><a href='/?type=cover&lang=Buang-Mangga&ver=mmo'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Buhutu&ver=bxh'>Buhutu Bible</a></td><td><a href='/?type=cover&lang=Buhutu&ver=bxh'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Bukawa&ver=buk'>Bukawa NT</a></td><td><a href='/?type=cover&lang=Bukawa&ver=buk'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Bukiyip&ver=apeB'>Bukiyip NT</a></td><td><a href='/?type=cover&lang=Bukiyip&ver=apeB'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Bukiyip&ver=apec'>Coastal Arapesh NT</a></td><td><a href='/?type=cover&lang=Bukiyip&ver=apec'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Bunama&ver=bdd'>Bunama NT</a></td><td><a href='/?type=cover&lang=Bunama&ver=bdd'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Bwanabwana&ver=tte'>Bwanabwana NT</a></td><td><a href='/?type=cover&lang=Bwanabwana&ver=tte'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Bwanabwana&ver=tteo'>Bwanabwana OT</a></td><td><a href='/?type=cover&lang=Bwanabwana&ver=tteo'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Chuave&ver=cjv'>Chuave NT</a></td><td><a href='/?type=cover&lang=Chuave&ver=cjv'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Dadibi&ver=mps'>Dadibi Bible</a></td><td><a href='/?type=cover&lang=Dadibi&ver=mps'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Daga&ver=dgz'>Daga Bible</a></td><td><a href='/?type=cover&lang=Daga&ver=dgz'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Dano&ver=aso'>Dano NT</a></td><td><a href='/?type=cover&lang=Dano&ver=aso'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Dawawa&ver=dww'>Dawawa NT</a></td><td><a href='/?type=cover&lang=Dawawa&ver=dww'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Dedua&ver=ded'>Dedua NT+Psalms</a></td><td><a href='/?type=cover&lang=Dedua&ver=ded'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Dobu&ver=dob'>Dobu NT</a></td><td><a href='/?type=cover&lang=Dobu&ver=dob'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Doromu-Koki&ver=kqc'>Doromu-Koki Bible</a></td><td><a href='/?type=cover&lang=Doromu-Koki&ver=kqc'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=East-Kewa&ver=kjs'>East Kewa NT</a></td><td><a href='/?type=cover&lang=East-Kewa&ver=kjs'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Edolo&ver=etr'>Edolo Bible</a></td><td><a href='/?type=cover&lang=Edolo&ver=etr'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Enga&ver=enq2'>Enga NT</a></td><td><a href='/?type=cover&lang=Enga&ver=enq2'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Ese-or-Managalasi&ver=mcq'>Managalasi NT</a></td><td><a href='/?type=cover&lang=Ese-or-Managalasi&ver=mcq'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Ewage-Notu&ver=nou'>Ewage-Notu NT</a></td><td><a href='/?type=cover&lang=Ewage-Notu&ver=nou'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Faiwol&ver=fai'>Faiwol NT</a></td><td><a href='/?type=cover&lang=Faiwol&ver=fai'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Fanamaket&ver=bjp'>Fanamaket NT</a></td><td><a href='/?type=cover&lang=Fanamaket&ver=bjp'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Fasu&ver=faa'>Fasu NT</a></td><td><a href='/?type=cover&lang=Fasu&ver=faa'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Filifita-dialect-of-Mufian&ver=aoj-filifita'>Filifita NT</a></td><td><a href='/?type=cover&lang=Filifita-dialect-of-Mufian&ver=aoj-filifita'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Folopa&ver=ppo'>Folopa NT</a></td><td><a href='/?type=cover&lang=Folopa&ver=ppo'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Fore&ver=for'>Fore NT</a></td><td><a href='/?type=cover&lang=Fore&ver=for'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Gapapaiwa&ver=pwg'>Gapapaiwa NT</a></td><td><a href='/?type=cover&lang=Gapapaiwa&ver=pwg'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Ghayavi&ver=bmk'>Ghayavi Mark</a></td><td><a href='/?type=cover&lang=Ghayavi&ver=bmk'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Girawa&ver=bbr'>Girawa NT</a></td><td><a href='/?type=cover&lang=Girawa&ver=bbr'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Girawa&ver=bbr2013'>New Testament in Girawa</a></td><td><a href='/?type=cover&lang=Girawa&ver=bbr2013'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Gizrra&ver=tof'>Gizrra Bible</a></td><td><a href='/?type=cover&lang=Gizrra&ver=tof'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Golin&ver=gvf'>Golin NT</a></td><td><a href='/?type=cover&lang=Golin&ver=gvf'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Guhu-Samane&ver=ghs'>Guhu-Samane NT</a></td><td><a href='/?type=cover&lang=Guhu-Samane&ver=ghs'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Gumawana&ver=gvs'>Gumawana Bible</a></td><td><a href='/?type=cover&lang=Gumawana&ver=gvs'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Gwahatike&ver=dah'>Gwahatike NT</a></td><td><a href='/?type=cover&lang=Gwahatike&ver=dah'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Halia&ver=hla'>Halia NT</a></td><td><a href='/?type=cover&lang=Halia&ver=hla'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Hanga-Hundi&ver=wos'>Hanga Hundi Bible</a></td><td><a href='/?type=cover&lang=Hanga-Hundi&ver=wos'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Haruai&ver=tmd'>Haruai NT</a></td><td><a href='/?type=cover&lang=Haruai&ver=tmd'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Huli&ver=hui'>Huli Bible</a></td><td><a href='/?type=cover&lang=Huli&ver=hui'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Iamalele&ver=yml'>Iamalele NT</a></td><td><a href='/?type=cover&lang=Iamalele&ver=yml'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Iatmul&ver=ian'>Iatmul NT</a></td><td><a href='/?type=cover&lang=Iatmul&ver=ian'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Iduna&ver=viv'>Iduna NT</a></td><td><a href='/?type=cover&lang=Iduna&ver=viv'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Imbo-Ungu&ver=imo'>Imbo Ungu NT</a></td><td><a href='/?type=cover&lang=Imbo-Ungu&ver=imo'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Inoke-Yate&ver=ino'>Inoke-Yate NT</a></td><td><a href='/?type=cover&lang=Inoke-Yate&ver=ino'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Inoke-Yate&ver=ino2013'>New Testament in Inoke-Yate</a></td><td><a href='/?type=cover&lang=Inoke-Yate&ver=ino2013'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Ipili&ver=ipi'>Ipili Bible</a></td><td><a href='/?type=cover&lang=Ipili&ver=ipi'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Iwal&ver=kbm'>Iwal NT</a></td><td><a href='/?type=cover&lang=Iwal&ver=kbm'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Iwam-Sepik&ver=iws'>Sepik Iwam NT</a></td><td><a href='/?type=cover&lang=Iwam-Sepik&ver=iws'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Iyo&ver=nca'>Iyo NT</a></td><td><a href='/?type=cover&lang=Iyo&ver=nca'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Kakabai&ver=kqf'>Kakabai Bible portions</a></td><td><a href='/?type=cover&lang=Kakabai&ver=kqf'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Kalam&ver=kmh'>Kalam NT</a></td><td><a href='/?type=cover&lang=Kalam&ver=kmh'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Kaluli&ver=bco'>Kaluli Bible portions</a></td><td><a href='/?type=cover&lang=Kaluli&ver=bco'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Kamano&ver=kbq'>Kamano-Kafe Bible</a></td><td><a href='/?type=cover&lang=Kamano&ver=kbq'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Kamasau&ver=kms'>Kamasau NT</a></td><td><a href='/?type=cover&lang=Kamasau&ver=kms'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Kamula&ver=xla'>Kamula Bible</a></td><td><a href='/?type=cover&lang=Kamula&ver=xla'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Kanasi&ver=soq'>Kanasi NT</a></td><td><a href='/?type=cover&lang=Kanasi&ver=soq'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Kandas&ver=kqw'>Kandas NT</a></td><td><a href='/?type=cover&lang=Kandas&ver=kqw'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Kandawo&ver=gam'>Kandawo NT</a></td><td><a href='/?type=cover&lang=Kandawo&ver=gam'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Kaninuwa&ver=wat'>Kaninuwa Bible</a></td><td><a href='/?type=cover&lang=Kaninuwa&ver=wat'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Kanite&ver=kmu'>Kanite NT</a></td><td><a href='/?type=cover&lang=Kanite&ver=kmu'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Kara&ver=leu'>Kara NT</a></td><td><a href='/?type=cover&lang=Kara&ver=leu'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Karkar-Yuri&ver=yuj'>Karkar-Yuri NT</a></td><td><a href='/?type=cover&lang=Karkar-Yuri&ver=yuj'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Kasua&ver=khs'>Kasua NT</a></td><td><a href='/?type=cover&lang=Kasua&ver=khs'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Kate&ver=kmg'>Kâte NT</a></td><td><a href='/?type=cover&lang=Kate&ver=kmg'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Kauana&ver=ksd'>Kauana Bible</a></td><td><a href='/?type=cover&lang=Kauana&ver=ksd'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Keapara&ver=khz'>Keapara Kalo NT</a></td><td><a href='/?type=cover&lang=Keapara&ver=khz'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Kein&ver=bmh'>Kein NT</a></td><td><a href='/?type=cover&lang=Kein&ver=bmh'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Keyagana&ver=kyg'>Keyagana Bible</a></td><td><a href='/?type=cover&lang=Keyagana&ver=kyg'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Kilivila&ver=kij'>Kilivila: Buki Pilabumaboma Kabutubogwa Deli Kabutuvau Bible</a></td><td><a href='/?type=cover&lang=Kilivila&ver=kij'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Kire&ver=geb'>Kire NT</a></td><td><a href='/?type=cover&lang=Kire&ver=geb'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Kiwai-Northeast&ver=kiw'>Kope Luke</a></td><td><a href='/?type=cover&lang=Kiwai-Northeast&ver=kiw'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Kobon&ver=kpw'>Kobon NT</a></td><td><a href='/?type=cover&lang=Kobon&ver=kpw'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Koiali-Mountain&ver=kpx'>Mountain Koiali NT</a></td><td><a href='/?type=cover&lang=Koiali-Mountain&ver=kpx'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Komba&ver=kpf'>Komba NT</a></td><td><a href='/?type=cover&lang=Komba&ver=kpf'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Kombio&ver=xbi-w'>Kombio Wampukuamp Bible</a></td><td><a href='/?type=cover&lang=Kombio&ver=xbi-w'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Kombio&ver=xbi-y'>Kombio Yanimoi Bible</a></td><td><a href='/?type=cover&lang=Kombio&ver=xbi-y'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Konai&ver=kxw'>Konai NT</a></td><td><a href='/?type=cover&lang=Konai&ver=kxw'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Korafe&ver=kpr'>Korafe NT+Psalms</a></td><td><a href='/?type=cover&lang=Korafe&ver=kpr'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Kosena&ver=kze'>Kosena NT</a></td><td><a href='/?type=cover&lang=Kosena&ver=kze'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Kube&ver=kgf'>Kube NT+Psalms</a></td><td><a href='/?type=cover&lang=Kube&ver=kgf'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Kuman&ver=kue'>Kuman NT</a></td><td><a href='/?type=cover&lang=Kuman&ver=kue'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Kuni-Boazi&ver=kvg'>Kuni-Boazi Bible</a></td><td><a href='/?type=cover&lang=Kuni-Boazi&ver=kvg'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Kunimaipa&ver=kup'>Kunimaipa NT</a></td><td><a href='/?type=cover&lang=Kunimaipa&ver=kup'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Kuot&ver=kto'>Kuot NT</a></td><td><a href='/?type=cover&lang=Kuot&ver=kto'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Kurti&ver=ktm'>Kurti Scripture Portions</a></td><td><a href='/?type=cover&lang=Kurti&ver=ktm'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Kwanga&ver=kwj'>Kwanga NT</a></td><td><a href='/?type=cover&lang=Kwanga&ver=kwj'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Kwoma&ver=kmo'>Washkuk NT</a></td><td><a href='/?type=cover&lang=Kwoma&ver=kmo'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Kyaka-Enga&ver=kyc'>Kyaka Enga Bible</a></td><td><a href='/?type=cover&lang=Kyaka-Enga&ver=kyc'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Kyenele&ver=kql'>Kyenele Mark</a></td><td><a href='/?type=cover&lang=Kyenele&ver=kql'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Label&ver=lbb'>Label NT</a></td><td><a href='/?type=cover&lang=Label&ver=lbb'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Lote&ver=uvl'>Lote Bible</a></td><td><a href='/?type=cover&lang=Lote&ver=uvl'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Madak&ver=mmx'>Madak NT+Psalms</a></td><td><a href='/?type=cover&lang=Madak&ver=mmx'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Maiadomu&ver=mzz'>Maiadomu Mark</a></td><td><a href='/?type=cover&lang=Maiadomu&ver=mzz'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Maiwa&ver=mti'>Maiwa NT</a></td><td><a href='/?type=cover&lang=Maiwa&ver=mti'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Malei-Hote&ver=hot'>Malei-Hote NT</a></td><td><a href='/?type=cover&lang=Malei-Hote&ver=hot'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Manam&ver=mva'>Manam NT</a></td><td><a href='/?type=cover&lang=Manam&ver=mva'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Manambu&ver=mle'>Manabu NT</a></td><td><a href='/?type=cover&lang=Manambu&ver=mle'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Mandara&ver=tbf'>Mandara Bible</a></td><td><a href='/?type=cover&lang=Mandara&ver=tbf'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Mangseng&ver=mbh'>Mangseng NT</a></td><td><a href='/?type=cover&lang=Mangseng&ver=mbh'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Mape&ver=mlh'>Mape NT</a></td><td><a href='/?type=cover&lang=Mape&ver=mlh'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Marik&ver=dad'>Marik NT</a></td><td><a href='/?type=cover&lang=Marik&ver=dad'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Mato&ver=met'>Mato Bible</a></td><td><a href='/?type=cover&lang=Mato&ver=met'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Mauwake&ver=mhl'>Mauwake NT</a></td><td><a href='/?type=cover&lang=Mauwake&ver=mhl'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Mbula&ver=mna'>Mbula Bible</a></td><td><a href='/?type=cover&lang=Mbula&ver=mna'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Mekeo&ver=mek'>Mekeo NT</a></td><td><a href='/?type=cover&lang=Mekeo&ver=mek'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Melanesian-Pidgin&ver=tpi'>Tok Pisin Bible with Deuterocanon</a></td><td><a href='/?type=cover&lang=Melanesian-Pidgin&ver=tpi'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Melanesian-Pidgin&ver=tpiOTNT'>Tok Pisin Bible</a></td><td><a href='/?type=cover&lang=Melanesian-Pidgin&ver=tpiOTNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Melpa&ver=med'>Melpa NT</a></td><td><a href='/?type=cover&lang=Melpa&ver=med'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Mende&ver=sim'>Mende NT</a></td><td><a href='/?type=cover&lang=Mende&ver=sim'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Mengen&ver=mee'>Mengen NT</a></td><td><a href='/?type=cover&lang=Mengen&ver=mee'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Menya&ver=mcr'>Menya NT</a></td><td><a href='/?type=cover&lang=Menya&ver=mcr'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Mian&ver=mpt'>Mian NT</a></td><td><a href='/?type=cover&lang=Mian&ver=mpt'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Migabac&ver=mpp'>Migabac Bible</a></td><td><a href='/?type=cover&lang=Migabac&ver=mpp'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Minaveha&ver=mvn'>Minaveha NT</a></td><td><a href='/?type=cover&lang=Minaveha&ver=mvn'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Miniafia&ver=aai'>Minaifia NT</a></td><td><a href='/?type=cover&lang=Miniafia&ver=aai'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Minimib-dialect-of-Kalam&ver=kmh-m'>Minimib NT</a></td><td><a href='/?type=cover&lang=Minimib-dialect-of-Kalam&ver=kmh-m'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Misima-Paneati&ver=mpx'>Misima-Paneati Bible</a></td><td><a href='/?type=cover&lang=Misima-Paneati&ver=mpx'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Molima&ver=mox'>Molima NT</a></td><td><a href='/?type=cover&lang=Molima&ver=mox'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Motu&ver=meu'>Motu Bible</a></td><td><a href='/?type=cover&lang=Motu&ver=meu'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Motu-Hiri&ver=hmo'>Hiri Motu Bible</a></td><td><a href='/?type=cover&lang=Motu-Hiri&ver=hmo'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Mufian&ver=aoj'>Mufian NT</a></td><td><a href='/?type=cover&lang=Mufian&ver=aoj'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Mum&ver=kqa'>Mum NT Portions</a></td><td><a href='/?type=cover&lang=Mum&ver=kqa'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Mussau-Emira&ver=emi'>Mussau-Emira Bible</a></td><td><a href='/?type=cover&lang=Mussau-Emira&ver=emi'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Mutu&ver=tuc-o'>Saveeng Oov Bible</a></td><td><a href='/?type=cover&lang=Mutu&ver=tuc-o'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Mutu&ver=tuc-t'>Saveeng Tuam Bible</a></td><td><a href='/?type=cover&lang=Mutu&ver=tuc-t'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Muyuw&ver=myw'>Muyuw NT</a></td><td><a href='/?type=cover&lang=Muyuw&ver=myw'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Naasioi&ver=nas'>Naasioi NT</a></td><td><a href='/?type=cover&lang=Naasioi&ver=nas'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Nabak&ver=naf'>Nabak NT</a></td><td><a href='/?type=cover&lang=Nabak&ver=naf'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Nakanai&ver=nak'>Nakanai NT</a></td><td><a href='/?type=cover&lang=Nakanai&ver=nak'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Nali&ver=nss'>Nali Bible</a></td><td><a href='/?type=cover&lang=Nali&ver=nss'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Nalik&ver=nal'>Nalik NT</a></td><td><a href='/?type=cover&lang=Nalik&ver=nal'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Namiae&ver=nvm'>Namiai NT</a></td><td><a href='/?type=cover&lang=Namiae&ver=nvm'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Nehan&ver=nsn'>Nehan NT</a></td><td><a href='/?type=cover&lang=Nehan&ver=nsn'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Nek&ver=nif'>Nek NT</a></td><td><a href='/?type=cover&lang=Nek&ver=nif'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Nend&ver=anh'>Mark in Nend</a></td><td><a href='/?type=cover&lang=Nend&ver=anh'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Nii&ver=nii'>Nii NT</a></td><td><a href='/?type=cover&lang=Nii&ver=nii'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Nimoa&ver=nmws'>Saisai Matthew + Ephesians</a></td><td><a href='/?type=cover&lang=Nimoa&ver=nmws'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Nobonob&ver=gaw'>Nobnob NT</a></td><td><a href='/?type=cover&lang=Nobonob&ver=gaw'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=North-Tairora&ver=tbg-a'>North Tairora Arau Bible</a></td><td><a href='/?type=cover&lang=North-Tairora&ver=tbg-a'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Nukna&ver=klt'>Nukna Bible</a></td><td><a href='/?type=cover&lang=Nukna&ver=klt'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Nukumanu&ver=nuq'>Nukumanu NT</a></td><td><a href='/?type=cover&lang=Nukumanu&ver=nuq'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Numanggang&ver=nop'>Numanggang Bible</a></td><td><a href='/?type=cover&lang=Numanggang&ver=nop'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Nyindrou&ver=lid'>Nyndrou NT + OT portions</a></td><td><a href='/?type=cover&lang=Nyindrou&ver=lid'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Odoodee&ver=kkc'>Odoodee partial NT</a></td><td><a href='/?type=cover&lang=Odoodee&ver=kkc'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Ogea&ver=eri'>Ogea NT</a></td><td><a href='/?type=cover&lang=Ogea&ver=eri'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Oksapmin&ver=opm'>Oksapmin NT</a></td><td><a href='/?type=cover&lang=Oksapmin&ver=opm'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Olo&ver=ong'>Olo NT</a></td><td><a href='/?type=cover&lang=Olo&ver=ong'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Omie&ver=aom'>Omie NT</a></td><td><a href='/?type=cover&lang=Omie&ver=aom'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Omwunra-Toqura-or-South-Tairora&ver=omw-v'>South Tairora Veqaura NT</a></td><td><a href='/?type=cover&lang=Omwunra-Toqura-or-South-Tairora&ver=omw-v'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Ono&ver=ons'>Ono NT</a></td><td><a href='/?type=cover&lang=Ono&ver=ons'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Orokaiva&ver=okv'>Orokaiva Etija NT</a></td><td><a href='/?type=cover&lang=Orokaiva&ver=okv'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Orokaiva&ver=okvh'>Orokaiva Ehija NT</a></td><td><a href='/?type=cover&lang=Orokaiva&ver=okvh'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Patep&ver=ptp'>Patep NT</a></td><td><a href='/?type=cover&lang=Patep&ver=ptp'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Patpatar&ver=gfk'>Patpatar NT and Psalms</a></td><td><a href='/?type=cover&lang=Patpatar&ver=gfk'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Patpatar&ver=gfkh'>Hinsaal NT</a></td><td><a href='/?type=cover&lang=Patpatar&ver=gfkh'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Patpatar&ver=gfks'>Sokarek NT</a></td><td><a href='/?type=cover&lang=Patpatar&ver=gfks'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Pele-Ata&ver=ata'>Ata Bible</a></td><td><a href='/?type=cover&lang=Pele-Ata&ver=ata'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Qaqet&ver=byx'>Qaqet Bible</a></td><td><a href='/?type=cover&lang=Qaqet&ver=byx'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Ramoaaina&ver=rai'>Ramoaaina NT</a></td><td><a href='/?type=cover&lang=Ramoaaina&ver=rai'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Rawa&ver=rwo-karo'>Rawa Karo NT</a></td><td><a href='/?type=cover&lang=Rawa&ver=rwo-karo'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Rawa&ver=rwo-rawa'>Rawa NT</a></td><td><a href='/?type=cover&lang=Rawa&ver=rwo-rawa'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Rotokas&ver=roo'>Rotokas NT</a></td><td><a href='/?type=cover&lang=Rotokas&ver=roo'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Safeyoka&ver=apz'>Ampeeli-Wojokeso NT+Genesis</a></td><td><a href='/?type=cover&lang=Safeyoka&ver=apz'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Saliba&ver=sbe'>Saliba NT</a></td><td><a href='/?type=cover&lang=Saliba&ver=sbe'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Salt-Yui&ver=sll'>Salt-Yui NT</a></td><td><a href='/?type=cover&lang=Salt-Yui&ver=sll'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Sam&ver=snx'>Sam Mark</a></td><td><a href='/?type=cover&lang=Sam&ver=snx'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Saniyo-Hiyewe&ver=sny'>Saniyo-Hiyewe NT</a></td><td><a href='/?type=cover&lang=Saniyo-Hiyewe&ver=sny'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Saposa&ver=sps'>Saposa NT</a></td><td><a href='/?type=cover&lang=Saposa&ver=sps'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Seimat&ver=ssg'>Seimat NT</a></td><td><a href='/?type=cover&lang=Seimat&ver=ssg'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Selepet&ver=spl'>Selepet NT</a></td><td><a href='/?type=cover&lang=Selepet&ver=spl'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Sembeleke&ver=ssx'>Sembeleke Bible</a></td><td><a href='/?type=cover&lang=Sembeleke&ver=ssx'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Siane&ver=snp'>Siane Komongu NT</a></td><td><a href='/?type=cover&lang=Siane&ver=snp'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Siane&ver=snp-lambau'>Siane Lambau NT</a></td><td><a href='/?type=cover&lang=Siane&ver=snp-lambau'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Sinaugoro&ver=snc'>Sinaugoro NT</a></td><td><a href='/?type=cover&lang=Sinaugoro&ver=snc'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Sio&ver=xsi'>Sio NT + Psalms</a></td><td><a href='/?type=cover&lang=Sio&ver=xsi'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Siroi&ver=ssd'>Siroi Bible</a></td><td><a href='/?type=cover&lang=Siroi&ver=ssd'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Somba-Siawari-or-Burum-Mindik&ver=bmu'>Somba-Siawari Bible</a></td><td><a href='/?type=cover&lang=Somba-Siawari-or-Burum-Mindik&ver=bmu'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Sop&ver=urw'>Sop Jonah and Luke</a></td><td><a href='/?type=cover&lang=Sop&ver=urw'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=South-Tairora&ver=omw-a'>South Tairora Aatasara John & Mark</a></td><td><a href='/?type=cover&lang=South-Tairora&ver=omw-a'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Suau&ver=swp'>Suau Bible</a></td><td><a href='/?type=cover&lang=Suau&ver=swp'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Sudest&ver=tgo'>Sudest Bible Portions</a></td><td><a href='/?type=cover&lang=Sudest&ver=tgo'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Suena&ver=sue'>Suena NT</a></td><td><a href='/?type=cover&lang=Suena&ver=sue'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Sulka&ver=sua'>Sulka NT</a></td><td><a href='/?type=cover&lang=Sulka&ver=sua'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Sursurunga&ver=sgz'>Sursurunga NT</a></td><td><a href='/?type=cover&lang=Sursurunga&ver=sgz'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Tabo&ver=knv-aramia'>Tabo Aramia NT</a></td><td><a href='/?type=cover&lang=Tabo&ver=knv-aramia'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Tabo&ver=knv-fly_river'>Tabo Fly River NT</a></td><td><a href='/?type=cover&lang=Tabo&ver=knv-fly_river'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Tai&ver=taw'>Tai NT</a></td><td><a href='/?type=cover&lang=Tai&ver=taw'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Tairora&ver=tbg'>North Tairora</a></td><td><a href='/?type=cover&lang=Tairora&ver=tbg'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Tairora-South&ver=omw'>South Tairora NT</a></td><td><a href='/?type=cover&lang=Tairora-South&ver=omw'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Takia&ver=tbc'>Takia NT</a></td><td><a href='/?type=cover&lang=Takia&ver=tbc'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Takuu&ver=nho'>Takuu NT</a></td><td><a href='/?type=cover&lang=Takuu&ver=nho'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Taupota&ver=tpa'>Taupota Mark</a></td><td><a href='/?type=cover&lang=Taupota&ver=tpa'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Tawala&ver=tbo'>Tawala NT</a></td><td><a href='/?type=cover&lang=Tawala&ver=tbo'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Telefol&ver=tlf'>Telefol NT</a></td><td><a href='/?type=cover&lang=Telefol&ver=tlf'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Tifal&ver=tif'>Tifal NT</a></td><td><a href='/?type=cover&lang=Tifal&ver=tif'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Timbe&ver=tim'>Timbe NT</a></td><td><a href='/?type=cover&lang=Timbe&ver=tim'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Tinputz&ver=tpz'>Tinputz Vasui NT</a></td><td><a href='/?type=cover&lang=Tinputz&ver=tpz'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Tuma-Irumu&ver=iou'>Tuma-Irumu Bible</a></td><td><a href='/?type=cover&lang=Tuma-Irumu&ver=iou'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Tungag&ver=lcm'>Tungag Bible</a></td><td><a href='/?type=cover&lang=Tungag&ver=lcm'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Uare&ver=ksj'>Uare NT</a></td><td><a href='/?type=cover&lang=Uare&ver=ksj'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Ubir&ver=ubr'>Ubir Bible</a></td><td><a href='/?type=cover&lang=Ubir&ver=ubr'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Umanakaina&ver=gdn'>Umanakaina NT</a></td><td><a href='/?type=cover&lang=Umanakaina&ver=gdn'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Umbu-Ungu&ver=ubu-andelale'>Umbu-Ungu Andelale NT</a></td><td><a href='/?type=cover&lang=Umbu-Ungu&ver=ubu-andelale'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Umbu-Ungu&ver=ubu-kala'>Umbu-Ungu Kala NT</a></td><td><a href='/?type=cover&lang=Umbu-Ungu&ver=ubu-kala'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Umbu-Ungu&ver=ubu-nopenge'>Umbu-Ungu No Penge NT</a></td><td><a href='/?type=cover&lang=Umbu-Ungu&ver=ubu-nopenge'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Ura&ver=uro'>Ura NT</a></td><td><a href='/?type=cover&lang=Ura&ver=uro'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Urat&ver=urt'>Urat New Testament</a></td><td><a href='/?type=cover&lang=Urat&ver=urt'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Uri&ver=uvh'>Urii NT</a></td><td><a href='/?type=cover&lang=Uri&ver=uvh'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Urim&ver=uri'>Urim: Wurkapm a Maur Wailen Portions</a></td><td><a href='/?type=cover&lang=Urim&ver=uri'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Usan&ver=wnu'>Usan NT</a></td><td><a href='/?type=cover&lang=Usan&ver=wnu'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Usarufa&ver=usa'>Usarufa Bible</a></td><td><a href='/?type=cover&lang=Usarufa&ver=usa'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Vitu&ver=wiv'>Vitu NT</a></td><td><a href='/?type=cover&lang=Vitu&ver=wiv'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Waffa&ver=waj'>Waffa NT</a></td><td><a href='/?type=cover&lang=Waffa&ver=waj'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Wagi&ver=fad'>Wagi Luke</a></td><td><a href='/?type=cover&lang=Wagi&ver=fad'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Waima&ver=rro'>Waima NT</a></td><td><a href='/?type=cover&lang=Waima&ver=rro'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Wantoat&ver=wnc'>Wantoat NT</a></td><td><a href='/?type=cover&lang=Wantoat&ver=wnc'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Waris&ver=wrs'>Waris Bible</a></td><td><a href='/?type=cover&lang=Waris&ver=wrs'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Waskia&ver=wsk'>Waskia Bible</a></td><td><a href='/?type=cover&lang=Waskia&ver=wsk'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Wedau&ver=wed'>Wedau Mark</a></td><td><a href='/?type=cover&lang=Wedau&ver=wed'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Wedau&ver=wed-topura'>Wedau Topura Mark</a></td><td><a href='/?type=cover&lang=Wedau&ver=wed-topura'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Weri&ver=wer'>Weri NT</a></td><td><a href='/?type=cover&lang=Weri&ver=wer'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=West-Kewa&ver=kew'>West Kewa Bible</a></td><td><a href='/?type=cover&lang=West-Kewa&ver=kew'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Wipi&ver=gdr'>Wipi NT</a></td><td><a href='/?type=cover&lang=Wipi&ver=gdr'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Wiru&ver=wiu'>Witu NT</a></td><td><a href='/?type=cover&lang=Wiru&ver=wiu'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Wosera-Kamu-dialect-of-Ambulas&ver=abt-wosera'>Ambulas Wosera NT</a></td><td><a href='/?type=cover&lang=Wosera-Kamu-dialect-of-Ambulas&ver=abt-wosera'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Wuvalu-Aua&ver=wuv'>Wuvalu-Aua NT</a></td><td><a href='/?type=cover&lang=Wuvalu-Aua&ver=wuv'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Yabem&ver=jae'>Yabem Bible</a></td><td><a href='/?type=cover&lang=Yabem&ver=jae'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Yale&ver=nce'>Portions of the Holy Bible in the Yalë language of Papua New Guinea</a></td><td><a href='/?type=cover&lang=Yale&ver=nce'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Yareba&ver=yrb'>Yareba NT</a></td><td><a href='/?type=cover&lang=Yareba&ver=yrb'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Yau&ver=yuw'>Yau NT</a></td><td><a href='/?type=cover&lang=Yau&ver=yuw'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Yaweyuha&ver=yby'>Yaweyuha NT</a></td><td><a href='/?type=cover&lang=Yaweyuha&ver=yby'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Yele&ver=yle'>Rossel NT</a></td><td><a href='/?type=cover&lang=Yele&ver=yle'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Yessan-Mayo&ver=yss-yamano'>Yessan-Mayo Yamano NT</a></td><td><a href='/?type=cover&lang=Yessan-Mayo&ver=yss-yamano'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Yessan-Mayo&ver=yss-yawu'>Yessan-Mayo Yawu NT</a></td><td><a href='/?type=cover&lang=Yessan-Mayo&ver=yss-yawu'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Yipma&ver=byr-w'>Yipma Wagamwa NT</a></td><td><a href='/?type=cover&lang=Yipma&ver=byr-w'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Yongkom&ver=yon'>Yongkom NT + partial OT</a></td><td><a href='/?type=cover&lang=Yongkom&ver=yon'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Yopno&ver=yut'>Yopno NT & Psalms</a></td><td><a href='/?type=cover&lang=Yopno&ver=yut'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Zia&ver=zia'>Zia NT</a></td><td><a href='/?type=cover&lang=Zia&ver=zia'>Cover</a></td></tr>
+				<tr><td rowspan=31><img src='flags/ph.png'><br>Philippines</td><td><a href='/?type=text&lang=Agta-Casiguran-Dumagat&ver=dgc'>Casiguran Dumagat Agta NT</a></td><td><a href='/?type=cover&lang=Agta-Casiguran-Dumagat&ver=dgc'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Agta-Central-Cagayan&ver=agt'>Central Cagayan Agta</a></td><td><a href='/?type=cover&lang=Agta-Central-Cagayan&ver=agt'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Agutaynen&ver=agn'>Agutaynen NT</a></td><td><a href='/?type=cover&lang=Agutaynen&ver=agn'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Atta-Pamplona&ver=att'>Pamplona Atta NT</a></td><td><a href='/?type=cover&lang=Atta-Pamplona&ver=att'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Ayta-Mag-antsi&ver=sgb'>Mag-antsi Ayta NT</a></td><td><a href='/?type=cover&lang=Ayta-Mag-antsi&ver=sgb'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Balangao&ver=blw'>Balangao NT</a></td><td><a href='/?type=cover&lang=Balangao&ver=blw'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Binukid&ver=bkd'>Binukid NT</a></td><td><a href='/?type=cover&lang=Binukid&ver=bkd'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Blaan-Koronadal&ver=bpr'>Koronadal Blaan NT</a></td><td><a href='/?type=cover&lang=Blaan-Koronadal&ver=bpr'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Blaan-Sarangani&ver=bps'>Sarangani Blaan NT</a></td><td><a href='/?type=cover&lang=Blaan-Sarangani&ver=bps'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Bolinao&ver=smkNT'>Bolinao NT</a></td><td><a href='/?type=cover&lang=Bolinao&ver=smkNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Bontok-Central&ver=lbk'>Central Bontok NT</a></td><td><a href='/?type=cover&lang=Bontok-Central&ver=lbk'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Bontok-Eastern&ver=ebk'>Eastern Bontok NT</a></td><td><a href='/?type=cover&lang=Bontok-Eastern&ver=ebk'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Caluyanun&ver=clu'>Caluyanun NT</a></td><td><a href='/?type=cover&lang=Caluyanun&ver=clu'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Cebuano&ver=cebulb'>Cebuano Bible</a></td><td><a href='/?type=cover&lang=Cebuano&ver=cebulb'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Chavacano&ver=cbk'>Chavacano NT</a></td><td><a href='/?type=cover&lang=Chavacano&ver=cbk'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Ilocano&ver=iloulb'>Ilocano Bible</a></td><td><a href='/?type=cover&lang=Ilocano&ver=iloulb'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Inabaknon&ver=abx'>Inabaknon NT</a></td><td><a href='/?type=cover&lang=Inabaknon&ver=abx'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Kagayanen&ver=cgc'>Kagayanen NT</a></td><td><a href='/?type=cover&lang=Kagayanen&ver=cgc'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Kalinga-Limos&ver=kmk'>Limos Kalinga NT</a></td><td><a href='/?type=cover&lang=Kalinga-Limos&ver=kmk'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Kankanaey&ver=kne'>Kankanaey Bible</a></td><td><a href='/?type=cover&lang=Kankanaey&ver=kne'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Kankanay-Northern&ver=xnn'>New Testament in Kankanay, Northern</a></td><td><a href='/?type=cover&lang=Kankanay-Northern&ver=xnn'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Manobo-Agusan&ver=msmNT'>Agusan Manobo NT</a></td><td><a href='/?type=cover&lang=Manobo-Agusan&ver=msmNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Manobo-Ata&ver=atdNT'>Ata Manobo NT</a></td><td><a href='/?type=cover&lang=Manobo-Ata&ver=atdNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Manobo-Matigsalug&ver=mbtNT'>Matigsalug Manobo NT</a></td><td><a href='/?type=cover&lang=Manobo-Matigsalug&ver=mbtNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Manobo-Obo&ver=oboNT'>Obo Manobo NT</a></td><td><a href='/?type=cover&lang=Manobo-Obo&ver=oboNT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Manobo-Sarangani&ver=mbs'>Sarangani Manobo NT</a></td><td><a href='/?type=cover&lang=Manobo-Sarangani&ver=mbs'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Manobo-Western-Bukidnon&ver=mbbOT'>Western Bukidnon Manobo OT</a></td><td><a href='/?type=cover&lang=Manobo-Western-Bukidnon&ver=mbbOT'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Mansaka&ver=msk'>Mansaka NT</a></td><td><a href='/?type=cover&lang=Mansaka&ver=msk'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Masbatenyo&ver=msb'>Masbatenyo NT</a></td><td><a href='/?type=cover&lang=Masbatenyo&ver=msb'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Tagabawa&ver=bgs'>Tagabawa Bible</a></td><td><a href='/?type=cover&lang=Tagabawa&ver=bgs'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Tagalog&ver=tglulb'>Tagalog Bible</a></td><td><a href='/?type=cover&lang=Tagalog&ver=tglulb'>Cover</a></td></tr>
+				<tr><td rowspan=1><img src='flags/ph.png'><br>Philippines</td><td><a href='/?type=text&lang=Tboli&ver=tblNT'>Tboli NT</a></td><td><a href='/?type=cover&lang=Tboli&ver=tblNT'>Cover</a></td></tr>
+				<tr><td rowspan=2><img src='flags/ph.png'><br>Philippines</td><td><a href='/?type=text&lang=Tiruray&ver=tiy'>Tiruray NT</a></td><td><a href='/?type=cover&lang=Tiruray&ver=tiy'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Yakan&ver=yka'>Yakan Bible</a></td><td><a href='/?type=cover&lang=Yakan&ver=yka'>Cover</a></td></tr>
+				<tr><td rowspan=11><img src='flags/sb.png'><br>Solomon Islands</td><td><a href='/?type=text&lang=Arosi&ver=aia'>Arosi New Testament</a></td><td><a href='/?type=cover&lang=Arosi&ver=aia'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Baeggu&ver=bvd'>Baegu New Testament</a></td><td><a href='/?type=cover&lang=Baeggu&ver=bvd'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Bughotu&ver=bgt'>Bughotu New Testament</a></td><td><a href='/?type=cover&lang=Bughotu&ver=bgt'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Fataleka&ver=far'>Fataleka New Testament</a></td><td><a href='/?type=cover&lang=Fataleka&ver=far'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Gela&ver=nlg'>Gela Bible</a></td><td><a href='/?type=cover&lang=Gela&ver=nlg'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Kwaio&ver=kwd'>Kwaio NT</a></td><td><a href='/?type=cover&lang=Kwaio&ver=kwd'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Kwara_ae&ver=kwf'>Kwara'ae Bible</a></td><td><a href='/?type=cover&lang=Kwara_ae&ver=kwf'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Nat_gu&ver=ntu'>Natqgu NT+Ruth and Psalms</a></td><td><a href='/?type=cover&lang=Nat_gu&ver=ntu'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Roviana&ver=rug'>Roviana Bible</a></td><td><a href='/?type=cover&lang=Roviana&ver=rug'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Sa_a&ver=apb'>Sa'a New Testament</a></td><td><a href='/?type=cover&lang=Sa_a&ver=apb'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Wala&ver=lgl'>Wala New Testament</a></td><td><a href='/?type=cover&lang=Wala&ver=lgl'>Cover</a></td></tr>
+				<tr><td rowspan=2><img src='flags/tl.png'><br>Timor Leste</td><td><a href='/?type=text&lang=Baikeno&ver=bkx'>Baikeno Mark</a></td><td><a href='/?type=cover&lang=Baikeno&ver=bkx'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Tetun-Dili&ver=tdt'>Tetun Dili NT</a></td><td><a href='/?type=cover&lang=Tetun-Dili&ver=tdt'>Cover</a></td></tr>
+				<tr><td rowspan=1><img src='flags/to.png'><br>Tonga</td><td><a href='/?type=text&lang=Tongan&ver=ton'>Revised West Version</a></td><td><a href='/?type=cover&lang=Tongan&ver=ton'>Cover</a></td></tr>
+				<tr><td rowspan=12><img src='flags/vu.png'><br>Vanuatu</td><td><a href='/?type=text&lang=Ambae-East&ver=omb'>Ambae, East: Waratau Siaga Tatuei mo Vilegi (Old Testament)</a></td><td><a href='/?type=cover&lang=Ambae-East&ver=omb'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Ambrym-Southeast&ver=tvk'>Southeast Ambrym Bible portions</a></td><td><a href='/?type=cover&lang=Ambrym-Southeast&ver=tvk'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Baki&ver=bki'>Baki NT</a></td><td><a href='/?type=cover&lang=Baki&ver=bki'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Lewo&ver=lww'>Lewo NT</a></td><td><a href='/?type=cover&lang=Lewo&ver=lww'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Maskelynes&ver=klv'>Maskelynes NT</a></td><td><a href='/?type=cover&lang=Maskelynes&ver=klv'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Nafe&ver=tnk'>Nafe NT</a></td><td><a href='/?type=cover&lang=Nafe&ver=tnk'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=North-Tanna&ver=tnn'>North Tanna NT</a></td><td><a href='/?type=cover&lang=North-Tanna&ver=tnn'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Paama&ver=pma'>Paama Bible</a></td><td><a href='/?type=cover&lang=Paama&ver=pma'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Southwest-Tanna&ver=nwi'>Southwest Tanna NT</a></td><td><a href='/?type=cover&lang=Southwest-Tanna&ver=nwi'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Tangoa&ver=tgp'>Tangoa NT</a></td><td><a href='/?type=cover&lang=Tangoa&ver=tgp'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Uripiv-Wala-Rano-Atchin&ver=upv'>Uripiv New Testament</a></td><td><a href='/?type=cover&lang=Uripiv-Wala-Rano-Atchin&ver=upv'>Cover</a></td></tr>
+				<tr><td><a href='/?type=text&lang=Whitesands&ver=tnp'>Whitesands NT</a></td><td><a href='/?type=cover&lang=Whitesands&ver=tnp'>Cover</a></td></tr>
+				</table>		
+			</div>
+		</div>
+		<div style="font-weight:bold;padding:8px;">
+			<div style="border:solid gray 2px;border-radius:4px;width:auto;padding:8px;">
+				Font size:&nbsp;<input value='8' onchange="setFontSize(this.value);" style="width:16px;">&nbsp;px
+				&nbsp;&nbsp;
+				Margin:&nbsp;<input value='0.4' id="min-margin" onchange="selectMargins(document.getElementById('margins-select').value);" style="width:16px;">&nbsp;cm
+				&nbsp;&nbsp;
+				Binding:&nbsp;<input value='2' id="punch-margin" onchange="selectMargins(document.getElementById('margins-select').value);" style="width:16px;">&nbsp;cm
+				&nbsp;&nbsp;
+				<select id="margins-select" onchange="selectMargins(this.value);">
+					<option value="inkjet">Basic margins</option>
+					<option value="zero">Zero margins</option>
+					<option value="holeSingle">Binding (single sided)</option>
+					<option value="holeDouble">Binding (double sided)</option>
+				</select>
+				&nbsp;&nbsp;
+				<input type='button' value="&#x1F5B6; Print" onclick='print()'>
+			</div>
+		</div>
 	</div>
 	<script>
 	function setFontSize(size) {
@@ -43,14 +1240,16 @@
 		var min = document.getElementById('min-margin').value; console.log('min: '+min);
 		var holePunch = document.getElementById('punch-margin').value; console.log('holePunch: '+holePunch);
 		const style=document.createElement('style');
-		if      (type==='inkjet')     {style.innerHTML='@page{margin:'+min+';}';}
+		if      (type==='inkjet')     {style.innerHTML='@page{margin:'+min+'cm;}';}
 		else if (type==='zero')       {style.innerHTML='@page{margin:0cm;}';}
-		else if (type==='holeSingle') {style.innerHTML='@page{margin:'+min+' '+min+' '+min+' '+holePunch+';}';}
-		else if (type==='holeDouble') {style.innerHTML='@page:left{margin:'+min+' '+holePunch+' '+min+' '+min+';}@page:right{margin:'+min+' '+min+' '+min+' '+holePunch+';}';}
+		else if (type==='holeSingle') {style.innerHTML='@page{margin:'+min+'cm '+min+'cm '+min+'cm '+holePunch+'cm;}';}
+		else if (type==='holeDouble') {style.innerHTML='@page:left{margin:'+min+'cm '+holePunch+'cm '+min+'cm '+min+'cm;}@page:right{margin:'+min+'cm '+min+'cm '+min+'cm '+holePunch+'cm;}';}
 		document.head.appendChild(style);
 	}
 	</script>
+	<center>
 	////html////
+	</center>
 	<!--<script src="paged.polyfill.js"></script>-->
 </body>
 </html>
