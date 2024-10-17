@@ -8,11 +8,9 @@ public class EBiblePrinterServer extends ServerState {
 	
 	EBiblePrinter printer;
 	String rootPath;
-	String eBiblePath;
 
-	public EBiblePrinterServer ( String rootPath, String eBiblePath, int port ) {
+	public EBiblePrinterServer ( String rootPath, int port ) {
 		this.rootPath = rootPath;
-		this.eBiblePath = eBiblePath;
 		printer = new EBiblePrinter( rootPath+"/printer.html" );
 		new ServerHTTP (
 			this,
@@ -23,6 +21,28 @@ public class EBiblePrinterServer extends ServerState {
 		);
 	}
 	
+	private void sendFile ( InboundHTTP session, String mimeType ) {
+		String path = session.request().path();
+		if (path.indexOf("..") == -1) { // block dir traversal
+			try {
+				session.response(
+					new ResponseHTTP(
+						new String[]{ "Content-Type", mimeType },
+						FileActions.readBytes( rootPath+path )
+					)
+				);
+			} catch (Exception e) {
+				session.response(
+					new ResponseHTTP( "404", "Not Found", null, null )
+				);
+			}
+		} else {
+			session.response(
+				new ResponseHTTP( "403", "Forbidden", null, null )
+			);
+		}
+	}
+	
 	@Override
 	public void received ( Connection c ) {
 		InboundHTTP session = http( c );
@@ -31,13 +51,11 @@ public class EBiblePrinterServer extends ServerState {
 		String lang = query.get("lang");
 		String ver = query.get("ver");
 		
-		String path = session.request().path();
-		
 		String html = "";
 		
 		if (httpQuery( session, "type", "text" )) {
 			try {
-				html = printer.textToHTML( eBiblePath+"/"+lang+"/text/"+ver );
+				html = printer.textToHTML( rootPath+"/biblesd/bibles/ebible.org/"+lang+"/text/"+ver );
 			} catch (Exception e) {
 				e.printStackTrace();
 				html = "<h3>text: "+query+"</h3>";
@@ -51,7 +69,7 @@ public class EBiblePrinterServer extends ServerState {
 			
 		} else if (httpQuery( session, "type", "cover" )) {
 			try {
-				html = printer.coverHTML( eBiblePath+"/"+lang+"/html/"+ver );
+				html = printer.coverHTML( rootPath+"/biblesd/bibles/ebible.org/"+lang+"/html/"+ver );
 			} catch (Exception e) {
 				e.printStackTrace();
 				html = "<h3>cover: "+query+"</h3>";
@@ -63,21 +81,11 @@ public class EBiblePrinterServer extends ServerState {
 				)
 			);
 			
-		} else if ( path.substring( 0, 6 ).equals( "/flags" ) ) {
-			if (path.indexOf("..") == -1) { // block dir traversal
-				try {
-					session.response(
-						new ResponseHTTP(
-							new String[]{ "Content-Type", "image/png" },
-							FileActions.readBytes( rootPath+path )
-						)
-					);
-				} catch (Exception e) {
-					session.response(
-						new ResponseHTTP( "403", "Forbidden", null, null )
-					);
-				}
-			}
+		} else if ( session.request().path().substring( 0, 6 ).equals( "/flags" ) ) {
+			sendFile( session, "image/png" );
+		
+		} else if ( session.request().path().substring( 0, 5 ).equals( "/pics" ) ) {
+			sendFile( session, "image/jpg" );
 		
 		} else {
 			session.response(
@@ -90,8 +98,7 @@ public class EBiblePrinterServer extends ServerState {
 		// args: <template_path> <eBible_path> <port>
 		new EBiblePrinterServer(
 			args[0],
-			args[1],
-			Integer.valueOf( args[2] )
+			Integer.valueOf( args[1] )
 		);
 	}
 

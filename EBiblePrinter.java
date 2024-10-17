@@ -74,7 +74,7 @@ public class EBiblePrinter {
 		System.out.println( copyrightHTML );
 		String copyright = Regex.first( copyrightHTML, "</h1>([\\s\\S]*?)<div" );
 		
-		String html = "<h1><br><br><br><br>"+title+"</h1><div style=\"break-before:page;width:576px;\"><br><br><br>"+copyright+"</div>"; // 8" * 72dpi = 576px
+		String html = "<div class=\"page-center\"><h1 style=\"font-size:48px;\">"+title+"</h1></div><hr><div><h1>"+title+"</h1><br><br><div style=\"text-align:left;margin:2px;\">"+copyright+"</div></div>";
 		
 		htmlTemplate
 			.replace( "title", FileActions.minName( eBibleHTMLPath ) )

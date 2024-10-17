@@ -12,10 +12,12 @@
 			margin:0;
 			color:black;
 		}
-		input {
-			font-size:12px;
+		input, select {
+			font-size:14px;
 			margin-top:4px;
 			margin-bottom:4px;
+			padding:4px;
+			border-radius:4px;
 		}
 		table {
 			border-collapse:collapse;
@@ -28,8 +30,8 @@
 			font-size:10px;
 		}
 		h3 {
-			color:gray;
 			margin:8px;
+			font-weight:normal;
 		}
 		thead {
 			border-bottom:solid white 4px;
@@ -50,34 +52,91 @@
 			border-bottom:none;
 			vertical-align:top;
 			padding: 0;
-			margin: 0 8px 0 8px;
+			margin: 4px 8px 4px 8px;
 			overflow:auto;
+			background-color:rgba(0,0,0,0.5);
+			border-top:solid rgba(255,255,255,0.4) 1px;
 		}
 		.scroll-box {
 			overflow:auto;
 			max-height:350px;
 			max-width:300px;
-			background-color:rgb(246,246,246);
 			margin:0 0 16px 0;
-
+			border-top:solid rgba(255,255,255,0.4) 1px;
 		}
 		.controls {
+			background-image:url('pics/still-lake.jpg');
+			background-attachment:fixed;
+			background-repeat: no-repeat;
+			background-position: center;
+			background-size: cover;
 			background-color:lightgray;
 			font-size:14px;
 			margin-bottom:4px;
+			color:white;
+		}
+		.controls a {
+			color:white;
+		}
+		.navigation {
+			width:100%;
+			font-size:24px;
+			margin:0;
+			color:rgb(200,200,200);
+		}
+		.icon-char {
+			font-weight:normal;
+			font-family:serif;
+			font-size:32px;
+			width:40px;
+			color:rgb(200,200,200);
+		}
+		.icon-char a {
+			color:rgb(200,200,200);
+			font-size:32px;
+			text-decoration:none;
+		}
+		.icon-char a:hover {
+			text-decoration:underline;
+		}
+		.navigation td {
+			border:0;
+			text-align:center;
+			vertical-align:middle;
+			background-color:rgba(0,0,0,0.5);
+			padding: 0 8px 0 8px;
+		}
+		.navigation .icon-char {
+			width:200px;
 		}
 	</style>
 	<style type="text/css" media="print">
 		.controls{
 			display:none;
 		}
+		/* from https://stackoverflow.com/questions/19798923/printing-text-in-html-in-the-center-of-the-page */
+		.page-center {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			width: 100%;
+			height: 100vh;
+		}
+		hr {
+			display:none;
+		}
 	</style>
 </head>
 <body id="body">
+	<center>
 	<div class="controls">
-		<div style="width:100%;background-color:gray;color:white;">
-			<div style="font-weight:bold;font-size:14px;padding:8px;">Print the Bible in 1,300 languages</div>
-		</div>
+		<table class="navigation">
+			<tr>
+			<td class="icon-char"><a href="http://bible.local/">&#x1F3E0;</a> > <a href="http://bible.local/bible.html">&#x1F4D6;</a> > <a href="/?type=text&lang=English&ver=engwebp">&#x1F5B6;</a></td>
+			<td>Print Bibles</td>
+		        <td class="icon-char"><a href="http://bible.local/salvation.html">&#x271D;</a></td>
+			</tr>
+		</table>
 		<div class="content">
 			<h3>Africa</h3>
 			<div class="scroll-box">
@@ -1210,13 +1269,13 @@
 				</table>		
 			</div>
 		</div>
-		<div style="font-weight:bold;padding:8px;">
-			<div style="border:solid gray 2px;border-radius:4px;width:auto;padding:8px;">
-				Font size:&nbsp;<input value='8' onchange="setFontSize(this.value);" style="width:16px;">&nbsp;px
+
+			<div style="font-weight:bold;background-color:rgba(0,0,0,0.5);color:white;padding:8px;border-top:solid rgba(255,255,255,0.4) 1px;">
+				Font size:&nbsp;<input value='8' onchange="setFontSize(this.value);" style="width:20px;">&nbsp;px
 				&nbsp;&nbsp;
-				Margin:&nbsp;<input value='0.4' id="min-margin" onchange="selectMargins(document.getElementById('margins-select').value);" style="width:16px;">&nbsp;cm
+				Margin:&nbsp;<input value='0.4' id="min-margin" onchange="selectMargins(document.getElementById('margins-select').value);" style="width:20px;">&nbsp;cm
 				&nbsp;&nbsp;
-				Binding:&nbsp;<input value='2' id="punch-margin" onchange="selectMargins(document.getElementById('margins-select').value);" style="width:16px;">&nbsp;cm
+				Book&nbsp;Binding:&nbsp;<input value='2' id="punch-margin" onchange="selectMargins(document.getElementById('margins-select').value);" style="width:20px;">&nbsp;cm
 				&nbsp;&nbsp;
 				<select id="margins-select" onchange="selectMargins(this.value);">
 					<option value="inkjet">Basic margins</option>
@@ -1225,9 +1284,9 @@
 					<option value="holeDouble">Binding (double sided)</option>
 				</select>
 				&nbsp;&nbsp;
-				<input type='button' value="&#x1F5B6; Print" onclick='print()'>
+				<input type='button' value="&#x1F5B6; Print" onclick='print()' style="width:100px;height:40px;background-color:blue;color:white;font-size:18px;">
 			</div>
-		</div>
+
 	</div>
 	<script>
 	function setFontSize(size) {
@@ -1237,17 +1296,17 @@
 		document.head.appendChild(style);
 	}
 	function selectMargins(type) {
-		var min = document.getElementById('min-margin').value; console.log('min: '+min);
-		var holePunch = document.getElementById('punch-margin').value; console.log('holePunch: '+holePunch);
+		var min = document.getElementById('min-margin').value;
+		var holePunch = document.getElementById('punch-margin').value;
 		const style=document.createElement('style');
 		if      (type==='inkjet')     {style.innerHTML='@page{margin:'+min+'cm;}';}
+		else if (type==='holeDouble') {style.innerHTML='@page:left{margin:'+min+'cm '+min+'cm '+min+'cm '+min+'cm;}@page:right{margin:'+min+'cm '+min+'cm '+min+'cm '+min+'cm;}';}
 		else if (type==='zero')       {style.innerHTML='@page{margin:0cm;}';}
 		else if (type==='holeSingle') {style.innerHTML='@page{margin:'+min+'cm '+min+'cm '+min+'cm '+holePunch+'cm;}';}
 		else if (type==='holeDouble') {style.innerHTML='@page:left{margin:'+min+'cm '+holePunch+'cm '+min+'cm '+min+'cm;}@page:right{margin:'+min+'cm '+min+'cm '+min+'cm '+holePunch+'cm;}';}
 		document.head.appendChild(style);
 	}
 	</script>
-	<center>
 	////html////
 	</center>
 	<!--<script src="paged.polyfill.js"></script>-->
