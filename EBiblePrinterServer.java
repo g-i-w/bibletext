@@ -17,7 +17,7 @@ public class EBiblePrinterServer extends ServerState {
 			port,
 			"EBiblePrinterServer",
 			1024, // inbound memory size
-			4000  // timeout [ms]
+			20000  // timeout [ms]
 		);
 	}
 	

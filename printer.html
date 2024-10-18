@@ -21,8 +21,6 @@
 		}
 		table {
 			border-collapse:collapse;
-			/*break-before:page;*/
-			margin:0 2px 32px 2px;
 		}
 		th, td {
 			border:0;padding:0;}
@@ -52,7 +50,7 @@
 			border-bottom:none;
 			vertical-align:top;
 			padding: 0;
-			margin: 4px 8px 4px 8px;
+			margin: 4px 8px 8px 8px;
 			overflow:auto;
 			background-color:rgba(0,0,0,0.5);
 			border-top:solid rgba(255,255,255,0.4) 1px;
@@ -109,6 +107,29 @@
 		.navigation .icon-char {
 			width:200px;
 		}
+		.input-table {
+			display:inline-block;
+			vertical-align:middle;
+			/*border:solid rgba(255,255,255,0.5) 1px;
+			border-radius:4px;*/
+			margin: 0 8px 0 8px;
+			padding:4px;
+		}
+		.input-table td {
+			text-align:center;
+			padding:2px;
+		}
+		.input-div {
+			background-color:rgba(0,0,0,0.5);
+			color:white;
+			padding:8px;
+			border-top:solid rgba(255,255,255,0.4) 1px;
+		}
+		.print-button {
+			width:100px;
+			height:40px;
+			font-size:18px;
+		}
 	</style>
 	<style type="text/css" media="print">
 		.controls{
@@ -127,7 +148,7 @@
 		}
 	</style>
 </head>
-<body id="body">
+<body id="body" onload="enablePrint();">
 	<center>
 	<div class="controls">
 		<table class="navigation">
@@ -1270,40 +1291,53 @@
 			</div>
 		</div>
 
-			<div style="font-weight:bold;background-color:rgba(0,0,0,0.5);color:white;padding:8px;border-top:solid rgba(255,255,255,0.4) 1px;">
-				Font size:&nbsp;<input value='8' onchange="setFontSize(this.value);" style="width:20px;">&nbsp;px
-				&nbsp;&nbsp;
-				Margin:&nbsp;<input value='0.4' id="min-margin" onchange="selectMargins(document.getElementById('margins-select').value);" style="width:20px;">&nbsp;cm
-				&nbsp;&nbsp;
-				Book&nbsp;Binding:&nbsp;<input value='2' id="punch-margin" onchange="selectMargins(document.getElementById('margins-select').value);" style="width:20px;">&nbsp;cm
-				&nbsp;&nbsp;
-				<select id="margins-select" onchange="selectMargins(this.value);">
-					<option value="inkjet">Basic margins</option>
+			<div class="input-div">
+				<table class="input-table">
+					<tr><td style="text-align:left;">Text size:</td><td><input value='8' onchange="textSize(this.value);" style="width:20px;">&nbsp;px</td></tr>
+					<tr><td style="text-align:left;">Heading size:</td><td><input value='10' onchange="headingSize(this.value);" style="width:20px;">&nbsp;px</td></tr>
+				</table>
+				<table class="input-table">
+					<tr><td></td><td><input value='0.4' id="top" onchange="selectMargins();" style="width:20px;"></td><td></td></tr>
+					<tr><td><input value='2' id="left" onchange="selectMargins();" style="width:20px;"></td><td>Margins<br>[cm]</td><td><input value='0.4' id="right" onchange="selectMargins();" style="width:20px;"></td></tr>
+					<tr><td></td><td><input value='0.4' id="bottom" onchange="selectMargins();" style="width:20px;"></td><td></td></tr>
+				</table>
+				<select id="margin-type" onchange="selectMargins(this.value);">
+					<option value="simple">Simple (single-sided pages)</option>
+					<option value="mirrored">Mirrored (double-sided pages)</option>
 					<option value="zero">Zero margins</option>
-					<option value="holeSingle">Binding (single sided)</option>
-					<option value="holeDouble">Binding (double sided)</option>
 				</select>
 				&nbsp;&nbsp;
-				<input type='button' value="&#x1F5B6; Print" onclick='print()' style="width:100px;height:40px;background-color:blue;color:white;font-size:18px;">
+				<input type='button' id='print-button' value="&#x1F5B6; Print" onclick='selectMargins();print();' class="print-button" disabled>
 			</div>
 
 	</div>
 	<script>
-	function setFontSize(size) {
-		var larger = Number(size)+2;
+	function enablePrint() {
+		var button = document.getElementById('print-button');
+		button.removeAttribute('disabled');
+		button.style['color'] = "white";
+		button.style['background-color'] = "blue";
+	}
+	function textSize(size) {
 		const style=document.createElement('style');
-		style.innerHTML=`body{font-size:${size}px;}th{font-size:${larger}px;}`;
+		style.innerHTML='body{font-size:'+size+'px;}';
 		document.head.appendChild(style);
 	}
-	function selectMargins(type) {
-		var min = document.getElementById('min-margin').value;
-		var holePunch = document.getElementById('punch-margin').value;
+	function headingSize(size) {
 		const style=document.createElement('style');
-		if      (type==='inkjet')     {style.innerHTML='@page{margin:'+min+'cm;}';}
-		else if (type==='holeDouble') {style.innerHTML='@page:left{margin:'+min+'cm '+min+'cm '+min+'cm '+min+'cm;}@page:right{margin:'+min+'cm '+min+'cm '+min+'cm '+min+'cm;}';}
-		else if (type==='zero')       {style.innerHTML='@page{margin:0cm;}';}
-		else if (type==='holeSingle') {style.innerHTML='@page{margin:'+min+'cm '+min+'cm '+min+'cm '+holePunch+'cm;}';}
-		else if (type==='holeDouble') {style.innerHTML='@page:left{margin:'+min+'cm '+holePunch+'cm '+min+'cm '+min+'cm;}@page:right{margin:'+min+'cm '+min+'cm '+min+'cm '+holePunch+'cm;}';}
+		style.innerHTML='th{font-size:'+size+'px;}';
+		document.head.appendChild(style);
+	}
+	function selectMargins() {
+		var top = document.getElementById('top').value;
+		var bottom = document.getElementById('bottom').value;
+		var left = document.getElementById('left').value;
+		var right = document.getElementById('right').value;
+		const style = document.createElement('style');
+		var type = document.getElementById('margin-type').value;
+		if (type==='simple')   {style.innerHTML='@page{margin:'+top+'cm '+right+'cm '+bottom+'cm '+left+'cm;}';}
+		else if (type==='mirrored') {style.innerHTML='@page:left{margin:'+top+'cm '+left+'cm '+bottom+'cm '+right+'cm;}@page:right{margin:'+top+'cm '+right+'cm '+bottom+'cm '+left+'cm;}';}
+		else if (type==='zero')     {style.innerHTML='@page{margin:0cm;}';}
 		document.head.appendChild(style);
 	}
 	</script>
