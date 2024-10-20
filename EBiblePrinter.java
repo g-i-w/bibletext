@@ -40,7 +40,7 @@ public class EBiblePrinter {
 					// complete the previous book
 					if (!currentBook.equals("")) html.append( "</tbody>\n</table>" );
 					// start new book
-					html.append( "<table>\n<thead>\n<tr><th class='book'>" ).append( fullBookName ).append( "</th></tr>\n</thead>\n<tbody>\n" );
+					html.append( "<table class='book-table'>\n<thead>\n<tr><th class='book-th'>" ).append( fullBookName ).append( "</th></tr>\n</thead>\n<tbody>\n" );
 					currentBook = book;
 				}
 				
