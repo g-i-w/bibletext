@@ -142,15 +142,18 @@
 			display:none;
 		}
 		/* from https://stackoverflow.com/questions/19798923/printing-text-in-html-in-the-center-of-the-page */
-		.page-center {
+		.title-page {
 			display: flex;
 			align-items: center;
 			justify-content: center;
 			width: 100%;
 			height: 100vh;
 		}
-		hr {
-			display:none;
+		.copyright-page {
+			height: 100vh;
+		}
+		.copyright-page h2 {
+			font-size:
 		}
 	</style>
 </head>
@@ -1298,26 +1301,59 @@
 		</div>
 
 			<div class="input-div">
+				<form id="form" action="/pagedjs" target="_blank">
+				<input type='hidden' id="left-left" name="left-left">
+				<input type='hidden' id="left-right" name="left-right">
+				<input type='hidden' name="type" value="pagedjs">
+				////hidden-inputs////
 				<table class="input-table">
-					<tr><td style="text-align:left;">Text size:</td><td><input value='8' onchange="textSize(this.value);" style="width:20px;">&nbsp;px</td></tr>
-					<tr><td style="text-align:left;">Heading size:</td><td><input value='10' onchange="headingSize(this.value);" style="width:20px;">&nbsp;px</td></tr>
+					<tr><td style="text-align:left;">Text size:</td><td><input name="body-font-size" value='8' onchange="textSize(this.value);" style="width:20px;">&nbsp;px</td></tr>
+					<tr><td style="text-align:left;">Heading size:</td><td><input name="heading-font-size" value='10' onchange="headingSize(this.value);" style="width:20px;">&nbsp;px</td></tr>
 				</table>
 				<table class="input-table">
-					<tr><td></td><td><input value='0.4' id="top" onchange="selectMargins();" style="width:20px;"></td><td></td></tr>
-					<tr><td><input value='2' id="left" onchange="selectMargins();" style="width:20px;"></td><td>Margins<br>[cm]</td><td><input value='0.4' id="right" onchange="selectMargins();" style="width:20px;"></td></tr>
-					<tr><td></td><td><input value='0.4' id="bottom" onchange="selectMargins();" style="width:20px;"></td><td></td></tr>
+					<tr><td></td><td><input name="top" value='0.4' id="top" onchange="selectMargins();" style="width:20px;"></td><td></td></tr>
+					<tr><td><input name="left" value='2' id="left" onchange="selectMargins();" style="width:20px;"></td><td>Margins<br>[cm]</td><td><input name="right" value='0.4' id="right" onchange="selectMargins();" style="width:20px;"></td></tr>
+					<tr><td></td><td><input name="bottom" value='0.4' id="bottom" onchange="selectMargins();" style="width:20px;"></td><td></td></tr>
 				</table>
-				<select id="margin-type" onchange="selectMargins(this.value);">
-					<option value="simple">Simple (single-sided pages)</option>
-					<option value="mirrored">Mirrored (double-sided pages)</option>
-					<option value="zero">Zero margins</option>
-				</select>
-				&nbsp;&nbsp;
-				<input type='button' id='print-button' value="&#x1F5B6; Print" onclick='selectMargins();print();' class="print-button" disabled>
+				<div class="input-table">
+					<select id="margin-type" onchange="selectMargins(this.value);">
+						<option value="simple">Simple (single-sided pages)</option>
+						<option value="mirrored">Mirrored (double-sided pages)</option>
+						<option value="zero">Zero margins</option>
+					</select>
+				</div>
+				<div class="input-table">
+					<input type='button' id='print-button' value="&#x1F5B6; Print" onclick='selectMargins();print();' class="print-button" disabled>
+					<br><a href="////toggle-cover-link////">////toggle-cover////</a>
+					</div>
+				</div>
+				
+				<!--<div style="display:inline-block;vertical-align:middle;">
+					<input type='button' id='pagedjs-button' value="&#x1F5B6; PagedJS" onclick='runPagedJS();' class="print-button" style="width:200px;"><br>
+					<input type="checkbox" id="text" name="text" value="true" checked><label for="text"> Bible Text</label><br>
+					<input type="checkbox" id="cover" name="cover" value="true" checked><label for="cover"> Cover Page</label>
+				</div>-->
+				</form>
 			</div>
 
 	</div>
 	<script>
+	function runPagedJS() {
+		var form = document.getElementById('form');
+		var rightLeft = document.getElementById('left');
+		var rightRight = document.getElementById('right');
+		var leftLeft = document.getElementById('left-left');
+		var leftRight = document.getElementById('left-right');
+		var type = document.getElementById('margin-type').value;
+		if (type==='mirrored') {
+			leftLeft.value = rightRight.value;
+			leftRight.value = rightLeft.value;
+		} else {
+			leftLeft.value = rightLeft.value;
+			leftRight.value = rightRight.value;
+		}
+		form.submit();
+	}
 	function enablePrint() {
 		var button = document.getElementById('print-button');
 		button.removeAttribute('disabled');
@@ -1331,7 +1367,7 @@
 	}
 	function headingSize(size) {
 		const style=document.createElement('style');
-		style.innerHTML='th{font-size:'+size+'px;}';
+		style.innerHTML='th{font-size:'+size+'px;}h2{font-size:'+size+'px;}';
 		document.head.appendChild(style);
 	}
 	function selectMargins() {

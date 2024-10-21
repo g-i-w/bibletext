@@ -7,13 +7,22 @@ import paddle.*;
 
 public class EBiblePrinter {
 
-	TemplateFile htmlTemplate;
-
-	public EBiblePrinter ( String template ) {
-		htmlTemplate = new TemplateFile( template, "////" );
+	public static String title ( String eBibleHTMLPath ) throws Exception {
+		// title from index.htm
+		String titleHTML = FileActions.read( eBibleHTMLPath+"/index.htm" );
+		String title = Regex.first( titleHTML, "<title>(.*?)</title>" ).trim();
+		return title;
 	}
-	
-	public String textToHTML ( String eBibleTextPath ) throws Exception {
+
+	public static String copyrightHTML ( String eBibleHTMLPath ) throws Exception {
+		// copyright info from copyright.htm
+		String copyrightHTML = FileActions.read( eBibleHTMLPath+"/copyright.htm" );
+		System.out.println( copyrightHTML );
+		String copyright = Regex.first( copyrightHTML, "</h1>([\\s\\S]*?)<div" );
+		return copyright;
+	}
+
+	public static String textHTML ( String eBibleTextPath ) throws Exception {
 		StringBuilder html = new StringBuilder();
 		String currentBook = "";
 		
@@ -57,36 +66,14 @@ public class EBiblePrinter {
 			}
 		}
 		
-		if (!currentBook.equals("")) html.append( "</tbody>\n</table>" );
-		htmlTemplate
-			.replace( "title", FileActions.minName( eBibleTextPath ) )
-			.replace( "html", html.toString() )
-		;
-		return htmlTemplate.toString();
+		if (!currentBook.equals("")) html.append( "</tbody>\n</table>\n" );
+		return html.toString();
 	}
 	
-	public String coverHTML ( String eBibleHTMLPath ) throws Exception {
-		// title from index.htm
-		String titleHTML = FileActions.read( eBibleHTMLPath+"/index.htm" );
-		String title = Regex.first( titleHTML, "<title>(.*?)</title>" ).trim();
-		// copyright info from copyright.htm
-		String copyrightHTML = FileActions.read( eBibleHTMLPath+"/copyright.htm" );
-		System.out.println( copyrightHTML );
-		String copyright = Regex.first( copyrightHTML, "</h1>([\\s\\S]*?)<div" );
-		
-		String html = "<div class=\"page-center\"><h1 style=\"font-size:48px;\">"+title+"</h1></div><hr><div><h1>"+title+"</h1><br><br><div style=\"text-align:left;margin:2px;\">"+copyright+"</div></div>";
-		
-		htmlTemplate
-			.replace( "title", FileActions.minName( eBibleHTMLPath ) )
-			.replace( "html", html )
-		;
-		return htmlTemplate.toString();
-	}
-
 	public static void main ( String[] args ) throws Exception {
 		// args: eBible_path/ template.html output.html
-		FileActions.write( args[2],
-			new EBiblePrinter( args[1] ).textToHTML( args[0] )
+		FileActions.write( args[1],
+			EBiblePrinter.textHTML( args[0] )
 		);
 	}
 	
