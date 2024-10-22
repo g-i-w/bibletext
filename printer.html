@@ -5,7 +5,6 @@
 	<meta charset='utf-8' />
 	<style type="text/css">
 		body {
-			font-size:8px;
 			font-family:sans-serif;
 			border:0;
 			padding:0;
@@ -23,9 +22,7 @@
 			border-collapse:collapse;
 		}
 		th, td {
-			border:0;padding:0;}
-		th {
-			font-size:10px;
+			border:0;padding:0;
 		}
 		h3 {
 			margin:8px;
@@ -34,6 +31,36 @@
 		thead {
 			/*border-bottom:solid white 4px;*/
 		}
+		
+		/* default font sizes */
+		body {
+			font-size:9px;
+		}
+		th, .heading {
+			font-size:12px;
+		}
+		h1 {
+			font-size:48px;
+		}
+		
+		/* page example */
+		.page-example {
+			width:42px;
+			height:55px;
+			border:solid white 1px;
+			border-color:white;
+			border-radius:2px;
+			display:inline-block;
+			background-color:gray;
+		}
+		.page-example-left {
+			border-width:1px 8px 1px 1px;
+			display:none;
+		}
+		.page-example-right {
+			border-width:1px 1px 1px 8px;
+		}
+		
 		.book-table {
 			margin-top:8px;
 		}
@@ -76,7 +103,6 @@
 			background-size: cover;
 			background-color:lightgray;
 			font-size:14px;
-			margin-bottom:4px;
 			color:white;
 		}
 		.controls a {
@@ -113,7 +139,7 @@
 		.navigation .icon-char {
 			width:200px;
 		}
-		.input-table {
+		.input-block {
 			display:inline-block;
 			vertical-align:middle;
 			/*border:solid rgba(255,255,255,0.5) 1px;
@@ -121,7 +147,7 @@
 			margin: 0 8px 0 8px;
 			padding:4px;
 		}
-		.input-table td {
+		.input-block td {
 			text-align:center;
 			padding:2px;
 		}
@@ -142,18 +168,12 @@
 			display:none;
 		}
 		/* from https://stackoverflow.com/questions/19798923/printing-text-in-html-in-the-center-of-the-page */
-		.title-page {
+		.full-page {
 			display: flex;
 			align-items: center;
 			justify-content: center;
 			width: 100%;
 			height: 100vh;
-		}
-		.copyright-page {
-			height: 100vh;
-		}
-		.copyright-page h2 {
-			font-size:
 		}
 	</style>
 </head>
@@ -1306,33 +1326,35 @@
 				<input type='hidden' id="left-right" name="left-right">
 				<input type='hidden' name="type" value="pagedjs">
 				////hidden-inputs////
-				<table class="input-table">
-					<tr><td style="text-align:left;">Text size:</td><td><input name="body-font-size" value='8' onchange="textSize(this.value);" style="width:20px;">&nbsp;px</td></tr>
-					<tr><td style="text-align:left;">Heading size:</td><td><input name="heading-font-size" value='10' onchange="headingSize(this.value);" style="width:20px;">&nbsp;px</td></tr>
+				<table class="input-block">
+					<tr><td style="text-align:left;">Text size:</td><td><input name="body-font-size" value='9' onchange="textSize(this.value);" style="width:20px;">&nbsp;px</td></tr>
+					<tr><td style="text-align:left;">Heading size:</td><td><input name="heading-font-size" value='12' onchange="headingSize(this.value);" style="width:20px;">&nbsp;px</td></tr>
+					<tr><td style="text-align:left;">Title size:</td><td><input name="title-font-size" value='48' onchange="titleSize(this.value);" style="width:20px;">&nbsp;px</td></tr>
 				</table>
-				<table class="input-table">
+				<table class="input-block">
 					<tr><td></td><td><input name="top" value='0.4' id="top" onchange="selectMargins();" style="width:20px;"></td><td></td></tr>
 					<tr><td><input name="left" value='2' id="left" onchange="selectMargins();" style="width:20px;"></td><td>Margins<br>[cm]</td><td><input name="right" value='0.4' id="right" onchange="selectMargins();" style="width:20px;"></td></tr>
 					<tr><td></td><td><input name="bottom" value='0.4' id="bottom" onchange="selectMargins();" style="width:20px;"></td><td></td></tr>
 				</table>
-				<div class="input-table">
-					<select id="margin-type" onchange="selectMargins(this.value);">
+				<div class="input-block">
+					<div class="page-example page-example-left"></div>
+					<div class="page-example page-example-right"></div>
+					<br><select id="margin-type" onchange="selectMargins(this.value);">
 						<option value="simple">Simple (single-sided pages)</option>
 						<option value="mirrored">Mirrored (double-sided pages)</option>
 						<option value="zero">Zero margins</option>
 					</select>
 				</div>
-				<div class="input-table">
+				<div class="input-block">
 					<input type='button' id='print-button' value="&#x1F5B6; Print" onclick='selectMargins();print();' class="print-button" disabled>
 					<br><a href="////toggle-cover-link////">////toggle-cover////</a>
-					</div>
 				</div>
 				
-				<!--<div style="display:inline-block;vertical-align:middle;">
-					<input type='button' id='pagedjs-button' value="&#x1F5B6; PagedJS" onclick='runPagedJS();' class="print-button" style="width:200px;"><br>
+				<div class="input-block">
+					<input type='button' id='pagedjs-button' value="&#x1F5B6; PagedJS" onclick='runPagedJS();' class="print-button" style="width:120px;"><br>
 					<input type="checkbox" id="text" name="text" value="true" checked><label for="text"> Bible Text</label><br>
 					<input type="checkbox" id="cover" name="cover" value="true" checked><label for="cover"> Cover Page</label>
-				</div>-->
+				</div>
 				</form>
 			</div>
 
@@ -1367,7 +1389,12 @@
 	}
 	function headingSize(size) {
 		const style=document.createElement('style');
-		style.innerHTML='th{font-size:'+size+'px;}h2{font-size:'+size+'px;}';
+		style.innerHTML='th{font-size:'+size+'px;}.heading{font-size:'+size+'px;}';
+		document.head.appendChild(style);
+	}
+	function titleSize(size) {
+		const style=document.createElement('style');
+		style.innerHTML='h1{font-size:'+size+'px;}';
 		document.head.appendChild(style);
 	}
 	function selectMargins() {
@@ -1380,6 +1407,19 @@
 		if (type==='simple')   {style.innerHTML='@page{margin:'+top+'cm '+right+'cm '+bottom+'cm '+left+'cm;}';}
 		else if (type==='mirrored') {style.innerHTML='@page:left{margin:'+top+'cm '+left+'cm '+bottom+'cm '+right+'cm;}@page:right{margin:'+top+'cm '+right+'cm '+bottom+'cm '+left+'cm;}';}
 		else if (type==='zero')     {style.innerHTML='@page{margin:0cm;}';}
+		document.head.appendChild(style);
+		exampleMargins();
+	}
+	function exampleMargins() {
+		var top = Math.round(Number(document.getElementById('top').value)*3);
+		var bottom = Math.round(Number(document.getElementById('bottom').value)*3);
+		var left = Math.round(Number(document.getElementById('left').value)*3);
+		var right = Math.round(Number(document.getElementById('right').value)*3);
+		const style = document.createElement('style');
+		var type = document.getElementById('margin-type').value;
+		if (type==='simple')   {style.innerHTML='.page-example-left{display:none;}.page-example-right{border-width:'+top+'px '+right+'px '+bottom+'px '+left+'px;}';}
+		else if (type==='mirrored') {style.innerHTML='.page-example-left{display:inline-block;border-width:'+top+'px '+left+'px '+bottom+'px '+right+'px;}.page-example-right{border-width:'+top+'px '+right+'px '+bottom+'px '+left+'px;}';}
+		else if (type==='zero')     {style.innerHTML='.page-example{border-width:0;}';}
 		document.head.appendChild(style);
 	}
 	</script>

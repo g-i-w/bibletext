@@ -1,0 +1,50 @@
+<div class="controls" style="font-size:14px;">
+	Background: 
+	<select id="cover-background" onchange="changeBackground(this.value);">
+		<option value="">None</option>
+		<option value="pics/still-lake-cropped.jpg">Still Lake</option>
+		<option value="pics/huntsville-overlook-cropped.jpg">Sunny Overlook</option>
+		<option value="pics/noccalula-falls-cropped.jpg">Waterfall</option>
+		<option value="pics/roman-nose-lake-cropped.jpg">Alpine Lake</option>
+		<option value="pics/lake-2-cropped.jpg">Sunny Lake</option>
+		<option value="pics/niagara-cropped.jpg">Waterfall 2</option>
+		<option value="pics/waterfall-3.jpg">Waterfall 3</option>
+		<option value="pics/beach-2-cropped.jpg">Beach</option>
+		<option value="pics/still-lake-2.jpg">Still Lake 2</option>
+	</select>
+</div>
+<script>
+	function changeBackground(url) {
+		var titlePage = document.getElementById('title-page');
+		var titleBackground = document.getElementById('title-background');
+		var copyrightPage = document.getElementById('copyright-page');
+		var copyrightPageBackground = document.getElementById('copyright-background');
+		titlePage.style['background-image'] = "";
+		titlePage.style['color'] = "black";
+		titleBackground.style['background-color'] = "";
+		copyrightPage.style['background-image'] = "";
+		copyrightPageBackground.style['background-color'] = "";
+		if (url!="") {
+			titlePage.style['background-image'] = "url('"+url+"')";
+			titlePage.style['color'] = "white";
+			if (url==="pics/noccalula-falls-cropped.jpg") titleBackground.style['background-color'] = "rgba(0,0,0,0.3)";
+			if (url==="pics/roman-nose-lake-cropped.jpg") titleBackground.style['background-color'] = "rgba(0,0,0,0.3)";
+			copyrightPage.style['background-image'] = "url('"+url+"')";
+			copyrightPageBackground.style['background-color'] = "rgba(255,255,255,0.7)";
+		}
+	}
+</script>
+
+<div id="title-page" class="full-page" style="background-position:top;background-size:cover;">
+	<div id="title-background" style="width:100%;text-align:center;">
+		<h1>////title////</h1>
+	</div>
+</div>
+<div id="copyright-page" class="full-page" style="background-size:cover;">
+	<div id="copyright-background" style="display:block;margin:0 10% 0 10%;">
+		<h4 class="heading" style="text-align:center;">////title////</h4>
+		<br><br>
+		<div style="text-align:left;margin:16px;">////copyright////</div>
+	</div>
+</div>
+

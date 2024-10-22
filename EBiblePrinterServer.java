@@ -7,12 +7,14 @@ import paddle.*;
 public class EBiblePrinterServer extends ServerState {
 	
 	String rootPath;
-	TemplateFile htmlTemplate;
+	TemplateFile printerTemplate;
+	TemplateFile titleCopyrightFragment;
 	TemplateFile pagedjsTemplate;
 
 	public EBiblePrinterServer ( String rootPath, int port ) {
 		this.rootPath = rootPath;
-		htmlTemplate = new TemplateFile( rootPath+"/printer.html", "////" );
+		printerTemplate = new TemplateFile( rootPath+"/printer.html", "////" );
+		titleCopyrightFragment = new TemplateFile( rootPath+"/title-copyright-fragment.html", "////" );
 		pagedjsTemplate = new TemplateFile( rootPath+"/pagedjs-template.html", "////" );
 		new ServerHTTP (
 			this,
@@ -69,12 +71,12 @@ public class EBiblePrinterServer extends ServerState {
 				text 		= EBiblePrinter.textHTML( textPath );
 			} catch (Exception e) {
 				e.printStackTrace();
-				text = "<h3>Encountered an error:\n"+query+"\n"+e+"</h3>";
+				text = "<h4>Encountered an error:\n"+query+"\n"+e+"</h4>";
 			}
 			session.response(
 				new ResponseHTTP(
 					new String[]{ "Content-Type", "text/html" },
-					htmlTemplate
+					printerTemplate
 						.replace( "title", title )
 						.replace( "toggle-cover", "Cover Page" )
 						.replace( "toggle-cover-link", coverLink )
@@ -92,16 +94,19 @@ public class EBiblePrinterServer extends ServerState {
 				title = EBiblePrinter.title( htmlPath );
 			} catch (Exception e) {
 				e.printStackTrace();
-				copyright = "<h3>copyright: "+query+"</h3>";
+				copyright = "<h4>copyright: "+query+"</h4>";
 			}
 			session.response(
 				new ResponseHTTP(
 					new String[]{ "Content-Type", "text/html" },
-					htmlTemplate
+					printerTemplate
+						.replace( "title", title )
 						.replace(
 							"html",
-							"<div class=\"title-page\"><h1 style=\"font-size:48px;\">"+title+"</h1></div>"+
-							"<div class=\"copyright-page\"><h1>"+title+"</h1><br><br><div style=\"text-align:left;margin:2px;\">"+copyright+"</div></div>"
+							titleCopyrightFragment
+							.replace( "title", title )
+							.replace( "copyright", copyright )
+							.toString()
 						)
 						.replace( "toggle-cover", "Bible Text" )
 						.replace( "toggle-cover-link", textLink )
@@ -122,13 +127,13 @@ public class EBiblePrinterServer extends ServerState {
 				text 		= EBiblePrinter.textHTML( textPath );
 			} catch (Exception e) {
 				e.printStackTrace();
-				text = "<h3>Encountered an error:\n"+query+"\n"+e+"</h3>";
+				text = "<h4>Encountered an error:\n"+query+"\n"+e+"</h4>";
 			}
 			// add title and copyright pages
-			if (httpQuery ( session, "cover" )) html += 
-				"<div class=\"title-page\"><h1 style=\"font-size:48px;\">"+title+"</h1></div>"+
-				"<div class=\"copyright-page\"><h1>"+title+"</h1><br><br><div style=\"text-align:left;margin:2px;\">"+copyright+"</div></div>"
-			;
+			if (httpQuery ( session, "cover" )) html += titleCopyrightFragment
+				.replace( "title", title )
+				.replace( "copyright", copyright )
+				.toString();
 			// add Bible text
 			if (httpQuery ( session, "text" )) html += text;
 			// send response
