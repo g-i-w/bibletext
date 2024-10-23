@@ -25,33 +25,11 @@ public class EBiblePrinterServer extends ServerState {
 		);
 	}
 	
-	private void sendFile ( InboundHTTP session, String mimeType ) {
-		String path = session.request().path();
-		if (path.indexOf("..") == -1) { // block dir traversal
-			try {
-				session.response(
-					new ResponseHTTP(
-						new String[]{ "Content-Type", mimeType },
-						FileActions.readBytes( rootPath+path )
-					)
-				);
-			} catch (Exception e) {
-				session.response(
-					new ResponseHTTP( "404", "Not Found", null, null )
-				);
-			}
-		} else {
-			session.response(
-				new ResponseHTTP( "403", "Forbidden", null, null )
-			);
-		}
-	}
-	
 	@Override
 	public void received ( Connection c ) {
 		InboundHTTP session = http( c );
 		
-		Map<String,String> query = httpQuery( session );
+		Map<String,String> query = getHttpQuery( session );
 
 		String textPath = rootPath+"/biblesd/bibles/ebible.org/"+query.get("lang")+"/text/"+query.get("ver");
 		String htmlPath = rootPath+"/biblesd/bibles/ebible.org/"+query.get("lang")+"/html/"+query.get("ver");
@@ -150,14 +128,14 @@ public class EBiblePrinterServer extends ServerState {
 				)
 			);
 			
-		} else if ( session.request().path().substring( 0, 6 ).equals( "/flags" ) ) {
-			sendFile( session, "image/png" );
+		} else if ( httpPathBegins( session, "/flags" ) ) {
+			session.response( httpFileResponse( session, rootPath, "image/png", -1 ) );
 		
-		} else if ( session.request().path().substring( 0, 5 ).equals( "/pics" ) ) {
-			sendFile( session, "image/jpg" );
+		} else if ( httpPathBegins( session,  "/pics" ) ) {
+			session.response( httpFileResponse( session, rootPath, "image/jpg", -1 ) );
 		
-		} else if ( session.request().path().equals( "/paged.polyfill.js" ) ) {
-			sendFile( session, "application/javascript" );
+		} else if ( httpPathBegins( session, "/paged.polyfill.js" ) ) {
+			session.response( httpFileResponse( session, rootPath, "application/javascript", -1 ) );
 		
 		} else {
 			session.response(
