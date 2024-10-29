@@ -6,6 +6,7 @@ import creek.*;
 public abstract class AbstractStrongs implements Strongs {
 
 	private Tree data;
+	private Tree dataHashed;
 	private Tree lookup;
 	private Alphabet alphabet = new Alphabet();
 	
@@ -29,12 +30,12 @@ public abstract class AbstractStrongs implements Strongs {
 		return raw;
 	}
 	
-	
 	//////////////////// ABSTRACT ////////////////////
 	public abstract Strongs load ( String path ) throws Exception;
 	
 	public Strongs data ( Strongs strongs ) {
 		data = strongs.data();
+		dataHashed = strongs.dataHashed();
 		//lookup = strongs.lookup();
 		return this;
 	}
@@ -49,6 +50,8 @@ public abstract class AbstractStrongs implements Strongs {
 		//data().auto( "strongs" ).auto( strongs  ).auto( basic    ).increment();
 
 		data().auto( "basic" ).auto( basic ).add( strongs, data().auto("strongs").auto(strongs) );
+		dataHashed().auto( "basicToCode" ).auto( alphabet.wordHash(basic) ).auto( basic ).auto( strongs ).increment();
+		dataHashed().auto( "codeToFull" ).auto( alphabet.strongsHash(strongs) ).auto( strongs ).auto( original ).increment();
 	}
 
 	// depricated; provides compatibility
@@ -61,12 +64,18 @@ public abstract class AbstractStrongs implements Strongs {
 		if (strongs==null || replacement==null) return;
 		strongs = formatStrongs(strongs);
 	
-		data().auto( "strongs" ).auto( strongs ).auto( replacement );
+		data().auto( "strongs" ).auto( alphabet.strongsHash(strongs) ).auto( strongs ).auto( replacement );
+		dataHashed().auto( "codeToReplacement" ).auto( alphabet.strongsHash(strongs) ).auto( strongs ).auto( replacement );
 	}
 	
 	public Tree data () {
 		if (data==null) data = new JSON( JSON.AUTO_ORDER );
 		return data;
+	}
+	
+	public Tree dataHashed () {
+		if (dataHashed==null) dataHashed = new JSON( JSON.AUTO_ORDER );
+		return dataHashed;
 	}
 	
 	public Tree search ( String word ) {

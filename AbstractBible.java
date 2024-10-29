@@ -16,6 +16,7 @@ public abstract class AbstractBible implements Bible {
 	
 	Tree bibleText = new JSON( JSON.RETAIN_ORDER );
 	Tree wordLookup = new JSON( JSON.RETAIN_ORDER );
+	Tree wordLookupHashed = new JSON( JSON.RETAIN_ORDER );
 	Tree wordData = new JSON( JSON.RETAIN_ORDER );
 	Tree bibleCompressed = new JSON( JSON.RETAIN_ORDER );
 	
@@ -40,6 +41,7 @@ public abstract class AbstractBible implements Bible {
 			if (basic.length()>0) {
 				// add to word lookup
 				wordLookup.auto( basic ).auto( book ).auto( chap ).auto( verse ).increment();
+				wordLookupHashed.auto( alphabet.wordHash(basic) ).auto( basic ).auto( book ).auto( chap ).auto( verse ).increment();
 				
 				// auto-increment the word ID
 				if (!wordData.keys().contains(basic)) wordData.auto( basic ).add( "id", String.valueOf(wordCount++) );
@@ -98,6 +100,10 @@ public abstract class AbstractBible implements Bible {
 	
 	public Tree lookup () {
 		return wordLookup;
+	}
+	
+	public Tree lookupHashed () {
+		return wordLookupHashed;
 	}
 	
 	public Tree words () {

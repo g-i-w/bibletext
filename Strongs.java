@@ -18,9 +18,15 @@ public interface Strongs {
 	public Tree data ();
 	/* {
 		"strongs":{ strongs: { replacement }},
-		"basic":{ 
-			basic_word: { strongs: data().get("strongs").get(strongs) }
-		},
+		"basic":{ basic_word: { strongs: data().get("strongs").get(strongs) } },
+	} */
+	
+	
+	public Tree dataHashed ();
+	/* {
+		"codeToReplacement":{ xx: {strongs: { replacement }}},
+		"basicToCode":{ xx: { basic_word: { strongs:incr }}},
+		"codeToFull":{ xx: { strongs: { full_word:incr }}},
 	} */
 	
 	

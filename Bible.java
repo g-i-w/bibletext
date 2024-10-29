@@ -15,10 +15,19 @@ public interface Bible {
 	public String verse ( String book, String chap, String verse ) throws Exception;
 
 	public Tree text ();
-	// { book:{ chap:{ verse:text }}}
+	/* {
+		book:{ chap:{ verse:text }}
+	} */
 
 	public Tree lookup ();
-	// { basic_word:{ book:{ chap:{ verse:{verse_obj} }}}}
+	/* {
+		basic_word:{ book:{ chap:{ verse:incr }}}
+	} */
+	
+	public Tree lookupHashed ();
+	/* {
+		xxx:{ basic_word:{ book:{ chap:{ verse:incr } }}}
+	} */
 	
 	public Tree words ();
 	/* {
@@ -28,7 +37,7 @@ public interface Bible {
 			"full":  { full_word:qty_str }
 		}
 	} */
-	
+		
 	public Tree compressed ();
 	/* {
 		"text":     { book: { chap:{ verse:[ id_0, id_1 ... ] }}             },

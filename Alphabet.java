@@ -111,6 +111,18 @@ public class Alphabet {
 		return convertChars;
 	}
 	
+	public String wordHash ( String key ) {
+		int len = key.length();
+		if (len <= 2) return key;
+		//return key.substring( 0, 2 );
+		return key.substring( 0, 1 )+key.substring( len-1, len ); // first+last
+	}
+	
+	public String strongsHash ( String key ) {
+		if (key.length() <= 3) return key;
+		return key.substring( 0, 3 );
+	}
+	
 	// use a table column for a character set
 	public static void main ( String[] args ) {
 		Alphabet a = new Alphabet();
