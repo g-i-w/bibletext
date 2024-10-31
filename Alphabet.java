@@ -114,7 +114,7 @@ public class Alphabet {
 	public String wordHash ( String key ) {
 		int len = key.length();
 		if (len <= 2) return key;
-		//return key.substring( 0, 2 );
+		//return key.substring( 0, 3 );
 		return key.substring( 0, 1 )+key.substring( len-1, len ); // first+last
 	}
 	
