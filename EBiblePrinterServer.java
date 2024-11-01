@@ -38,8 +38,8 @@ public class EBiblePrinterServer extends ServerState {
 			"<input type='hidden' name='lang' value='"+query.get("lang")+"'>"+
 			"<input type='hidden' name='ver' value='"+query.get("ver")+"'>";
 			
-		String textLink = "/?type=text&lang="+query.get("lang")+"&ver="+query.get("ver");
-		String coverLink = "/?type=cover&lang="+query.get("lang")+"&ver="+query.get("ver");
+		String textLink = "?type=text&lang="+query.get("lang")+"&ver="+query.get("ver");
+		String coverLink = "?type=cover&lang="+query.get("lang")+"&ver="+query.get("ver");
 		
 		if (httpQuery( session, "type", "text" )) {
 			String title = query.get("ver");
