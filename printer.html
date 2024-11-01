@@ -1333,7 +1333,7 @@
 				</table>
 				<table class="input-block">
 					<tr><td></td><td><input name="top" value='0.4' id="top" onchange="selectMargins();" style="width:20px;"></td><td></td></tr>
-					<tr><td><input name="left" value='2' id="left" onchange="selectMargins();" style="width:20px;"></td><td>Margins<br>[cm]</td><td><input name="right" value='0.4' id="right" onchange="selectMargins();" style="width:20px;"></td></tr>
+					<tr><td><input name="left" value='1.2' id="left" onchange="selectMargins();" style="width:20px;"></td><td>Margins<br>[cm]</td><td><input name="right" value='0.4' id="right" onchange="selectMargins();" style="width:20px;"></td></tr>
 					<tr><td></td><td><input name="bottom" value='0.4' id="bottom" onchange="selectMargins();" style="width:20px;"></td><td></td></tr>
 				</table>
 				<div class="input-block">
@@ -1422,6 +1422,7 @@
 		else if (type==='zero')     {style.innerHTML='.page-example{border-width:0;}';}
 		document.head.appendChild(style);
 	}
+	selectMargins();
 	</script>
 	////html////
 	</center>
