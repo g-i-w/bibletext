@@ -69,13 +69,15 @@ public class InterlinearServer extends ServerState {
 		return output;
 	}
 	
-	private Tree translations ( String book, String chap, String verse ) throws Exception {
+	private Tree translations ( String lang, String book, String chap, String verse ) throws Exception {
 		Tree input = interlinearTree.get( "translations" );
 		Tree output = new JSON( JSON.RETAIN_ORDER );
 		for (String key : input.keys()) {
-			output.auto( book ).auto( chap ).auto( verse ).add( key,
-				input.get( key ).get( book ).get( chap ).get( verse )
-			);
+			if (key.equals("English") || Regex.exists( key, lang )) {
+				output.auto( book ).auto( chap ).auto( verse ).add( key,
+					input.get( key ).get( book ).get( chap ).get( verse )
+				);
+			}
 		}
 		return output;
 	}
@@ -100,11 +102,15 @@ public class InterlinearServer extends ServerState {
 		htmlEnd;
 	}
 	
+	String htmlTree ( Tree t0, Tree t1 ) {
+		return htmlTree( t0 )+htmlTree( t1 );
+	}
+	
 	@Override
 	public void received ( Connection c ) {
 		InboundHTTP session = http( c );
 		
-		Map<String,String> query = httpQueryFields( session, new String[]{ "book", "chap", "verse", "word" } );
+		Map<String,String> query = httpQueryFields( session, new String[]{ "lang", "book", "chap", "verse", "word" } );
 		
 		System.out.println( session.request().path() );
 		System.out.println( query );
@@ -115,12 +121,15 @@ public class InterlinearServer extends ServerState {
 			if (httpPathBegins( session, "/query" )) {
 				if (httpQuery( session, "type", "diagram" )) {
 					httpRespondHTML( session,
-						htmlTree( verseDiagram( query.get("book"), query.get("chap"), query.get("verse") ) )
+						htmlTree(
+							translations( query.get("lang"), query.get("book"), query.get("chap"), query.get("verse") ),
+							verseDiagram( query.get("book"), query.get("chap"), query.get("verse") )
+						)
 					);
 					
 				} else if (httpQuery( session, "type", "translations" )) {
 					httpRespondHTML( session,
-						htmlTree( translations( query.get("book"), query.get("chap"), query.get("verse") ) )
+						htmlTree( translations( query.get("lang"), query.get("book"), query.get("chap"), query.get("verse") ) )
 					);
 
 				} else if (httpQuery( session, "type", "where-used" )) {

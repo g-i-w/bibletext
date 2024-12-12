@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset='utf-8' />
+<title>Interlinear Bible</title>
+<style>
+	div {
+		margin:32px;
+		background-color:lightgray;
+		min-height:100px;
+		width:100%;
+	}
+	input {
+		width:100px;
+	}
+
+</style>
+</head>
+<body>
+	<div id="verseDiv"></div>
+
+	Reference: <input id="book" onchange="refresh()">&nbsp;&nbsp;<input id="chap" onchange="refresh()">:<input id="verse" onchange="refresh()"> <br>
+	Word: <input id="word" onchange="refresh()">
+	
+	
+<script src="interlinear.js"></script>	
+<script>
+
+	function getId ( id ) {
+		return document.getElementById( id );
+	}
+	
+	function getVal ( id ) {
+		return getId( id ).value;
+	}
+	
+	function setVal ( id, val ) {
+		var prev = getId( id ).value;
+		getId( id ).value = val;
+		return prev;
+	}
+	
+	function verseTable ( book, chap, verse ) {
+		var verseTable = "<table>";
+		for (const [tCode, bibleObj] of Object.entries(interlinear.translations)) {
+			console.log( `tCode: ${tCode}` );
+			verseTable += `<tr><td>${tCode}</td>`;
+			if (bibleObj[book]!==undefined && bibleObj[book][chap]!==undefined) {
+				var verseText = bibleObj[book][chap][verse];
+				console.log( `${tCode} --> ${book} ${chap}:${verse} '${verseText}'` );
+				verseTable += `<td>${verseText}</td></tr>`;
+			} else {
+				verseTable += `<td>[NOT FOUND]</td></tr>`;
+			}
+		}
+		verseTable += "</table>";
+		return verseTable;
+	}
+
+	function refresh () {
+		var book = getVal( "book" );
+		var chap = getVal( "chap" );
+		var verse = getVal( "verse" );
+		var word = getVal( "word" );
+		
+		getId( "verseDiv" ).innerHTML = verseTable( book, chap, verse );
+	}
+
+</script>
+</body>
+</html>
+
