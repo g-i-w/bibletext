@@ -5,7 +5,7 @@
 <title>Interlinear Bible</title>
 <style>
 	div {
-		margin:32px;
+		margin-bottom:32px;
 		background-color:lightgray;
 		min-height:100px;
 		width:100%;
@@ -13,18 +13,29 @@
 	input {
 		width:100px;
 	}
+	table {
+		border-collapse:collapse;
+		border:0;
+	}
+	td {
+		border-top:solid 1px black;
+	}
 
 </style>
 </head>
 <body>
-	<div id="verseDiv"></div>
 
-	Reference: <input id="book" onchange="refresh()">&nbsp;&nbsp;<input id="chap" onchange="refresh()">:<input id="verse" onchange="refresh()"> <br>
-	Word: <input id="word" onchange="refresh()">
+	Reference: <input id="book" onchange="refreshVerse()">&nbsp;&nbsp;<input id="chap" onchange="refreshVerse()">:<input id="verse" onchange="refreshVerse()"> <br>
+	Word: <input id="word" onchange="refreshWord()">
 	
+	<div id="verseDiv"></div>
+	<br>
+	<div id="wordDiv"></div>
 	
 <script src="interlinear.js"></script>	
 <script>
+
+	// building-block functions
 
 	function getId ( id ) {
 		return document.getElementById( id );
@@ -35,35 +46,207 @@
 	}
 	
 	function setVal ( id, val ) {
+		console.log( 'setting '+id+' to '+val );
 		var prev = getId( id ).value;
 		getId( id ).value = val;
 		return prev;
+	}
+	
+	function basicChar ( c ) {
+		// check for substitute greek char
+		if ('άᾳᾴᾶᾷὰάἀἁἂἃἄἅἆᾄᾅ'.indexOf( c ) > -1) return 'α';
+		if ('ἈἉἋἌἍἎ'.indexOf( c ) > -1) return 'Α';
+		if ('έἐἑἓἔἕ'.indexOf( c ) > -1) return 'ε';
+		if ('ἘἙἛἜἝ'.indexOf( c ) > -1) return 'Ε';
+		if ('ἨἩἪἫἬἭἮ'.indexOf( c ) > -1) return 'Η';
+		if ('ϊΐὶίίῒΐῖἰἱἳἴἵἶἷ'.indexOf( c ) > -1) return 'ι';
+		if ('ἸἹἼἽ'.indexOf( c ) > -1) return 'Ι';
+		if ('όὸόὀὁὂὃὄὅ'.indexOf( c ) > -1) return 'ο';
+		if ('ὈὉὋὌὍ'.indexOf( c ) > -1) return 'Ο';
+		if ('ΰῦῢὐὑὒὓὔὕὖὗ'.indexOf( c ) > -1) return 'υ';
+		if ('ὙὝὟ'.indexOf( c ) > -1) return 'Υ';
+		if ('ώῳῴῶῷᾠᾧὠὡὢὤὥὦὧὼώ'.indexOf( c ) > -1) return 'ω';
+		if ('ὨὩὪὬὭὮὯᾯ'.indexOf( c ) > -1) return 'Ω';
+		if ('ἐἑἓἔἕὲέέ'.indexOf( c ) > -1) return 'ε';
+		if ('ύϋὺύ'.indexOf( c ) > -1) return 'ν';
+		if ('ὴήῃῄῆῇᾐᾑᾔᾖᾗήἠἡἢἣἤἥἦἧ'.indexOf( c ) > -1) return 'η';
+		if ('ῥ'.indexOf( c ) > -1) return 'ρ';
+		if ('Ῥ'.indexOf( c ) > -1) return 'Ρ';
+		
+		// check for basic greek char
+		if ('᾽’ΑαΒβΓγΔδΕεΖζΗηΘθΙιΚκΛλΜμΝνΞξΟοΠπΡρΣσςΤτΥυΦφΧχΨψΩω'.indexOf( c ) > -1) return c;
+		
+		// check for basic hebrew char
+		if ('אבגדהוזחטיךכלםמןנסעףפץצקרשתװױײ׳״־׀׃׆'.indexOf( c ) > -1) return c;
+		
+		// otherwise return nothing
+		return '';
+	}
+	
+	function basicWord ( word ) {
+		var basic = '';
+		for (let i = 0; i < word.length; i++) {
+			basic += basicChar( word[i] );
+		}
+		return basic;
+	}
+	
+	function substringSet ( word ) {
+		var wordLength = word.length;
+		var set = new Set();
+		
+		for (let size=wordLength-1; size>=1; size--) {
+			let maxPos = wordLength-size; // max start-index of substring
+			for (let pos=0; pos<=maxPos; pos++) {
+				let subWord = word.substring(pos, pos+size);
+				set.add( subWord );
+			}
+		}
+		return set;
+	}
+
+	function wordHash ( key ) {
+		let len = key.length;
+		if (len <= 2) return key;
+		return key.substring( 0, 1 )+key.substring( len-1, len ); // first+last
+	}
+
+
+
+
+	// structural functions
+
+	function verseText ( bibleObj, book, chap, verse ) {
+		console.log( 'verseText: '+book+','+chap+','+verse );
+		if (bibleObj!==undefined && bibleObj[book]!==undefined && bibleObj[book][chap]!==undefined) {
+			return bibleObj[book][chap][verse];
+		} else {
+			//return `[NOT FOUND: ${book} ${chap}:${verse}]`;
+			return '';
+		}
+	}
+	
+	function exactWord ( text, basic ) {
+		console.log( text );
+		var html = '';
+		if (text!==undefined) {
+			for (let word of text.split(/\s+/)) {
+				if (basicWord( word )==basic) html += " <a href=\"#\" onclick=\"changeWord('"+word+"')\">"+word+"</a>";
+			}
+		}
+		return html;
+	}
+	
+	function strongsInfo ( word ) {
+		var basicToCode = interlinear.strongs.basicToCode;
+		var codeToReplacement = interlinear.strongs.codeToReplacement;
+		var basic = basicWord( word );
+		var hash = wordHash( basic );
+		var html = '<table>';
+		if (basicToCode[hash]!==undefined && basicToCode[hash][basic]!==undefined) {
+			for (const [code, codeObj] of Object.entries(basicToCode[hash][basic])) {
+				let codeHash = code.substring(0,3);
+				if (codeToReplacement[codeHash]!==undefined && codeToReplacement[codeHash][code]!==undefined) {
+					for (const [rep, repObj] of Object.entries(codeToReplacement[codeHash][code])) {
+						html += "<tr><td>"+code+"</td><td>"+rep+"</td></tr>";
+					}
+				}
+			}
+		}
+		html += '</table>';
+		return html;
+	}
+	
+	function wordInfo ( word ) {
+		var basic = basicWord( word );
+		var hash = wordHash( basic );
+		
+		// word info
+		var html = '<table>';
+		html += '<tr><td><h2>'+basic+'</h2></td><td>'+strongsInfo( word )+'</td></tr>';
+		html += '</table>';
+		
+		// word locations
+		html += '<table>';
+		if (interlinear.data[hash]!==undefined && interlinear.data[hash][basic]!==undefined) {
+			for (const [book, bookObj] of Object.entries(interlinear.data[hash][basic])) {
+				for (const [chap, chapObj] of Object.entries(bookObj)) {
+					for (const [verse, verseOjb] of Object.entries(chapObj)) {
+						let text = verseText( interlinear.text, book, chap, verse );
+						console.log( text );
+						html += '<tr><td>'+book+'</td><td>'+chap+"</td><td><a href=\"#\" onclick=\"changeVerse('"+book+"','"+chap+"','"+verse+"')\">"+verse+'</a></td><td>'+exactWord( text, basic )+'</td></tr>';
+					}
+				}
+			}
+		}
+		html += '</table>';
+		
+		// sub-word info
+		html += '<table>';
+		for (let sub of substringSet( basic )) {
+			let subHash = wordHash( sub );
+			if (interlinear.data[subHash]!==undefined && interlinear.data[subHash][sub]!==undefined) {
+				html += "<tr><td><a href=\"#\" onclick=\"changeWord('"+sub+"')\">"+sub+"</a></td><td>"+strongsInfo( sub )+"</td></tr>";
+			}
+		}
+		html += '</table>';
+		
+		return html;
+	}
+	
+	function wordLink ( word ) {
+		return ` <a href="#" onclick="changeWord('${word}');">${word}</a>`;
+	}
+	
+	function linkedText ( text ) {
+		console.log( text );
+		var newText = '';
+		for (let word of text.split(/\s+/)) {
+			console.log( word );
+			newText += wordLink( word );
+			first = false;
+		}
+		return newText;
 	}
 	
 	function verseTable ( book, chap, verse ) {
 		var verseTable = "<table>";
 		for (const [tCode, bibleObj] of Object.entries(interlinear.translations)) {
 			console.log( `tCode: ${tCode}` );
-			verseTable += `<tr><td>${tCode}</td>`;
-			if (bibleObj[book]!==undefined && bibleObj[book][chap]!==undefined) {
-				var verseText = bibleObj[book][chap][verse];
-				console.log( `${tCode} --> ${book} ${chap}:${verse} '${verseText}'` );
-				verseTable += `<td>${verseText}</td></tr>`;
-			} else {
-				verseTable += `<td>[NOT FOUND]</td></tr>`;
-			}
+			verseTable += '<tr><td>'+tCode+'</td><td>'+verseText( bibleObj, book, chap, verse )+'</td></tr>';
 		}
-		verseTable += "</table>";
+		var text = verseText( interlinear.text, book, chap, verse );
+		verseTable += '<tr><td>original</td><td>'+linkedText( text )+'</td></tr></table>';
+		console.log( linkedText(text) );
 		return verseTable;
 	}
+	
+	function changeVerse ( book, chap, verse ) {
+		setVal( "book", book );
+		setVal( "chap", chap );
+		setVal( "verse", verse );
+		
+		refreshVerse();
+	}
 
-	function refresh () {
+	function refreshVerse () {
 		var book = getVal( "book" );
 		var chap = getVal( "chap" );
 		var verse = getVal( "verse" );
-		var word = getVal( "word" );
 		
 		getId( "verseDiv" ).innerHTML = verseTable( book, chap, verse );
+	}
+	
+	function changeWord ( word ) {
+		setVal( "word", word );
+		
+		refreshWord();
+	}
+	
+	function refreshWord () {
+		var word = getVal( "word" );
+
+		getId( "wordDiv" ).innerHTML = wordInfo( word );
 	}
 
 </script>

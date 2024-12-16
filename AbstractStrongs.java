@@ -63,6 +63,7 @@ public abstract class AbstractStrongs implements Strongs {
 	public void replacement ( String strongs, String replacement ) {
 		if (strongs==null || replacement==null) return;
 		strongs = formatStrongs(strongs);
+		replacement = replacement.replaceAll( "[\\n\\r]", "" ).replaceAll( "\"", "" ); // remove newlines and quotes
 	
 		data().auto( "strongs" ).auto( alphabet.strongsHash(strongs) ).auto( strongs ).auto( replacement );
 		dataHashed().auto( "codeToReplacement" ).auto( alphabet.strongsHash(strongs) ).auto( strongs ).auto( replacement );

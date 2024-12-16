@@ -42,7 +42,6 @@ public class InterlinearData {
 		
 		// Translations
 		System.err.println( "*** Translations ***" );
-		Tree translationsTree = new JSON( JSON.RETAIN_ORDER );
 
 		System.err.println( "Loading English..." );
 		Bible english = new EBibleOrgText().load( rootPath+"/biblesd/bibles/ebible.org/English/text/eng-web/" );
@@ -66,13 +65,12 @@ public class InterlinearData {
 		
 		// Strongs
 		System.err.println( "*** Strongs ***" );
-		Tree strongsTree = new JSON( JSON.RETAIN_ORDER );
 
 		System.err.println( "Loading Strongs..." );
 		//Strongs msb = new StrongsMsbNt().load( "biblelookup/majoritybible.com/msb_nt_tables.JSON" );
 		Strongs bsb = new StrongsBSB().load( rootPath+"/biblelookup/openbible.org/csv/" );
 		Strongs strongs = new StrongsSwordProject().data( bsb ).load( rootPath+"/biblelookup/SwordProject/" );
-		strongsTree.map( strongs.dataHashed().map() );
+		jsonTree.auto( "strongs" ).map( strongs.dataHashed().map() );
 		Stats.displayMemory();
 		
 		
