@@ -51,7 +51,7 @@ public abstract class AbstractStrongs implements Strongs {
 
 		data().auto( "basic" ).auto( basic ).add( strongs, data().auto("strongs").auto(strongs) );
 		dataHashed().auto( "basicToCode" ).auto( alphabet.wordHash(basic) ).auto( basic ).auto( strongs ).increment();
-		dataHashed().auto( "codeToFull" ).auto( alphabet.strongsHash(strongs) ).auto( strongs ).auto( original ).increment();
+		//dataHashed().auto( "codeToFull" ).auto( alphabet.strongsHash(strongs) ).auto( strongs ).auto( original ).increment();
 	}
 
 	// depricated; provides compatibility

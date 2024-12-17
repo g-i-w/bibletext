@@ -26,7 +26,7 @@ public interface Strongs {
 	/* {
 		"codeToReplacement":{ xx: {strongs: { replacement }}},
 		"basicToCode":{ xx: { basic_word: { strongs:incr }}},
-		"codeToFull":{ xx: { strongs: { full_word:incr }}},
+		//disabled// "codeToFull":{ xx: { strongs: { full_word:incr }}},
 	} */
 	
 	

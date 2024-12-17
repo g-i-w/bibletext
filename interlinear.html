@@ -4,36 +4,102 @@
 <meta charset='utf-8' />
 <title>Interlinear Bible</title>
 <style>
+	body {
+		font-family:sans-serif;
+		font-size:14px;
+		border:0;
+		margin:0;
+		padding:0;
+	}
 	div {
-		margin-bottom:32px;
-		background-color:lightgray;
-		min-height:100px;
-		width:100%;
+		margin:8px 0 8px 0;
+		min-height:20px;
+		display:inline-block;
+		min-width:200px;
+		max-width:500px;
+		vertical-align:top;
+	}
+	.main-div {
+		background-color:#fafafa;
+		visibility:hidden;		
+	}
+	.controls-subdiv {
+		margin:0 8px 0 8px;
+	}
+	#controlsDiv {
+		margin-top:0;
+		padding:16px 0 16px 0;
 	}
 	input {
-		width:100px;
+		padding: 4px 8px;
+		margin: 4px 0;
+		display: inline-block;
+		border: 1px solid #ccc;
+		border-radius: 4px;
+		box-sizing: border-box;
 	}
 	table {
 		border-collapse:collapse;
 		border:0;
 	}
 	td {
-		border-top:solid 1px black;
+		border-top:solid 1px lightgray;
+		padding:4px;
+	}
+	td table td {
+		border-top:0;
+	}
+	
+	.highlighted {
+		color:white;
+		background-color:#004080;
+		border:0;
+		padding:2px;
+	}
+	a {
+		color:#004080;
+	}
+	a.highlighted {
+		font-weight:bold;
+		border-radius:2px;
+	}
+	td.highlighted, .highlighted td {
+		color:black;
+		border-top:0;
+		margin-bottom:4px;
+		background-color:#f0f0f0;
 	}
 
 </style>
 </head>
 <body>
-
-	Reference: <input id="book" onchange="refreshVerse()">&nbsp;&nbsp;<input id="chap" onchange="refreshVerse()">:<input id="verse" onchange="refreshVerse()"> <br>
-	Word: <input id="word" onchange="refreshWord()">
+	<center>
 	
-	<div id="verseDiv"></div>
+	<div id="controlsDiv" style="max-width:100%;width:100%;">
+	<div class="controls-subdiv">
+	Verse: <input id="book" onchange="refresh()" value="GEN" style="width:80px;">&nbsp;&nbsp;<input id="chap" onchange="refresh()" value="1" style="width:40px;">:<input id="verse" onchange="refresh()" value="1" style="width:40px;"> <br>
+	</div>
+	<div class="controls-subdiv">
+	Word: <input id="word" onchange="refresh()" value="בְּרֵאשִׁ֖ית">
+	</div>
+	</div>
+	<a id="verseView"></a>
+	
+	<div id="verseDiv" class="main-div"></div>
+	
+	<div id="wordDiv" class="main-div"></div>
+	<a id="wordView"></a>
+	
 	<br>
-	<div id="wordDiv"></div>
+	<div id="loadingDiv"><h1>Loading...</h1></div>
+	
+	</center>
 	
 <script src="interlinear.js"></script>	
 <script>
+
+	const verseHistory = {};
+	const wordHistory = {};
 
 	// building-block functions
 
@@ -46,7 +112,7 @@
 	}
 	
 	function setVal ( id, val ) {
-		console.log( 'setting '+id+' to '+val );
+		//console.log( 'setting '+id+' to '+val );
 		var prev = getId( id ).value;
 		getId( id ).value = val;
 		return prev;
@@ -117,7 +183,7 @@
 	// structural functions
 
 	function verseText ( bibleObj, book, chap, verse ) {
-		console.log( 'verseText: '+book+','+chap+','+verse );
+		//console.log( 'verseText: '+book+','+chap+','+verse );
 		if (bibleObj!==undefined && bibleObj[book]!==undefined && bibleObj[book][chap]!==undefined) {
 			return bibleObj[book][chap][verse];
 		} else {
@@ -127,11 +193,11 @@
 	}
 	
 	function exactWord ( text, basic ) {
-		console.log( text );
+		//console.log( text );
 		var html = '';
 		if (text!==undefined) {
 			for (let word of text.split(/\s+/)) {
-				if (basicWord( word )==basic) html += " <a href=\"#\" onclick=\"changeWord('"+word+"')\">"+word+"</a>";
+				if (basicWord( word )==basic) html += " <a href=\"#wordView\" onclick=\"changeWord('"+word+"')\">"+word+"</a>";
 			}
 		}
 		return html;
@@ -157,36 +223,65 @@
 		return html;
 	}
 	
+	function verseLink ( book, chap, verse ) {
+		if ( getVal("book")==book && getVal("chap")==chap && getVal("verse")==verse )
+			return `<a href="#verseView" onclick="changeVerse('${book}','${chap}','${verse}')" class="highlighted">${book} ${chap}:${verse}</a>`;
+		else
+			return `<a href="#verseView" onclick="changeVerse('${book}','${chap}','${verse}')">${book} ${chap}:${verse}</a>`;
+	}
+	
+	function wordLink ( word ) {
+		if ( basicWord(getVal( "word" )) == basicWord(word) )
+			return `<a href="#wordView" onclick="changeWord('${word}')" class="highlighted">${word}</a>`;
+		else
+			return `<a href="#wordView" onclick="changeWord('${word}')">${word}</a>`;
+	}
+	
 	function wordInfo ( word ) {
 		var basic = basicWord( word );
 		var hash = wordHash( basic );
 		
+		// history
+		var html = '<table><tr><td colspan=2 class="highlighted">';
+		var delim = '';
+		for (const [key, nullObj] of Object.entries(wordHistory)) {
+			html += delim+wordLink( key );
+			delim = '&nbsp; ';
+		}
+		html += '</td></tr>';
+
 		// word info
-		var html = '<table>';
-		html += '<tr><td><h2>'+basic+'</h2></td><td>'+strongsInfo( word )+'</td></tr>';
-		html += '</table>';
+		//var html = '<table>';
+		html += '<tr><td class="highlighted"><h1>'+basic+'</h1></td><td class="highlighted">'+strongsInfo( word )+'</td></tr>';
+		//html += '</table>';
 		
 		// word locations
-		html += '<table>';
+		//html += '<table>';
 		if (interlinear.data[hash]!==undefined && interlinear.data[hash][basic]!==undefined) {
 			for (const [book, bookObj] of Object.entries(interlinear.data[hash][basic])) {
+				html += '<tr><td>'+book+'</td><td>';
+				let delim = '';
 				for (const [chap, chapObj] of Object.entries(bookObj)) {
 					for (const [verse, verseOjb] of Object.entries(chapObj)) {
 						let text = verseText( interlinear.text, book, chap, verse );
-						console.log( text );
-						html += '<tr><td>'+book+'</td><td>'+chap+"</td><td><a href=\"#\" onclick=\"changeVerse('"+book+"','"+chap+"','"+verse+"')\">"+verse+'</a></td><td>'+exactWord( text, basic )+'</td></tr>';
+						//console.log( text );
+						//html += '<tr><td>'+book+'</td><td>'+chap+"</td><td><a href=\"#\" onclick=\"changeVerse('"+book+"','"+chap+"','"+verse+"')\">"+verse+'</a></td><td>'+exactWord( text, basic )+'</td></tr>';
+						//html += delim+"<a href=\"#verseView\" onclick=\"changeVerse('"+book+"','"+chap+"','"+verse+"')\">"+chap+':'+verse+'</a>';
+						html += delim+verseLink( book, chap, verse );
+						delim = ' , ';
 					}
 				}
+				html += '</td></tr>';
 			}
 		}
-		html += '</table>';
+		//html += '</table>';
 		
 		// sub-word info
-		html += '<table>';
+		//html += '<table>';
 		for (let sub of substringSet( basic )) {
 			let subHash = wordHash( sub );
 			if (interlinear.data[subHash]!==undefined && interlinear.data[subHash][sub]!==undefined) {
-				html += "<tr><td><a href=\"#\" onclick=\"changeWord('"+sub+"')\">"+sub+"</a></td><td>"+strongsInfo( sub )+"</td></tr>";
+				html += "<tr><td><a href=\"#wordView\" onclick=\"changeWord('"+sub+"')\">"+sub+"</a></td><td>"+strongsInfo( sub )+"</td></tr>";
 			}
 		}
 		html += '</table>';
@@ -194,60 +289,60 @@
 		return html;
 	}
 	
-	function wordLink ( word ) {
-		return ` <a href="#" onclick="changeWord('${word}');">${word}</a>`;
-	}
-	
-	function linkedText ( text ) {
-		console.log( text );
-		var newText = '';
-		for (let word of text.split(/\s+/)) {
-			console.log( word );
-			newText += wordLink( word );
-			first = false;
+	function verseInfo ( book, chap, verse ) {
+		var html = '<table><tr><td colspan=2 class="highlighted">';
+		var delim = '';
+		for (const [key, verseObj] of Object.entries(verseHistory)) {
+			html += delim+verseLink( verseObj.book, verseObj.chap, verseObj.verse );
+			delim = '&nbsp; ';
 		}
-		return newText;
-	}
-	
-	function verseTable ( book, chap, verse ) {
-		var verseTable = "<table>";
+		html += '</td></tr>';
 		for (const [tCode, bibleObj] of Object.entries(interlinear.translations)) {
-			console.log( `tCode: ${tCode}` );
-			verseTable += '<tr><td>'+tCode+'</td><td>'+verseText( bibleObj, book, chap, verse )+'</td></tr>';
+			html += '<tr><td class="highlighted">'+tCode+'</td><td class="highlighted">'+verseText( bibleObj, book, chap, verse )+'</td></tr>';
 		}
 		var text = verseText( interlinear.text, book, chap, verse );
-		verseTable += '<tr><td>original</td><td>'+linkedText( text )+'</td></tr></table>';
-		console.log( linkedText(text) );
-		return verseTable;
+		for (let word of text.split(/\s+/)) {
+			html += '<tr><td>'+wordLink( word )+'</td><td>'+strongsInfo( word )+'</td></tr>';
+		}
+		html += '</table>';
+		return html;
 	}
 	
 	function changeVerse ( book, chap, verse ) {
 		setVal( "book", book );
 		setVal( "chap", chap );
 		setVal( "verse", verse );
-		
-		refreshVerse();
+		refresh();
 	}
 
-	function refreshVerse () {
+	function changeWord ( word ) {
+		setVal( "word", word );
+		refresh();
+	}
+	
+	function refresh () {
+
+		// verse inputs
 		var book = getVal( "book" );
 		var chap = getVal( "chap" );
 		var verse = getVal( "verse" );
-		
-		getId( "verseDiv" ).innerHTML = verseTable( book, chap, verse );
-	}
-	
-	function changeWord ( word ) {
-		setVal( "word", word );
-		
-		refreshWord();
-	}
-	
-	function refreshWord () {
+
+		// word input
 		var word = getVal( "word" );
 
+		// history
+		verseHistory[book+chap+verse] = { book:book, chap:chap, verse:verse };
+		wordHistory[word] = null;
+		
+		// refresh divs
+		getId( "verseDiv" ).innerHTML = verseInfo( book, chap, verse );
 		getId( "wordDiv" ).innerHTML = wordInfo( word );
 	}
+	
+	refresh();
+	getId( "verseDiv" ).style.visibility = 'visible';
+	getId( "wordDiv" ).style.visibility = 'visible';
+	getId( "loadingDiv" ).style.visibility = 'hidden';
 
 </script>
 </body>
