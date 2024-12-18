@@ -12,18 +12,19 @@
 		padding:0;
 	}
 	div {
-		margin:8px 0 8px 0;
+		margin:8px 0 0 0;
 		min-height:20px;
 		display:inline-block;
-		min-width:200px;
 		max-width:500px;
 		vertical-align:top;
+		padding:0;
+		border:0;
 	}
 	.main-wrapper {
 		visibility:hidden;		
+		padding:8px;
 	}
 	.main-div {
-		margin:8px;
 		background-color:#fafafa;
 		box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 	}
@@ -32,11 +33,11 @@
 	}
 	#controlsDiv {
 		margin-top:0;
-		padding:16px 0 16px 0;
+		padding:4px 0 4px 0;
 	}
-	input {
-		padding: 4px 8px;
-		margin: 4px 0;
+	input, select {
+		padding: 4px 0 4px 0;
+		margin: 4px 0 4px 0;
 		display: inline-block;
 		border: 1px solid #ccc;
 		border-radius: 4px;
@@ -48,6 +49,7 @@
 		width:100%;
 	}
 	td {
+		border:0;
 		border-top:solid 1px lightgray;
 		padding:8px;
 	}
@@ -66,7 +68,7 @@
 	a {
 		color:#004080;
 		text-decoration:none;
-		padding:1px;
+		/*padding:1px;*/
 		border-radius:2px;
 	}
 	a:hover {
@@ -88,13 +90,20 @@
 <body>
 	<center>
 	
-	<div id="controlsDiv" style="max-width:90%;width:90%;">
-	<div class="controls-subdiv">
-	Verse: <input id="book" onchange="refresh()" value="GEN" style="width:80px;">&nbsp;&nbsp;<input id="chap" onchange="refresh()" value="1" style="width:40px;">:<input id="verse" onchange="refresh()" value="1" style="width:40px;"> <br>
-	</div>
-	<div class="controls-subdiv">
-	Word: <input id="word" onchange="refresh()" value="בְּרֵאשִׁ֖ית">
-	</div>
+	<div id="controlsDiv" style="max-width:100%;width:100%">
+	
+		<div class="controls-subdiv">
+		<select id="lang" onchange="changeLanguages();"></select>
+		</div>
+		
+		<div class="controls-subdiv">
+		<input id="book" onchange="refresh()" value="GEN" style="width:80px;">&nbsp;&nbsp;<input id="chap" onchange="refresh()" value="1" style="width:40px;">:<input id="verse" onchange="refresh()" value="1" style="width:40px;"> <br>
+		</div>
+		
+		<div class="controls-subdiv">
+		<input id="word" onchange="refresh()" value="בְּרֵאשִׁ֖ית" style="width:120px;text-align:center">
+		</div>
+	
 	</div>
 	
 	<div id="verseDivWrapper" class="main-wrapper"><div id="verseDiv" class="main-div"></div></div>
@@ -244,8 +253,8 @@
 		var lastVerseNum = Number(last(getVerses(bibleObj,book,chap)));
 		
 		var data = {
-			prevVerse: { book:null, chap:null, verse:null },
-			nextVerse: { book:null, chap:null, verse:null }
+			prevVerse: { book:'', chap:'', verse:'' },
+			nextVerse: { book:'', chap:'', verse:'' }
 		};
 		
 		// next verse
@@ -253,9 +262,9 @@
 			if (chapNum+1 > lastChapNum) {
 				if (nextBook==book) {
 					// do nothing
-					data.nextVerse.book = null;
-					data.nextVerse.chap = null;
-					data.nextVerse.verse = null;
+					data.nextVerse.book = '';
+					data.nextVerse.chap = '';
+					data.nextVerse.verse = '';
 				} else {
 					// otherwise next book
 					data.nextVerse.book = nextBook;
@@ -280,9 +289,9 @@
 			if (chapNum-1 < 1) {
 				if (prevBook==book) {
 					// do nothing
-					data.prevVerse.book = null;
-					data.prevVerse.chap = null;
-					data.prevVerse.verse = null;
+					data.prevVerse.book = '';
+					data.prevVerse.chap = '';
+					data.prevVerse.verse = '';
 				} else {
 					// otherwise prev book
 					let prevChap = last(getChaps(bibleObj,prevBook));
@@ -342,7 +351,7 @@
 	}
 	
 	function isVerse ( book, chap, verse ) {
-		return ( getVal("book")==book && getVal("chap")==chap && getVal("verse")==verse );
+		return ( langToCode(getVal("book"))==langToCode(book) && getVal("chap")==chap && getVal("verse")==verse );
 	}
 	
 	function isWord ( word ) {
@@ -350,7 +359,9 @@
 	}
 	
 	function verseLink ( book, chap, verse, link ) {
-		if (link==undefined) link = `${book}&nbsp;${chap}:${verse}`;
+		console.log(book);
+		if (link==undefined) link = codeToLang(book)+'&nbsp;'+chap+':'+verse;
+		console.log(link);
 		if (isVerse( book, chap, verse ))
 			return `<a href="#verseView" onclick="changeVerse('${book}','${chap}','${verse}')" class="highlighted">${link}</a>`;
 		else
@@ -424,7 +435,7 @@
 		html += '<table>';
 		if (interlinear.data[hash]!==undefined && interlinear.data[hash][basic]!==undefined) {
 			for (const [book, bookObj] of Object.entries(interlinear.data[hash][basic])) {
-				html += '<tr><td>'+book+'</td><td>';
+				html += '<tr><td>'+codeToLang(book)+'</td><td>';
 				let delim = '';
 				for (const [chap, chapObj] of Object.entries(bookObj)) {
 					for (const [verse, verseOjb] of Object.entries(chapObj)) {
@@ -461,18 +472,18 @@
 		html += '</td></tr>';
 		html += '</table>';
 		
-		// translations
+		// translations￼
 		html += '<table>';
-		for (const [tCode, bibleObj] of Object.entries(interlinear.translations)) {
-			let data = verseData( bibleObj, book, chap, verse );
-			html += '<tr><td class="highlighted">'+verseLink(data.prevVerse.book, data.prevVerse.chap, data.prevVerse.verse, upArrow)+'</td><td class="highlighted" style="text-align:center;color:gray;">'+verseText( bibleObj, data.prevVerse.book, data.prevVerse.chap, data.prevVerse.verse )+'</td></tr>';
-			html += '<tr><td class="highlighted"></td><td class="highlighted" style="text-align:center;">'+verseText( bibleObj, book, chap, verse )+'</td></tr>';
-			html += '<tr><td class="highlighted">'+verseLink(data.nextVerse.book, data.nextVerse.chap, data.nextVerse.verse, downArrow)+'</td><td class="highlighted" style="text-align:center;color:gray;">'+verseText( bibleObj, data.nextVerse.book, data.nextVerse.chap, data.nextVerse.verse )+'</td></tr>';
-		}
+		var lang = interlinear.translations[language];
+		let data = verseData( lang, book, chap, verse );
+		if (data.prevVerse.book!='') html += '<tr><td class="highlighted">'+verseLink(data.prevVerse.book, data.prevVerse.chap, data.prevVerse.verse, upArrow)+'</td><td class="highlighted" style="color:gray;">'+data.prevVerse.chap+':'+data.prevVerse.verse+'</td><td class="highlighted" style="color:gray;">'+verseText( lang, data.prevVerse.book, data.prevVerse.chap, data.prevVerse.verse )+'</td></tr>';
+		html += '<tr><td class="highlighted">'+codeToLang(book)+'</td><td class="highlighted">'+chap+':'+verse+'</td><td class="highlighted" style="">'+verseText( lang, book, chap, verse )+'</td></tr>';
+		html += '<tr><td class="highlighted">'+verseLink(data.nextVerse.book, data.nextVerse.chap, data.nextVerse.verse, downArrow)+'</td><td class="highlighted" style="color:gray;">'+data.nextVerse.chap+':'+data.nextVerse.verse+'</td><td class="highlighted" style="color:gray;">'+verseText( lang, data.nextVerse.book, data.nextVerse.chap, data.nextVerse.verse )+'</td></tr>';
+		
 		// original text
 		var text = verseText( interlinear.text, book, chap, verse );
 		var wordArray = text.split(/\s+/);
-		html += '<tr><td colspan=2 style="text-align:center;">';
+		html += '<tr><td colspan=3 style="text-align:center;">';
 		for (let word of wordArray) {
 			html += ' '+wordLink( word );
 		}
@@ -489,7 +500,7 @@
 	}
 	
 	function changeVerse ( book, chap, verse ) {
-		setVal( "book", book );
+		setVal( "book", codeToLang(book) );
 		setVal( "chap", chap );
 		setVal( "verse", verse );
 		refresh();
@@ -500,10 +511,13 @@
 		refresh();
 	}
 	
+
+	//refreshing
+	
 	function refresh () {
 
 		// verse inputs
-		var book = getVal( "book" );
+		var book = langToCode(getVal( "book" ));
 		var chap = getVal( "chap" );
 		var verse = getVal( "verse" );
 
@@ -520,6 +534,62 @@
 		getId( "verseDiv" ).innerHTML = verseInfo( book, chap, verse );
 		getId( "wordDiv" ).innerHTML = wordInfo( word );
 	}
+	
+	
+	// languages
+	
+	var language = 'English';
+	
+	const codes = {};
+	
+	function langToCode ( expression ) {
+		if (expression!==undefined && interlinear.aliases[language]!==undefined) {
+			for (const [alias, code] of Object.entries(interlinear.aliases[language])) {
+				if (alias.toLowerCase().indexOf( expression.toLowerCase() ) > -1) return code;
+			}
+		} else {
+			return expression;
+		}
+	}
+	
+	function codeToLang ( code ) {
+		if (codes[language]!==undefined && codes[language][code]!==undefined) {
+			return codes[language][code];
+		} else {
+			return code;
+		}
+	}
+	
+	function changeLanguages () {
+		var prevCode = langToCode( getVal( "book" ) );
+		language = getVal( "lang" );
+		setVal( "book", codeToLang( prevCode ) );
+		refresh();
+	}
+	
+	// auto-run code
+	
+	//correcting bugs in aliases as they arise
+	interlinear.aliases.English.Jeremiah = 'JER';
+	interlinear.aliases.English.Lamentations = 'LAM';
+	
+	for (const [lang, langObj] of Object.entries(interlinear.aliases)) {
+		codes[lang] = {};
+		for (const [alias, code] of Object.entries(langObj)) {
+			interlinear.aliases[lang][code] = code; // add codes to aliases too
+			codes[lang][code] = alias; // later values override
+		}
+	}
+	
+	for (let lang of Object.keys(interlinear.translations)) {
+		const option = document.createElement('option');
+		option.value = lang;
+		option.text = lang;
+		getId( "lang" ).add( option );
+	}
+	
+	console.log( interlinear.aliases );
+	console.log( codes );
 	
 	refresh();
 	getId( "verseDivWrapper" ).style.visibility = 'visible';

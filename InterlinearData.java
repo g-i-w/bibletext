@@ -44,15 +44,15 @@ public class InterlinearData {
 		System.err.println( "*** Translations ***" );
 
 		System.err.println( "Loading English..." );
-		Bible english = new EBibleOrgText().load( rootPath+"/biblesd/bibles/ebible.org/English/text/eng-web/" );
-		jsonTree.auto( "aliases" ).add( english.aliases() );
-		jsonTree.auto( "translations" ).add( "eng-web", english.text() );
+		Bible english = new EBibleOrgText().load( rootPath+"/biblesd/bibles/ebible.org/English/text/engwebp/" );
+		jsonTree.auto( "aliases" ).auto( "English" ).add( english.aliases() );
+		jsonTree.auto( "translations" ).add( "English", english.text() );
 		Stats.displayMemory();
 
 		System.err.println( "Loading Chinese..." );
 		Bible chinese = new EBibleOrgText().load( rootPath+"/biblesd/bibles/ebible.org/Chinese/text/cmn-cu89s/" );
-		jsonTree.auto( "aliases" ).add( chinese.aliases() );
-		jsonTree.auto( "translations" ).add( "cmn-cu89s", chinese.text() );
+		jsonTree.auto( "aliases" ).auto( "Chinese (Simplified)" ).add( chinese.aliases() );
+		jsonTree.auto( "translations" ).add( "Chinese (Simplified)", chinese.text() );
 		Stats.displayMemory();
 
 		System.err.println( "Reducing memory..." );
