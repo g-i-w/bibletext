@@ -5,6 +5,19 @@ import java.io.*;
 import creek.*;
 
 public class InterlinearData {
+
+	public static void loadLanguage ( Tree jsonTree, String rootPath, String langName, String langCode, String langTitle ) throws Exception {
+		System.err.println( "Loading "+langName+"..." );
+		Bible lang = new EBibleOrgText().load( rootPath+"/biblesd/bibles/ebible.org/"+langName+"/text/"+langCode+"/" );
+		jsonTree.auto( "aliases" ).auto( langTitle ).add( lang.aliases() );
+		jsonTree.auto( "translations" ).add( langTitle, lang.text() );
+		System.err.println( "Reducing memory..." );
+		lang = null;
+		Stats.displayMemory();
+		System.gc();
+	}
+
+
 	public static void main ( String[] args ) throws Exception {
 
 		// main directory
@@ -43,6 +56,7 @@ public class InterlinearData {
 		// Translations
 		System.err.println( "*** Translations ***" );
 
+		/*
 		System.err.println( "Loading English..." );
 		Bible english = new EBibleOrgText().load( rootPath+"/biblesd/bibles/ebible.org/English/text/engwebp/" );
 		jsonTree.auto( "aliases" ).auto( "English" ).add( english.aliases() );
@@ -51,16 +65,19 @@ public class InterlinearData {
 
 		System.err.println( "Loading Chinese..." );
 		Bible chinese = new EBibleOrgText().load( rootPath+"/biblesd/bibles/ebible.org/Chinese/text/cmn-cu89s/" );
-		jsonTree.auto( "aliases" ).auto( "Chinese (Simplified)" ).add( chinese.aliases() );
-		jsonTree.auto( "translations" ).add( "Chinese (Simplified)", chinese.text() );
+		jsonTree.auto( "aliases" ).auto( "简体中文" ).add( chinese.aliases() );
+		jsonTree.auto( "translations" ).add( "简体中文", chinese.text() );
 		Stats.displayMemory();
-
-		System.err.println( "Reducing memory..." );
-		english = null;
-		chinese = null;
-		System.gc();
-		Thread.sleep(1000);
-		Stats.displayMemory();
+		*/
+		
+		loadLanguage( jsonTree, rootPath, "English", "engwebp", "English" );
+		loadLanguage( jsonTree, rootPath, "Chinese", "cmn-cu89s", "新标点和合本 (Simplified Chinese)" );
+		loadLanguage( jsonTree, rootPath, "Hindi", "hincv", "सरल हिन्दी बाइबल (Hindi)" );
+		loadLanguage( jsonTree, rootPath, "Spanish", "spablm", "Santa Biblia (Spanish)" );
+		loadLanguage( jsonTree, rootPath, "French", "frasbl", "Sainte Bible (French)" );
+		loadLanguage( jsonTree, rootPath, "Arabic", "arbnav", "كتاب الحياة (Arabic)" );
+		loadLanguage( jsonTree, rootPath, "Bengali", "benirv", "ইন্ডিয়ান রিভাইজড ভার্সন (Bengali)" );
+		loadLanguage( jsonTree, rootPath, "Russian", "russyn", "Синодальный перевод (Russian)" );
 		
 		
 		// Strongs

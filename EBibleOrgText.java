@@ -10,7 +10,8 @@ public class EBibleOrgText extends AbstractBible {
 
 	public Bible load ( String path ) throws Exception {
 		for (File file : FileActions.recurse(path)) {
-			List<String> ref = Regex.groups( file.getName(), "(\\w{3})_(\\d{2})_read.txt$" );
+			List<String> ref = Regex.groups( file.getName(), "(\\w{3})_(\\d{2,3})_read.txt$" );
+			if (ref.size()==2 && ref.get(1).equals("000")) continue;
 			if (ref.size()==2) {
 				String book = ref.get(0);
 				String chap = Regex.first( ref.get(1), "([^0]\\d*)" ); // trim leading zeros
