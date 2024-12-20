@@ -92,6 +92,8 @@
 	
 	<div id="controlsDiv" style="max-width:100%;width:100%">
 	
+		<span style="font-size:0.8em;"><b>BibleLookup</b> 0.9 (beta)<span style="color:gray;font-size:0.8em;"><br>Source texts from <b>eBible.org</b>: Masoretic Text (hbo), Textus Receptus (grctr)</span></span><br><br>
+
 		<div class="controls-subdiv">
 		&#x1F310;&nbsp;<select id="lang" onchange="changeLanguages();"></select>
 		</div>
@@ -101,7 +103,7 @@
 		</div>
 		
 		<div class="controls-subdiv">
-		&#x1F50E;&nbsp;<input id="word" onchange="changeWord(this.value);" value="בראשית" style="width:120px;text-align:center">
+		&#x1F50E;&nbsp;<input id="word" onchange="changeWord(this.value);getId('wordView').scrollIntoView();" value="בראשית" style="width:120px;text-align:center">
 		</div>
 	
 	</div>
