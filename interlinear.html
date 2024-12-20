@@ -101,7 +101,7 @@
 		</div>
 		
 		<div class="controls-subdiv">
-		<input id="word" onchange="changeWord(this.value);" value="בְּרֵאשִׁ֖ית" style="width:120px;text-align:center">
+		&#x1F50E;&nbsp;<input id="word" onchange="changeWord(this.value);" value="בראשית" style="width:120px;text-align:center">
 		</div>
 	
 	</div>
@@ -117,7 +117,8 @@
 	
 	</center>
 	
-<script src="interlinear.js"></script>	
+<script src="interlinear.js"></script>
+<script src="aliases.js"></script>
 <script>
 
 	const verseHistory = {};	
@@ -451,7 +452,7 @@
 		html += '</td></tr></table>';
 
 		// word info
-		html += '<table><tr><td class="highlighted"><h1>'+basic+'</h1></td><td class="highlighted">'+strongsInfo( word )+'</td></tr>';
+		html += '<table><tr><td class="highlighted"><h1>'+basic+'</h1>'+gematria( word )+'</td><td class="highlighted">'+strongsInfo( word )+'</td></tr>';
 		html += '</table>';
 		
 		// word locations
@@ -476,7 +477,7 @@
 		for (let sub of substringSet( basic )) {
 			let subHash = wordHash( sub );
 			if (something( interlinear.data[subHash] ) && something( interlinear.data[subHash][sub] )) {
-				html += "<tr><td><a href=\"#wordView\" onclick=\"changeWord('"+sub+"')\">"+sub+"</a></td><td>"+gematria( sub )+"</td><td>"+strongsInfo( sub )+"</td></tr>";
+				html += "<tr><td>"+wordLink( sub )+'<br>'+gematria( sub )+"</td><td>"+strongsInfo( sub )+"</td></tr>";
 			}
 		}
 		html += '</table>';
@@ -505,23 +506,29 @@
 		if (something(data.prevVerse.book)) html += '<tr><td class="highlighted">'+verseLink(data.prevVerse.book, data.prevVerse.chap, data.prevVerse.verse, upArrow)+'</td><td class="highlighted" style="color:gray;">'+data.prevVerse.chap+':'+data.prevVerse.verse+'</td><td class="highlighted" style="color:gray;">'+verseText( lang, data.prevVerse.book, data.prevVerse.chap, data.prevVerse.verse )+'</td></tr>';
 		html += '<tr><td class="highlighted">'+codeToLang(book)+'</td><td class="highlighted">'+chap+':'+verse+'</td><td class="highlighted" style="">'+verseText( lang, book, chap, verse )+'</td></tr>';
 		if (something(data.nextVerse.book)) html += '<tr><td class="highlighted">'+verseLink(data.nextVerse.book, data.nextVerse.chap, data.nextVerse.verse, downArrow)+'</td><td class="highlighted" style="color:gray;">'+data.nextVerse.chap+':'+data.nextVerse.verse+'</td><td class="highlighted" style="color:gray;">'+verseText( lang, data.nextVerse.book, data.nextVerse.chap, data.nextVerse.verse )+'</td></tr>';
+		html += '</table>';
 		
 		// original text
 		var text = verseText( interlinear.text, book, chap, verse );
-		var wordArray = text.split(/\s+/);
-		html += '<tr><td colspan=3 style="text-align:center;">';
-		for (let word of wordArray) {
-			html += ' '+wordLink( word );
+		if (something(text)) { // Zech 1:18-21 were at beginning of chap 2 in 'hbo'.  This ensures it's clear if something is missing!
+			html += '<table>';
+			html += '<tr><td style="text-align:center;">';
+			var wordArray = text.split(/\s+/);
+			for (let word of wordArray) {
+				html += ' '+wordLink( word );
+			}
+			html += '</td></tr>';
+			html += '</table>';
+			
+			// each word with Strongs info
+			html += '<table>';
+			for (let word of wordArray) {
+				html += '<tr><td>'+wordLink( word )+'<br>'+gematria( word )+'</td><td>'+strongsInfo( word )+'</td></tr>';
+			}
+			html += '</table>';
+		} else {
+			html += '[ERROR: verse not found!]';
 		}
-		html += '</td></tr>';
-		html += '</table>';
-		
-		// each word with Strongs info
-		html += '<table>';
-		for (let word of wordArray) {
-			html += '<tr><td>'+wordLink( word )+'</td><td>'+gematria( word )+'</td><td>'+strongsInfo( word )+'</td></tr>';
-		}
-		html += '</table>';
 		return html;
 	}
 	
@@ -531,33 +538,18 @@
 	
 	function changeVerse ( book, chap, verse ) {
 		console.log( 'changeVerse: '+book+','+chap+','+verse );
-		/*
-		if (something(book) && something(chap) && something(verse)) {
-			setVal( "book", codeToLang(book) );
-			setVal( "chap", chap );
-			setVal( "verse", verse );
-			refresh();
-		} else {
-			console.log( 'ERROR calling changeVerse('+book+','+chap+','+verse+')' );
-		}
-		*/
 		state.book = langToCode( book );
-		setVal( "book", codeToLang(state.book) );
-		
 		state.chap = chap;
 		state.verse = verse;
-		
+
+		setVal( "book", codeToLang(state.book) );
+		setVal( "chap", state.chap );
+		setVal( "verse", state.verse );
+				
 		refresh();
 	}
 
 	function changeWord ( word ) {
-		/*
-		if (something(word)) {
-			setVal( "word", word );
-			refresh();
-		} else {
-			console.log( 'ERROR calling changeVerse('+book+','+chap+','+verse+')' );
-		}*/
 		state.word = basicWord( word );
 		setVal( "word", state.word );
 		
@@ -568,15 +560,6 @@
 	//refreshing
 	
 	function refresh () {
-		/*
-		// verse inputs
-		var book = langToCode(getVal( "book" ));
-		var chap = getVal( "chap" );
-		var verse = getVal( "verse" );
-
-		// word input
-		var word = getVal( "word" );
-		*/
 		// verse history
 		verseHistory[state.book+state.chap] = { book:state.book, chap:state.chap, verse:state.verse };
 		
@@ -593,9 +576,12 @@
 	function gematria ( word ) {
 		basic = basicWord( word );
 		var value = 0;
+		var altval = 0;
+		var alttitle = '';
 		var pass = 0;
+		var title = '';
+		var delim = '';
 		
-		console.log( word );
 		// overall
 		for (let i=0; i<basic.length; i++) {
 			//console.log( 'pass: '+i+', char: '+basic[i] );
@@ -606,11 +592,10 @@
 			if ('Γγ'.indexOf( basic[i] ) > -1) pass += 3;
 			if ('Δδ'.indexOf( basic[i] ) > -1) pass += 4;
 			if ('Εε'.indexOf( basic[i] ) > -1) pass += 5;
-			if ('ς' == basic[i]) pass += 6;
 			if ('Zζ'.indexOf( basic[i] ) > -1) pass += 7;
 			if ('Hη'.indexOf( basic[i] ) > -1) pass += 8;
 			if ('Θθ'.indexOf( basic[i] ) > -1) pass += 9;
-			if ('Iι'.indexOf( basic[i] ) > -1) pass += 10;
+			if ('Ιι'.indexOf( basic[i] ) > -1) pass += 10;
 			if ('Kκ'.indexOf( basic[i] ) > -1) pass += 20;
 			if ('Λλ'.indexOf( basic[i] ) > -1) pass += 30;
 			if ('Mμ'.indexOf( basic[i] ) > -1) pass += 40;
@@ -627,9 +612,10 @@
 			if ('Χχ'.indexOf( basic[i] ) > -1) pass += 600;
 			if ('Ψψ'.indexOf( basic[i] ) > -1) pass += 700;
 			if ('Ωω'.indexOf( basic[i] ) > -1) pass += 800;
+			if ('ς' == basic[i]) pass += 200; // final sigma
 			if ('Ϡ' == basic[i]) pass += 900;
 			// Hebrew
-			if ('א' == basic[i]) pass += 1; // or 1000?;
+			if ('א' == basic[i]) pass += 1; // or 1000 (altval);
 			if ('ב' == basic[i]) pass += 2;
 			if ('ג' == basic[i]) pass += 3;
 			if ('ד' == basic[i]) pass += 4;
@@ -645,7 +631,7 @@
 			if ('ם' == basic[i]) pass += 40;
 			if ('מ' == basic[i]) {if (i<basic.length-1) pass+=40; else pass+=600;}
 			if ('נ' == basic[i]) pass += 50;
-			if ('ן' == basic[i]) {if (i<basic.length-1) pass+=50; else pass+=600;}
+			if ('ן' == basic[i]) {if (i<basic.length-1) pass+=50; else pass+=700;}
 			if ('ס' == basic[i]) pass += 60;
 			if ('ע' == basic[i]) pass += 70;
 			if ('פ' == basic[i]) pass += 80;
@@ -658,27 +644,34 @@
 			if ('ת' == basic[i]) pass += 400;
 			
 			value += pass;
+			if ('א' == basic[i]) {
+				altval += 1000;
+				alttitle += delim+basic[i]+':'+1000;
+			} else {
+				altval += pass;
+				alttitle += delim+basic[i]+':'+pass;
+			}
+			
+			title += delim+basic[i]+':'+pass;
+			delim = ' ';
 
-			if (pass == 0) console.log( 'gematria (beginning): '+basic[i]+'" not found ('+i+')' );
-			console.log( 'gematria (beginning): "'+basic[i]+'='+pass+', total='+value+' ('+i+')' );
 			pass = 0;
 		}
 
-		//console.log( word.toUpperCase() );
-		return '<span style="font-size:0.8em;">'+value+'</span>';
+		return '<span style="font-size:0.7em;color:gray" title="'+title+'">'+value+'</span>'+(value==altval ? '' : '<span style="font-size:0.7em;color:gray" title="'+alttitle+'"> (or&nbsp;'+altval+')</span>');
 	}
 	
 	// languages
 	
-	var language = 'English';
-	
-	const codes = {};
+	var language = 'World English Bible';
 	
 	function langToCode ( expression ) {
+		console.log( 'langToCode: '+expression );
 		if (expression=='') return expression;
-		if (something(expression) && something(interlinear.aliases[language])) {
-			for (const [alias, code] of Object.entries(interlinear.aliases[language])) {
+		if (something(expression) && something(aliases.langToCode[language])) {
+			for (const [alias, code] of Object.entries(aliases.langToCode[language])) {
 				if (alias.toLowerCase().indexOf( expression.toLowerCase() ) > -1) {
+					console.log( code );
 					return code;
 				}
 			}
@@ -687,9 +680,12 @@
 	}
 	
 	function codeToLang ( code ) {
+		console.log( 'codeToLang: '+code );
 		if (code=='') return code;
-		if (something(codes[language]) && something(codes[language][code])) {
-			return codes[language][code];
+		console.log( aliases.codeToLang[language] );
+		if (something(aliases.codeToLang[language]) && something(aliases.codeToLang[language][code])) {
+			console.log( aliases.codeToLang[language][code] );
+			return aliases.codeToLang[language][code];
 		}
 		return code;
 	}
@@ -703,27 +699,6 @@
 	
 	// auto-run code
 	
-	//correcting bugs in aliases as they arise
-	interlinear.aliases.English.Jeremiah = 'JER';
-	interlinear.aliases.English.Lamentations = 'LAM';
-	
-	for (const [lang, langObj] of Object.entries(interlinear.aliases)) {
-		codes[lang] = {};
-		console.log( lang );
-		console.log( langObj );
-		if (something( langObj ) && typeof langObj === 'object') {
-			for (const [alias, code] of Object.entries(langObj)) {
-				interlinear.aliases[lang][code] = code; // add codes to aliases too
-				codes[lang][code] = alias; // later values override
-			}
-		} else {
-			interlinear.aliases[lang] = {};
-			for (const [alias, code] of Object.entries(interlinear.aliases.English)) {
-				interlinear.aliases[lang][code] = code; // add codes to aliases too
-				codes[lang][code] = alias; // later values override
-			}
-		}
-	}
 	
 	for (let lang of Object.keys(interlinear.translations)) {
 		const option = document.createElement('option');
@@ -733,7 +708,7 @@
 	}
 	
 	console.log( interlinear.aliases );
-	console.log( codes );
+	console.log( interlinear.names );
 	
 	refresh();
 	getId( "verseDivWrapper" ).style.visibility = 'visible';

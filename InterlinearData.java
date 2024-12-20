@@ -6,10 +6,12 @@ import creek.*;
 
 public class InterlinearData {
 
-	public static void loadLanguage ( Tree jsonTree, String rootPath, String langName, String langCode, String langTitle ) throws Exception {
+	public static void loadLanguage ( Tree jsonTree, Tree aliasesTree, String rootPath, String langName, String langCode, String langTitle ) throws Exception {
 		System.err.println( "Loading "+langName+"..." );
-		Bible lang = new EBibleOrgText().load( rootPath+"/biblesd/bibles/ebible.org/"+langName+"/text/"+langCode+"/" );
-		jsonTree.auto( "aliases" ).auto( langTitle ).add( lang.aliases() );
+		EBibleOrgText lang = new EBibleOrgText();
+		lang.load( rootPath+"/biblesd/bibles/ebible.org/"+langName+"/text/"+langCode+"/" );
+		aliasesTree.auto( "langToCode" ).auto( langTitle ).add( lang.aliases() );
+		aliasesTree.auto( "codeToLang" ).auto( langTitle ).map( lang.names().map() );
 		jsonTree.auto( "translations" ).add( langTitle, lang.text() );
 		System.err.println( "Reducing memory..." );
 		lang = null;
@@ -24,8 +26,9 @@ public class InterlinearData {
 		String rootPath = args[0];
 
 
-		// main Tree
+		// Tree structures
 		Tree jsonTree = new JSON( JSON.RETAIN_ORDER );
+		Tree aliasesTree = new JSON( JSON.RETAIN_ORDER );
 		
 		
 		// Original
@@ -70,14 +73,14 @@ public class InterlinearData {
 		Stats.displayMemory();
 		*/
 		
-		loadLanguage( jsonTree, rootPath, "English", "engwebp", "English" );
-		loadLanguage( jsonTree, rootPath, "Chinese", "cmn-cu89s", "新标点和合本 (Simplified Chinese)" );
-		loadLanguage( jsonTree, rootPath, "Hindi", "hincv", "सरल हिन्दी बाइबल (Hindi)" );
-		loadLanguage( jsonTree, rootPath, "Spanish", "spablm", "Santa Biblia (Spanish)" );
-		loadLanguage( jsonTree, rootPath, "French", "frasbl", "Sainte Bible (French)" );
-		loadLanguage( jsonTree, rootPath, "Arabic", "arbnav", "كتاب الحياة (Arabic)" );
-		loadLanguage( jsonTree, rootPath, "Bengali", "benirv", "ইন্ডিয়ান রিভাইজড ভার্সন (Bengali)" );
-		loadLanguage( jsonTree, rootPath, "Russian", "russyn", "Синодальный перевод (Russian)" );
+		loadLanguage( jsonTree, aliasesTree, rootPath, "English", "engwebp", "World English Bible" );
+		loadLanguage( jsonTree, aliasesTree, rootPath, "Chinese", "cmn-cu89s", "新标点和合本" );
+		loadLanguage( jsonTree, aliasesTree, rootPath, "Hindi", "hincv", "सरल हिन्दी बाइबल" );
+		loadLanguage( jsonTree, aliasesTree, rootPath, "Spanish", "spablm", "Santa Biblia libre para el mundo" );
+		loadLanguage( jsonTree, aliasesTree, rootPath, "French", "frasbl", "Sainte Bible libre pour le monde" );
+		loadLanguage( jsonTree, aliasesTree, rootPath, "Arabic-Standard", "arbnav", "كتاب الحياة" );
+		loadLanguage( jsonTree, aliasesTree, rootPath, "Bengali", "benirv", "ইন্ডিয়ান রিভাইজড ভার্সন" );
+		loadLanguage( jsonTree, aliasesTree, rootPath, "Russian", "russyn", "Синодальный перевод" );
 		
 		
 		// Strongs
@@ -93,6 +96,7 @@ public class InterlinearData {
 		
 		// Write output JSON
 		FileActions.write( rootPath+"/interlinear.js", "var interlinear = "+jsonTree.serialize()+";\n" );
+		FileActions.write( rootPath+"/aliases-auto.js", "var aliases = "+aliasesTree.serialize()+";\n" );
 
 	}
 }
