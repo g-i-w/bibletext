@@ -31,6 +31,17 @@ public class InterlinearData {
 		Tree aliasesTree = new JSON( JSON.RETAIN_ORDER );
 		
 		
+		// Strongs
+		System.err.println( "*** Strongs ***" );
+
+		System.err.println( "Loading Strongs..." );
+		//Strongs msb = new StrongsMsbNt().load( "biblelookup/majoritybible.com/msb_nt_tables.JSON" );
+		Strongs bsb = new StrongsBSB().load( rootPath+"/biblelookup/openbible.org/csv/" );
+		Strongs strongs = new StrongsSwordProject().data( bsb ).load( rootPath+"/biblelookup/SwordProject/" );
+		jsonTree.auto( "strongs" ).map( strongs.dataHashed().map() );
+		Stats.displayMemory();
+		
+
 		// Original
 		System.err.println( "*** Original ***" );
 		
@@ -45,7 +56,22 @@ public class InterlinearData {
 		Stats.displayMemory();
 		
 		jsonTree.add( "text", original.text() );
-		jsonTree.add( "data", original.lookupHashed() );
+		//jsonTree.add( "data", original.lookupHashed() );
+		for (String hash : original.lookupHashed().keys()) {
+			for (String basic : original.lookupHashed().get(hash).keys()) {
+				for (String book : original.lookupHashed().get(hash).get(basic).keys()) {
+					for (String chap : original.lookupHashed().get(hash).get(basic).get(book).keys()) {
+						for (String verse : original.lookupHashed().get(hash).get(basic).get(book).get(chap).keys()) {
+							String code = "";
+							List<String> path = Arrays.asList( new String[]{ basic, book, chap, verse } );
+							Tree codeNode = strongs.data().get("lookup").get( path );
+							if (codeNode!=null && !codeNode.value().equals("")) code = codeNode.value();
+							jsonTree.auto( "data" ).auto( hash ).auto( basic ).auto( code ).auto( book ).auto( chap ).add( verse );
+						}
+					}
+				}
+			}
+		}
 		
 		Stats.displayMemory();
 
@@ -83,19 +109,9 @@ public class InterlinearData {
 		loadLanguage( jsonTree, aliasesTree, rootPath, "Russian", "russyn", "Синодальный перевод" );
 		
 		
-		// Strongs
-		System.err.println( "*** Strongs ***" );
-
-		System.err.println( "Loading Strongs..." );
-		//Strongs msb = new StrongsMsbNt().load( "biblelookup/majoritybible.com/msb_nt_tables.JSON" );
-		Strongs bsb = new StrongsBSB().load( rootPath+"/biblelookup/openbible.org/csv/" );
-		Strongs strongs = new StrongsSwordProject().data( bsb ).load( rootPath+"/biblelookup/SwordProject/" );
-		jsonTree.auto( "strongs" ).map( strongs.dataHashed().map() );
-		Stats.displayMemory();
-		
 		
 		// Write output JSON
-		FileActions.write( rootPath+"/interlinear.js", "var interlinear = "+jsonTree.serialize()+";\n" );
+		FileActions.write( rootPath+"/interlinear.js", "var interlinear = "+jsonTree.serialize(  )+";\n" );
 		FileActions.write( rootPath+"/aliases-auto.js", "var aliases = "+aliasesTree.serialize()+";\n" );
 
 	}

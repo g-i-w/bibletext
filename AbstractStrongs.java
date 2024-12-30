@@ -40,7 +40,7 @@ public abstract class AbstractStrongs implements Strongs {
 		return this;
 	}
 	
-	public void link ( String strongs, String original ) {
+	public void link ( String strongs, String original, String book, String chap, String verse ) {
 		if (strongs==null || original==null) return;
 		strongs = formatStrongs(strongs);
 		
@@ -50,6 +50,7 @@ public abstract class AbstractStrongs implements Strongs {
 		//data().auto( "strongs" ).auto( strongs  ).auto( basic    ).increment();
 
 		data().auto( "basic" ).auto( basic ).add( strongs, data().auto("strongs").auto(strongs) );
+		if (book!=null && chap!=null && verse!=null) data().auto( "lookup" ).auto( basic ).auto( book ).auto( chap ).add( verse, strongs );
 		dataHashed().auto( "basicToCode" ).auto( alphabet.wordHash(basic) ).auto( basic ).auto( strongs ).increment();
 		//dataHashed().auto( "codeToFull" ).auto( alphabet.strongsHash(strongs) ).auto( strongs ).auto( original ).increment();
 	}

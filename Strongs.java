@@ -10,7 +10,7 @@ public interface Strongs {
 	public Strongs data ( Strongs strongs );
 	
 
-	public void link ( String strongs, String full_word );
+	public void link ( String strongs, String full_word, String chap, String book, String verse );
 
 	public void replacement ( String strongs, String replacement );
 	
@@ -19,6 +19,7 @@ public interface Strongs {
 	/* {
 		"strongs":{ strongs: { replacement }},
 		"basic":{ basic_word: { strongs: data().get("strongs").get(strongs) } },
+		"lookup":{ basic_word: { book: { chap: { verse:strongs }}}}
 	} */
 	
 	

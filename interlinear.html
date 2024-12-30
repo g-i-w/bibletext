@@ -100,7 +100,7 @@
 		</div>
 		
 		<div class="controls-subdiv">
-		&#x1F4D6;&nbsp;<input id="book" onchange="changeBook(this.value);" value="GEN" style="width:80px;">&nbsp;&nbsp;<input id="chap" onchange="state.chap=this.value;refresh();" value="1" style="width:40px;">:<input id="verse" onchange="state.verse=this.value;refresh();" value="1" style="width:40px;"> <br>
+		&#x1F4D6;&nbsp;<select id="book" onchange="changeBook(this.value);"></select>&nbsp;&nbsp;<input id="chap" onchange="state.chap=this.value;refresh();" value="1" style="width:40px;">:<input id="verse" onchange="state.verse=this.value;refresh();" value="1" style="width:40px;"> <br>
 		</div>
 		
 		<div class="controls-subdiv">
@@ -136,8 +136,8 @@
 	
 	const rightArrow = '&nbsp;&#10093;&nbsp;';
 	const leftArrow = '&nbsp;&#10092;&nbsp;';
-	const upArrow = '<span style="font-size:1.5em;">&nbsp;&#x2B06;&nbsp;</span>';
-	const downArrow = '<span style="font-size:1.5em;">&nbsp;&#x2B07;&nbsp;</span>';
+	const upArrow = '<div style="font-size:1.5em;">&nbsp;&#x2B06;&nbsp;</span>';
+	const downArrow = '<div style="font-size:1.5em;">&nbsp;&#x2B07;&nbsp;</span>';
 
 	// building-block functions
 
@@ -223,7 +223,28 @@
 		if (anything!==undefined && anything!=null && anything!=='') return true;
 		else return false;
 	}
-
+	
+	function objectPath ( obj, pathArray ) {
+		console.log( pathArray );
+		if (!something(obj)) return null;
+		for (const key of Object.values(pathArray)) {
+			if (!something(obj[key])) {
+				//console.log(obj);
+				//console.log( "couldn't find key: "+key );
+				return null;
+			}
+			obj = obj[key];
+		}
+		return obj;
+	}
+	
+	function inArray ( arrObj, arrVal ) {
+		for (let val of Object.values(arrObj)) {
+			if (arrVal==val) return true;
+		}
+		return false;
+	}
+	
 
 	// structural functions
 
@@ -376,6 +397,33 @@
 		return html;
 	}
 	
+	function strongsInfoVerse ( word, book, chap, verse ) {
+		var basicToCode = interlinear.strongs.basicToCode;
+		var codeToReplacement = interlinear.strongs.codeToReplacement;
+		var basic = basicWord( word );
+		var hash = wordHash( basic );
+		var html = '<table>';
+		if (something( basicToCode[hash] ) && something( basicToCode[hash][basic] )) {
+			for (const [code, codeObj] of Object.entries(basicToCode[hash][basic])) {
+				let codeHash = code.substring(0,3);
+				if (something( codeToReplacement[codeHash] ) && something( codeToReplacement[codeHash][code] )) {
+					for (const [rep, repObj] of Object.entries(codeToReplacement[codeHash][code])) {
+						console.log( "testing strongs path: "+word );
+						var obj = objectPath( interlinear.data, [ hash, basic, code, book, chap ] );
+						if (something(obj)) {
+							//console.log(obj);
+							//console.log( verse );
+							if (inArray(obj, verse))
+								html += "<tr><td style=\"font-size:0.7em;color:gray;\">"+code+"</td><td style=\"font-size:0.8em;\">"+rep+"</td></tr>";
+						}
+					}
+				}
+			}
+		}
+		html += '</table>';
+		return html;
+	}
+	
 	function isVerse ( book, chap, verse ) {
 		//return ( langToCode(getVal("book"))==langToCode(book) && getVal("chap")==chap && getVal("verse")==verse );
 		return ( state.book==book && state.chap==chap && state.verse==verse );
@@ -455,23 +503,26 @@
 		html += '</td></tr></table>';
 
 		// word info
-		html += '<table><tr><td class="highlighted"><h1>'+basic+'</h1>'+gematria( word )+'</td><td class="highlighted">'+strongsInfo( word )+'</td></tr>';
+		html += '<table><tr><td class="highlighted"><h1>'+basic+'</h1>'+gematria( word )[1]+'<br><br>'+gematria( word )[0]+'</td><td class="highlighted">'+strongsInfo( word )+'</td></tr>';
 		html += '</table>';
 		
 		// word locations
 		html += '<table>';
 		if (something( interlinear.data[hash] ) && something( interlinear.data[hash][basic] )) {
-			for (const [book, bookObj] of Object.entries(interlinear.data[hash][basic])) {
-				html += '<tr><td>'+codeToLang(book)+'</td><td>';
-				let delim = '';
-				for (const [chap, chapObj] of Object.entries(bookObj)) {
-					for (const [verse, verseOjb] of Object.entries(chapObj)) {
-						let text = verseText( interlinear.text, book, chap, verse );
-						html += delim+verseLink( book, chap, verse, chap+':'+verse );
-						delim = '&nbsp; ';
+			for (const [code, codeObj] of Object.entries(interlinear.data[hash][basic])) {
+				html += '<tr><td style="font-size:0.7em;color:gray;" rowspan='+Object.entries(codeObj).length+'>'+code+'</td>';
+				for (const [book, bookObj] of Object.entries(codeObj)) {
+					html += '<td>'+codeToLang(book)+'</td><td>';
+					let delim = '';
+					for (const [chap, chapObj] of Object.entries(bookObj)) {
+						for (const verse of Object.values(chapObj)) {
+							let text = verseText( interlinear.text, book, chap, verse );
+							html += delim+verseLink( book, chap, verse, chap+':'+verse );
+							delim = '&nbsp; ';
+						}
 					}
+					html += '</td></tr>';
 				}
-				html += '</td></tr>';
 			}
 		}
 		html += '</table>';
@@ -480,7 +531,7 @@
 		for (let sub of substringSet( basic )) {
 			let subHash = wordHash( sub );
 			if (something( interlinear.data[subHash] ) && something( interlinear.data[subHash][sub] )) {
-				html += "<tr><td>"+wordLink( sub )+'<br>'+gematria( sub )+"</td><td>"+strongsInfo( sub )+"</td></tr>";
+				html += "<tr><td>"+wordLink( sub )+'<br>'+gematria( sub )[0]+"</td><td>"+strongsInfo( sub )+"</td></tr>";
 			}
 		}
 		html += '</table>';
@@ -526,7 +577,7 @@
 			// each word with Strongs info
 			html += '<table>';
 			for (let word of wordArray) {
-				html += '<tr><td>'+wordLink( word )+'<br>'+gematria( word )+'</td><td>'+strongsInfo( word )+'</td></tr>';
+				html += '<tr><td>'+wordLink( word )+'<br>'+gematria( word )[0]+'</td><td>'+strongsInfoVerse( word, book, chap, verse )+'</td></tr>';
 			}
 			html += '</table>';
 		} else {
@@ -536,16 +587,16 @@
 	}
 	
 	function changeBook ( book ) {
-		changeVerse( book, state.chap, state.verse );
+		changeVerse( book, 1, 1 );
 	}
 	
 	function changeVerse ( book, chap, verse ) {
 		console.log( 'changeVerse: '+book+','+chap+','+verse );
-		state.book = langToCode( book );
+		state.book = book;
 		state.chap = chap;
 		state.verse = verse;
 
-		setVal( "book", codeToLang(state.book) );
+		setVal( "book", state.book );
 		setVal( "chap", state.chap );
 		setVal( "verse", state.verse );
 				
@@ -583,7 +634,9 @@
 		var alttitle = '';
 		var pass = 0;
 		var title = '';
+		var list = '';
 		var delim = '';
+		var listdelim = '';
 		
 		// overall
 		for (let i=0; i<basic.length; i++) {
@@ -656,12 +709,15 @@
 			}
 			
 			title += delim+basic[i]+':'+pass;
+			list += listdelim+basic[i]+':'+('א' == basic[i] ? '1||1000' : pass);
+
 			delim = ' ';
+			listdelim = '&nbsp;&nbsp; ';
 
 			pass = 0;
 		}
 
-		return '<span style="font-size:0.7em;color:gray" title="'+title+'">'+value+'</span>'+(value==altval ? '' : '<span style="font-size:0.7em;color:gray" title="'+alttitle+'"> (or&nbsp;'+altval+')</span>');
+		return [ '<span style="font-size:0.7em;color:gray" title="'+title+'">'+value+'</span>'+(value==altval ? '' : '<span style="font-size:0.7em;color:gray" title="'+alttitle+'">&nbsp;||&nbsp;'+altval+'</span>'), '<span style="font-size:0.7em;color:gray">'+list+'</span>' ];
 	}
 	
 	// languages
@@ -696,8 +752,22 @@
 	function changeLanguages () {
 		//var prevCode = langToCode( getVal( "book" ) );
 		language = getVal( "lang" );
-		setVal( "book", codeToLang( state.book ) );
+		
+		changeBookSelect();
+		
 		refresh();
+	}
+	
+	function changeBookSelect () {
+		var bookSelect = getId( "book" );
+		bookSelect.innerHTML = "";
+		//setVal( "book", codeToLang( state.book ) );
+		for (let book of Object.keys(interlinear.text)) {
+			const option = document.createElement('option');
+			option.value = book;
+			option.text = codeToLang( book );
+			bookSelect.add( option );
+		}
 	}
 	
 	// auto-run code
@@ -709,6 +779,8 @@
 		option.text = lang;
 		getId( "lang" ).add( option );
 	}
+	
+	changeBookSelect();
 	
 	console.log( interlinear.aliases );
 	console.log( interlinear.names );
