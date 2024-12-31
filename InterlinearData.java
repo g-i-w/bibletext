@@ -99,7 +99,8 @@ public class InterlinearData {
 		Stats.displayMemory();
 		*/
 		
-		loadLanguage( jsonTree, aliasesTree, rootPath, "English", "engwebp", "World English Bible" );
+		loadLanguage( jsonTree, aliasesTree, rootPath, "English", "eng-kjv2006", "English KJV" );
+		loadLanguage( jsonTree, aliasesTree, rootPath, "English", "engwebp", "English WEB" );
 		loadLanguage( jsonTree, aliasesTree, rootPath, "Chinese", "cmn-cu89s", "新标点和合本" );
 		loadLanguage( jsonTree, aliasesTree, rootPath, "Hindi", "hincv", "सरल हिन्दी बाइबल" );
 		loadLanguage( jsonTree, aliasesTree, rootPath, "Spanish", "spablm", "Santa Biblia libre para el mundo" );
