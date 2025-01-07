@@ -116,37 +116,33 @@
 	<a id="wordView"></a>
 	
 	<br>
-	<div id="loadingDiv"><h1>Loading...</h1></div>
+	<div id="loadingDiv"><h1>Loading...</h1><progress id="loading" value="0" max="100"></progress></div>
 	
 	</center>
-	
-<script src="interlinear.js"></script>
-<script src="aliases.js"></script>
+
+
 <script src="functions.js"></script>
+
+<script src="aliases.js"></script>
+
+<script>loadingProgress('5');</script>
+
+<script src="text.js"></script>		<script>loadingProgress('15');</script>
+<script src="strongs.js"></script>	<script>loadingProgress('25');</script>
+<script src="data.js"></script>		<script>loadingProgress('55');</script>
+
+<script src="eng-kjv2006.js"></script>	<script>loadingProgress('60');</script>
+<script src="engwebp.js"></script>	<script>loadingProgress('65');</script>
+<script src="cmn-cu89s.js"></script>	<script>loadingProgress('70');</script>
+<script src="hincv.js"></script>	<script>loadingProgress('75');</script>
+<script src="spablm.js"></script>	<script>loadingProgress('80');</script>
+<script src="frasbl.js"></script>	<script>loadingProgress('85');</script>
+<script src="arbnav.js"></script>	<script>loadingProgress('90');</script>
+<script src="benirv.js"></script>	<script>loadingProgress('95');</script>
+<script src="russyn.js"></script>	<script>loadingProgress('100');</script>
+
 <script>
 
-	
-	const verseHistory = {};	
-	const wordHistory = {};
-	
-	var state = {
-		book:'GEN',
-		chap:'1',
-		verse:'1',
-		word:'בראשית'
-	};
-	
-	const rightArrow = '<span style="font-size:1.5em;height:40px;">&nbsp;&#10093;&nbsp;</span>';
-	const leftArrow = '<span style="font-size:1.5em;height:40px;">&nbsp;&#10092;&nbsp;</span>';
-	const upArrow = '<span style="font-size:2em;height:40px;">&nbsp;&#x2B06;&nbsp;</span>';
-	const downArrow = '<span style="font-size:2em;height:40px;">&nbsp;&#x2B07;&nbsp;</span>';
-	
-	const missingPlaceholder = '<span style="font-size:1.5em;color:gray;" title="Can\'t find Strongs association">*</span>';
-
-	// language variables
-	var languageStrongs = 'English KJV';
-	var language;
-	
 	// 'back' button event
 	window.addEventListener("popstate", (event) => {
 		//console.log( "overriding state!" );

@@ -482,61 +482,6 @@ function verseInfo ( book, chap, verse ) {
 }
 
 
-var controlsChanged = false;
-
-function changeBook ( book ) {
-	changeVerse( book, 1, 1 );
-}
-
-function changeVerse ( book, chap, verse ) {
-	//console.log( 'changeVerse: '+book+','+chap+','+verse );
-	state.book = book;
-	state.chap = chap;
-	state.verse = verse;
-
-	setVal( "book", state.book );
-	setVal( "chap", state.chap );
-	setVal( "verse", state.verse );
-	
-	controlsChanged = true;
-			
-	refresh();
-}
-
-function changeWord ( word ) {
-	state.word = basicWord( word );
-	setVal( "word", state.word );
-	
-	controlsChanged = true;
-	
-	refresh();
-}
-
-
-//refreshing
-
-function refresh () {
-	console.log( "state:" );
-	console.log( state );
-	// verse history
-	verseHistory[state.book+state.chap] = { book:state.book, chap:state.chap, verse:state.verse };
-	
-	// word history
-	wordHistory[basicWord(state.word)] = null;
-	
-	// refresh divs
-	getId( "verseDiv" ).innerHTML = verseInfo( state.book, state.chap, state.verse );
-	getId( "wordDiv" ).innerHTML = wordInfo( state.word );
-	
-	// page history
-	history.replaceState(
-		{ book:state.book, chap:state.chap, verse:state.verse, word:state.word, view:state.view },
-		state.book+' '+state.chap+':'+state.verse+' ('+state.word+')',
-		'?book='+state.book+'&chap='+state.chap+'&verse='+state.verse+'&view='+state.view+'&word='+state.word
-	);
-	
-	if (something(state.view)) getId( state.view ).scrollIntoView();
-}
 
 // Greek and Hebrew gematria
 
@@ -710,6 +655,50 @@ function codeToLang ( code ) {
 	return code;
 }
 
+
+
+// refreshing
+
+var interlinear = {};
+interlinear.translations = {};
+
+var verseHistory = {};	
+var wordHistory = {};
+
+var state = {
+	book:'GEN',
+	chap:'1',
+	verse:'1',
+	word:'בראשית'
+};
+
+var history;
+var historyIndex;
+
+function initHistory () {
+	history = [ state ];
+	historyIndex = 0;
+}
+
+function backHistory () {
+
+}
+
+function forwardHistory () {
+
+}
+
+const rightArrow = '<span style="font-size:1.5em;height:40px;">&nbsp;&#10093;&nbsp;</span>';
+const leftArrow = '<span style="font-size:1.5em;height:40px;">&nbsp;&#10092;&nbsp;</span>';
+const upArrow = '<span style="font-size:2em;height:40px;">&nbsp;&#x2B06;&nbsp;</span>';
+const downArrow = '<span style="font-size:2em;height:40px;">&nbsp;&#x2B07;&nbsp;</span>';
+
+const missingPlaceholder = '<span style="font-size:1.5em;color:gray;" title="Can\'t find Strongs association">*</span>';
+
+// language variables
+var languageStrongs = 'English KJV';
+var language;
+
 function changeLanguages () {
 	//var prevCode = langToCode( getVal( "book" ) );
 	language = getVal( "lang" );
@@ -746,5 +735,57 @@ function getQuery () {
 	}
 	
 }
+
+function loadingProgress ( prog ) {
+	setVal( "loading", prog );
+}
+
+function changeBook ( book ) {
+	changeVerse( book, 1, 1 );
+}
+
+function changeVerse ( book, chap, verse ) {
+	//console.log( 'changeVerse: '+book+','+chap+','+verse );
+	state.book = book;
+	state.chap = chap;
+	state.verse = verse;
+
+	setVal( "book", state.book );
+	setVal( "chap", state.chap );
+	setVal( "verse", state.verse );
+			
+	refresh();
+}
+
+function changeWord ( word ) {
+	state.word = basicWord( word );
+	setVal( "word", state.word );
+	
+	refresh();
+}
+
+function refresh () {
+	console.log( "state:" );
+	console.log( state );
+	// verse history
+	verseHistory[state.book+state.chap] = { book:state.book, chap:state.chap, verse:state.verse };
+	
+	// word history
+	wordHistory[basicWord(state.word)] = null;
+	
+	// refresh divs
+	getId( "verseDiv" ).innerHTML = verseInfo( state.book, state.chap, state.verse );
+	getId( "wordDiv" ).innerHTML = wordInfo( state.word );
+	
+	// page history
+	history.replaceState(
+		{ book:state.book, chap:state.chap, verse:state.verse, word:state.word, view:state.view },
+		state.book+' '+state.chap+':'+state.verse+' ('+state.word+')',
+		'?book='+state.book+'&chap='+state.chap+'&verse='+state.verse+'&view='+state.view+'&word='+state.word
+	);
+	
+	if (something(state.view)) getId( state.view ).scrollIntoView();
+}
+
 
 
