@@ -608,11 +608,9 @@ function overlap ( verse, strongsList ) {
 			if (verseWord=='') continue;
 			let strongsLower = strongsWord.toLowerCase();
 			let verseLower = verseWord.toLowerCase();
-			if (verseLower.length>3 && strongsLower.length>3) {
-				if (strongsLower.indexOf(verseLower)==0 || verseLower.indexOf(strongsLower)==0) {
-					if (strongsLower == verseLower) overlapSet.add( verseWord );
-					else overlapSet.add( strongsWord );
-				}
+			if ((verseLower.length>2 && strongsLower.indexOf(verseLower)==0) || (strongsLower.length>2 && verseLower.indexOf(strongsLower)==0)) {
+				if (strongsLower == verseLower) overlapSet.add( verseWord );
+				else overlapSet.add( strongsWord );
 			} else {
 				if (strongsLower == verseLower) overlapSet.add( verseWord );
 			}
