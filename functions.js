@@ -411,7 +411,7 @@ function wordInfo ( word ) {
 			if (code=='') code = missingPlaceholder;
 			html += '<tr><td style="font-size:0.7em;color:gray;vertical-align:top;border-right:solid 1px lightgray;" rowspan='+Object.entries(codeObj).length+'>'+code+'</td>';
 			for (const [book, bookObj] of Object.entries(codeObj)) {
-				html += '<td>'+codeToLang(book)+'</td><td>';
+				html += '<td>'+codeToLang(book).replaceAll( ' ', '&nbsp;' )+'</td><td>';
 				let delim = '';
 				for (const [chap, chapObj] of Object.entries(bookObj)) {
 					for (const verse of Object.values(chapObj)) {
@@ -457,7 +457,7 @@ function verseInfo ( book, chap, verse ) {
 	var lang = interlinear.translations[language];
 	let data = verseData( lang, book, chap, verse );
 	if (something(data.prevVerse.book)) html += '<tr><td class="highlighted"><center>'+verseLink(data.prevVerse.book, data.prevVerse.chap, data.prevVerse.verse, upArrow)+'</center></td><td class="highlighted" style="color:gray;">'+data.prevVerse.chap+':'+data.prevVerse.verse+'</td><td class="highlighted" style="color:gray;">'+verseText( lang, data.prevVerse.book, data.prevVerse.chap, data.prevVerse.verse )+'</td></tr>';
-	html += '<tr><td class="highlighted">'+codeToLang(book)+'</td><td class="highlighted">'+chap+':'+verse+'</td><td class="highlighted" style="">'+verseText( lang, book, chap, verse )+'</td></tr>';
+	html += '<tr><td class="highlighted">'+codeToLang(book).replaceAll( ' ', '&nbsp;' )+'</td><td class="highlighted">'+chap+':'+verse+'</td><td class="highlighted" style="">'+verseText( lang, book, chap, verse )+'</td></tr>';
 	if (something(data.nextVerse.book)) html += '<tr><td class="highlighted"><center>'+verseLink(data.nextVerse.book, data.nextVerse.chap, data.nextVerse.verse, downArrow)+'</center></td><td class="highlighted" style="color:gray;">'+data.nextVerse.chap+':'+data.nextVerse.verse+'</td><td class="highlighted" style="color:gray;">'+verseText( lang, data.nextVerse.book, data.nextVerse.chap, data.nextVerse.verse )+'</td></tr>';
 	html += '</table>';
 	
