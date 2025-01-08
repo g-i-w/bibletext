@@ -21,6 +21,9 @@
 		padding:0;
 		border:0;
 	}
+	.controls-subdiv {
+		visibility:hidden;		
+	}
 	.main-wrapper {
 		visibility:hidden;		
 		padding:8px;
@@ -95,16 +98,16 @@
 	
 		<span style="font-size:0.8em;"><b>BibleCrossReference</b> 1.0 <span style="color:gray;font-size:0.8em;"><br>Source texts from <a href="http://ebible.org">eBible.org</a>: Hebrew Masoretic Text (hbo), Greek Textus Receptus (grctr)</span></span><br><br>
 
-		<div class="controls-subdiv">
+		<div id="langInputDiv" class="controls-subdiv">
 		&#x1F310;&nbsp;<select id="lang" onchange="changeLanguages();"></select>
 		</div>
 		
-		<div class="controls-subdiv">
+		<div id="bookInputDiv" class="controls-subdiv">
 		&#x1F4D6;&nbsp;<select id="book" onchange="changeBook(this.value);"></select>&nbsp;&nbsp;<input id="chap" onchange="state.chap=this.value;refresh();" value="1" style="width:40px;">:<input id="verse" onchange="state.verse=this.value;refresh();" value="1" style="width:40px;"> <br>
 		</div>
 		
-		<div class="controls-subdiv">
-		<a href="#wordView" onclick="changeWord(getVal('word'));">&#x1F50E;</a>&nbsp;<input id="word" onchange="changeWord(this.value);getId('wordView').scrollIntoView();" value="בראשית" style="width:120px;text-align:center">
+		<div id="wordInputDiv" class="controls-subdiv">
+		<a href="#wordView" onclick="changeWord(getVal('word'));">&#x1F50E;</a>&nbsp;<input id="word" onchange="changeWord(this.value);getId('wordView').scrollIntoView();" style="width:120px;text-align:center">
 		</div>
 	
 	</div>
@@ -154,9 +157,6 @@
 		refresh();
 	});
 	
-	// get key-value query data from location bar
-	getQuery();
-
 	// load language options in language select menu
 	for (let lang of Object.keys(interlinear.translations)) {
 		if (!something(language)) language = lang; // first language in list is default
@@ -166,13 +166,19 @@
 		getId( "lang" ).add( option );
 	}
 	
-	// load book options in book select menu
+	// load book options in book select menu (using current language)
 	changeBookSelect();
 	
+	// get key-value query data from location bar if available
+	getQuery();
+
 	// call initial refresh
 	refresh();
 	
 	// make visible
+	getId( "langInputDiv" ).style.visibility = 'visible';
+	getId( "bookInputDiv" ).style.visibility = 'visible';
+	getId( "wordInputDiv" ).style.visibility = 'visible';
 	getId( "verseDivWrapper" ).style.visibility = 'visible';
 	getId( "wordDivWrapper" ).style.visibility = 'visible';
 	getId( "loadingDiv" ).style.visibility = 'hidden';

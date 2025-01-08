@@ -9,7 +9,7 @@ function getVal ( id ) {
 }
 
 function setVal ( id, val ) {
-	//console.log( 'setting '+id+' to '+val );
+	console.log( 'setting '+id+' to '+val );
 	var prev = getId( id ).value;
 	getId( id ).value = val;
 	return prev;
@@ -313,8 +313,13 @@ function isWord ( word ) {
 	return ( state.word == basicWord(word) );
 }
 
+function nbNumber ( book ) {
+	if (book.indexOf(' ')==1) return book.substring(0,1)+'&nbsp;'+book.substring(2); // if second char is space, replace with '&nbsp;'
+	else return book;
+}
+
 function verseLink ( book, chap, verse, link ) {
-	if (!something( link )) link = codeToLang(book)+'&nbsp;'+chap+':'+verse;
+	if (!something( link )) link = nbNumber(codeToLang(book))+'&nbsp;'+chap+':'+verse;
 	if (isVerse( book, chap, verse ))
 		return `<a href="#verseView" onclick="state.view='verseView';changeVerse('${book}','${chap}','${verse}');" class="highlighted">${link}</a>`;
 	else
@@ -411,7 +416,7 @@ function wordInfo ( word ) {
 			if (code=='') code = missingPlaceholder;
 			html += '<tr><td style="font-size:0.7em;color:gray;vertical-align:top;border-right:solid 1px lightgray;" rowspan='+Object.entries(codeObj).length+'>'+code+'</td>';
 			for (const [book, bookObj] of Object.entries(codeObj)) {
-				html += '<td>'+codeToLang(book).replaceAll( ' ', '&nbsp;' )+'</td><td>';
+				html += '<td>'+nbNumber(codeToLang(book))+'</td><td>';
 				let delim = '';
 				for (const [chap, chapObj] of Object.entries(bookObj)) {
 					for (const verse of Object.values(chapObj)) {
@@ -457,7 +462,7 @@ function verseInfo ( book, chap, verse ) {
 	var lang = interlinear.translations[language];
 	let data = verseData( lang, book, chap, verse );
 	if (something(data.prevVerse.book)) html += '<tr><td class="highlighted"><center>'+verseLink(data.prevVerse.book, data.prevVerse.chap, data.prevVerse.verse, upArrow)+'</center></td><td class="highlighted" style="color:gray;">'+data.prevVerse.chap+':'+data.prevVerse.verse+'</td><td class="highlighted" style="color:gray;">'+verseText( lang, data.prevVerse.book, data.prevVerse.chap, data.prevVerse.verse )+'</td></tr>';
-	html += '<tr><td class="highlighted">'+codeToLang(book).replaceAll( ' ', '&nbsp;' )+'</td><td class="highlighted">'+chap+':'+verse+'</td><td class="highlighted" style="">'+verseText( lang, book, chap, verse )+'</td></tr>';
+	html += '<tr><td class="highlighted">'+nbNumber(codeToLang(book))+'</td><td class="highlighted">'+chap+':'+verse+'</td><td class="highlighted" style="">'+verseText( lang, book, chap, verse )+'</td></tr>';
 	if (something(data.nextVerse.book)) html += '<tr><td class="highlighted"><center>'+verseLink(data.nextVerse.book, data.nextVerse.chap, data.nextVerse.verse, downArrow)+'</center></td><td class="highlighted" style="color:gray;">'+data.nextVerse.chap+':'+data.nextVerse.verse+'</td><td class="highlighted" style="color:gray;">'+verseText( lang, data.nextVerse.book, data.nextVerse.chap, data.nextVerse.verse )+'</td></tr>';
 	html += '</table>';
 	
@@ -691,7 +696,7 @@ const leftArrow = '<span style="font-size:1.5em;height:40px;">&nbsp;&#10092;&nbs
 const upArrow = '<span style="font-size:2em;height:40px;">&nbsp;&#x2B06;&nbsp;</span>';
 const downArrow = '<span style="font-size:2em;height:40px;">&nbsp;&#x2B07;&nbsp;</span>';
 
-const missingPlaceholder = '<span style="font-size:1.5em;color:gray;" title="Can\'t find Strongs association">*</span>';
+const missingPlaceholder = '<span style="font-size:1.5em;color:gray;" title="Unable to find content">*</span>';
 
 // language variables
 var languageStrongs = 'English KJV';
@@ -720,8 +725,10 @@ function changeBookSelect () {
 }
 
 function getQuery () {
-	if (something(location.search.substring(1))) {
-		var query = location.search.substring(1).split( '&' );
+	var search = location.search.substring(1);
+	if (something(search)) {
+		console.log( "Search: "+search );
+		var query = search.split( '&' );
 		for (let keyval of Object.values(query)) {
 			tuple = keyval.split( '=' );
 			state[tuple[0]] = decodeURI(tuple[1]);
@@ -748,16 +755,11 @@ function changeVerse ( book, chap, verse ) {
 	state.chap = chap;
 	state.verse = verse;
 
-	setVal( "book", state.book );
-	setVal( "chap", state.chap );
-	setVal( "verse", state.verse );
-			
 	refresh();
 }
 
 function changeWord ( word ) {
 	state.word = basicWord( word );
-	setVal( "word", state.word );
 	
 	refresh();
 }
@@ -765,6 +767,12 @@ function changeWord ( word ) {
 function refresh () {
 	console.log( "state:" );
 	console.log( state );
+
+	setVal( "book", state.book );
+	setVal( "chap", state.chap );
+	setVal( "verse", state.verse );		
+	setVal( "word", state.word );
+
 	// verse history
 	verseHistory[state.book+state.chap] = { book:state.book, chap:state.chap, verse:state.verse };
 	
@@ -782,7 +790,7 @@ function refresh () {
 		'?book='+state.book+'&chap='+state.chap+'&verse='+state.verse+'&view='+state.view+'&word='+state.word
 	);
 	
-	if (something(state.view)) getId( state.view ).scrollIntoView();
+	if (something(state.view) && something( state.view ) && something(getId( state.view ))) getId( state.view ).scrollIntoView();
 }
 
 

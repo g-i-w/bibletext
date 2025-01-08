@@ -94,22 +94,6 @@ public class InterlinearData {
 		System.err.println( "*** Translations ***" );
 		
 		
-		// add all languages too the interlinear.js file
-		
-		/*
-		loadLanguage( jsonTree, aliasesTree, rootPath, "English", "eng-kjv2006", "English KJV" );
-		loadLanguage( jsonTree, aliasesTree, rootPath, "English", "engwebp", "English WEB" );
-		loadLanguage( jsonTree, aliasesTree, rootPath, "Chinese", "cmn-cu89s", "新标点和合本" );
-		loadLanguage( jsonTree, aliasesTree, rootPath, "Hindi", "hincv", "सरल हिन्दी बाइबल" );
-		loadLanguage( jsonTree, aliasesTree, rootPath, "Spanish", "spablm", "Santa Biblia libre para el mundo" );
-		loadLanguage( jsonTree, aliasesTree, rootPath, "French", "frasbl", "Sainte Bible libre pour le monde" );
-		loadLanguage( jsonTree, aliasesTree, rootPath, "Arabic-Standard", "arbnav", "كتاب الحياة" );
-		loadLanguage( jsonTree, aliasesTree, rootPath, "Bengali", "benirv", "ইন্ডিয়ান রিভাইজড ভার্সন" );
-		loadLanguage( jsonTree, aliasesTree, rootPath, "Russian", "russyn", "Синодальный перевод" );
-		
-		FileActions.write( rootPath+"/interlinear.js", "var interlinear = "+jsonTree.serialize(  )+";\n" );
-		FileActions.write( rootPath+"/aliases-auto.js", "var aliases = "+aliasesTree.serialize()+";\n" );
-		*/
 		
 		
 		// write main text & data
@@ -130,6 +114,24 @@ public class InterlinearData {
 		writeLanguage( rootPath, "Arabic-Standard", "arbnav", "كتاب الحياة" );
 		writeLanguage( rootPath, "Bengali", "benirv", "ইন্ডিয়ান রিভাইজড ভার্সন" );
 		writeLanguage( rootPath, "Russian", "russyn", "Синодальный перевод" );
+
+
+		// additional options		
+		if (args.length>1) {
+			loadLanguage( jsonTree, aliasesTree, rootPath, "English", "eng-kjv2006", "English KJV" );
+			loadLanguage( jsonTree, aliasesTree, rootPath, "English", "engwebp", "English WEB" );
+			loadLanguage( jsonTree, aliasesTree, rootPath, "Chinese", "cmn-cu89s", "新标点和合本" );
+			loadLanguage( jsonTree, aliasesTree, rootPath, "Hindi", "hincv", "सरल हिन्दी बाइबल" );
+			loadLanguage( jsonTree, aliasesTree, rootPath, "Spanish", "spablm", "Santa Biblia libre para el mundo" );
+			loadLanguage( jsonTree, aliasesTree, rootPath, "French", "frasbl", "Sainte Bible libre pour le monde" );
+			loadLanguage( jsonTree, aliasesTree, rootPath, "Arabic-Standard", "arbnav", "كتاب الحياة" );
+			loadLanguage( jsonTree, aliasesTree, rootPath, "Bengali", "benirv", "ইন্ডিয়ান রিভাইজড ভার্সন" );
+			loadLanguage( jsonTree, aliasesTree, rootPath, "Russian", "russyn", "Синодальный перевод" );
+		
+			if (args[1].equals("interlinear")) FileActions.write( rootPath+"/interlinear.js", "var interlinear = "+jsonTree.serialize(  )+";\n" );
+			if (args[1].equals("aliases")) FileActions.write( rootPath+"/aliases-auto.js", "var aliases = "+aliasesTree.serialize()+";\n" );
+		}
+
 
 	}
 }
