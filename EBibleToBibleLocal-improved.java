@@ -1,7 +1,7 @@
 package bibletext;
 
 import java.util.*;
-import java.time.LocalDateTime;
+import java.time.*;
 import java.nio.file.Files;
 import java.nio.file.attribute.FileTime;
 import java.io.*;
@@ -48,17 +48,31 @@ public class EBibleToBibleLocal {
 		return item;
 	}
 	
+	public boolean upToDate ( String date, File current ) {
+		if (!current.exists()) return false;
+		FileTime fileTime = Files.getLastModifiedTime( current.toPath() );
+		LocalDate sourceDate = LocalDate.parse( date );
+		LocalDate convertedFileTime = LocalDate.ofInstant( fileTime.toInstant(), ZoneId.systemDefault() );
+		if (sourceDate.compareTo( convertedFileTime ) < 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
 	public static void itemToDirectory ( String eBiblePath, FilesystemTree ft, String language, String type, String code, String date ) throws Exception {
 		System.out.println( "Downloading "+eBiblePath+" to "+language+"/"+type+"/"+code );
 		FilesystemTree file = ((FilesystemTree)ft.auto( language ).auto( type ).auto( code ));
-		file.toDirectory();
 		
 		if (!type.equals("epub")) {
+			if (upToDate( date, new File( file.file(), "signature.txt.asc" ) )) return;
+			file.toDirectory();
 			ZipActions.toFiles(
 				eBibleItem( eBiblePath, true ),
 				file.file()
 			);
 		} else {
+			if (upToDate( date, new File( file.file(), "signature.txt.asc" ) )) return;
 			FileActions.write(
 				file.file(),
 				eBibleItem( eBiblePath, true )
@@ -66,15 +80,6 @@ public class EBibleToBibleLocal {
 		}
 	}
 
-	public static void eBibleFileToDirectory ( String eBiblePath, FilesystemTree ft, String language, String type, String code ) throws Exception {
-		System.out.println( "Downloading "+eBiblePath+" to "+language+"/"+type+"/"+code );
-		FilesystemTree f = ((FilesystemTree)ft.auto( language ).auto( type ).auto( code ));
-		FileActions.write(
-			f.file(),
-			eBibleItem( eBiblePath, true )
-		);
-	}
-	
 	public static void main ( String[] args ) throws Exception {
 		
 		CSV eBibleCSV = new CSV( new String( eBibleItem( "/Scriptures/translations.csv", true ) ) );
