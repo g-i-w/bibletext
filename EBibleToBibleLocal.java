@@ -11,6 +11,24 @@ import creek.*;
 
 public class EBibleToBibleLocal {
 
+	private boolean continueOnError;
+
+	private CSV eBibleCSV;
+	
+	private String rootPath;
+	private FileTree rootTree;
+	
+	private Set<String> langCodes;
+	
+	private LookupTable translations;
+	private LookupTable countries;
+	private LookupTable regions;
+	
+	private Tree languageGrouping;
+	
+
+	// static methods
+
 	public static String sanitize ( String raw ) {
 		return raw.replaceAll("[^abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ]", "_" );
 	}
@@ -68,10 +86,125 @@ public class EBibleToBibleLocal {
 		}
 	}
 	
-	public static void zipToDirectory ( String eBiblePath, FileTree ft, String language, String type, String code, String date ) throws Exception {
+	public static boolean verifyEBibleSHA256 ( File dir ) throws Exception {
+		System.out.print( "Checking SHA256 sums" );
+		File signature = new File( dir, "signature.txt.asc" );
+		if (!signature.exists()) {
+			System.out.println( " -> ERROR: MISSING signature.txt.asc" );
+			return false;
+		}
+		List<String> sumsFiles = Regex.groups( FileActions.read( signature ), "([a-zA-Z0-9]{64})\\s+(\\S+\\.[a-z]{3})" );
+		if (sumsFiles.size()==0) {
+			System.out.println( " -> ERROR: No SHA256 sums found in signature.txt.asc" );
+			return false;
+		}
+		boolean ret = true;
+		for (int i=0; i<sumsFiles.size(); i+=2) {
+			String recordedSHA256 = sumsFiles.get(i).toLowerCase();
+			String fileName = sumsFiles.get(i+1);
+			
+			if (fileName.substring( fileName.length()-3 ).equals( "wof" )) continue; // ignore many missing ".wof" font files
+			
+			File file = new File( dir, fileName );
+			if (!file.exists()) {
+				System.out.print( " -> NOT FOUND: "+fileName );
+				ret = false;
+				continue;
+			}
+			byte[] fileData = FileActions.readBytes( file );
+			byte[] computedSHA256 = MessageDigest.getInstance( "SHA-256" ).digest( fileData );
+			String computedSHA256str = new Bytes( computedSHA256 ).toString().toLowerCase();
+			if (!recordedSHA256.equals( computedSHA256str )) {
+				System.out.println( fileName+": recorded "+recordedSHA256+" != computed "+computedSHA256str+" -> FAILED" );
+			}
+		}
+		if (ret) System.out.println( " -> GOOD" );
+		else System.out.println( " -> SOME FILES NOT FOUND" );
+		return ret;
+	}
+	
+
+	// constructor
+
+	public EBibleToBibleLocal ( String rootPath, boolean continueOnError ) throws Exception {
+	
+		this.continueOnError = continueOnError;
+
+		// root tree
+		this.rootPath = rootPath;
+		rootTree = new FilesystemTree( rootPath );
+			
+		// translations.csv
+		eBibleCSV = new CSV( new String( eBibleItem( "/Scriptures/translations.csv", true ) ) );
+		translations = new LookupTable( eBibleCSV );
+		
+		// countries.csv
+		countries = new LookupTable( new CSV( rootTree.get("countries.csv").value() ) );
+
+		// regions.csv
+		regions = new LookupTable( new CSV( rootTree.get("regions.csv").value() ) );
+		
+		// links tree
+		languageGrouping = new JSON();
+		
+		
+		// code loop
+		Set<String> langCodes = translations.colLookup(1).keySet();
+		langCodes.remove( "translationId" );
+		for (String code : langCodes) {
+		
+			// basic info
+			String date = translations.lookup( 1, code, 0, "sourceDate" );
+			String title = translations.lookup( 1, code, 0, "title" );
+			String name = translations.lookup( 1, code, 0, "languageNameInEnglish" );
+			String description = translations.lookup( 1, code, 0, "description" );
+			
+			// safe directory name
+			String language = safeLangName( name, description );
+			System.out.println( "\n*** Checking "+code+": ("+language+") ***" );
+			
+			// download into directory
+			zipToDirectory( "/Scriptures/"+code+"_html.zip", language, "html", code, date );
+			zipToDirectory( "/Scriptures/"+code+"_readaloud.zip", language, "text", code, date );
+			epubToDirectory( "/epub/"+code+".epub", language, "epub", code, date );
+			
+			// register in language grouping tree
+			groupLanguage( code, language );
+		}
+		
+		// save language groups
+		rootTree.add( "language-groups.json", languageGrouping.serialize() );
+	}
+	
+	
+	// instance methods
+	
+	public void groupLanguage ( String code, String langDir ) {
+		String name = translations.lookup( 1, code, 0, "languageName" );
+		String title = translations.lookup( 1, code, 0, "shortTitle" );
+		String country = countries.colLookup( 1, 0 ).get( name );
+		String region = null;
+		String flag = null;
+		
+		if (country!=null) {
+			region = regions.colLookup( 1, 2 ).get( country );
+			if (region==null) region = "UNKNOWN";
+			flag = regions.colLookup( 1, 0 ).get( country );
+			if (flag==null) flag = "UNKNOWN";
+		} else {
+			country = "UNKNOWN";
+			region = "UNKNOWN";
+			flag = "UNKNOWN";
+		}
+		
+		languageGrouping.auto( region ).auto( country ).auto( "translations" ).auto( title ).add( "dir", langDir ).add( "code", code );
+		languageGrouping.auto( region ).auto( country ).add( "flag", flag );
+	}
+	
+	public void zipToDirectory ( String eBiblePath, String language, String type, String code, String date ) throws Exception {
 		System.out.println( "ZIP: "+eBiblePath+" -> "+language+"/"+type+"/"+code );
 		
-		FileTree zipDir = (FileTree) ft.auto( language ).auto( type ).auto( code );
+		FileTree zipDir = (FileTree) rootTree.auto( language ).auto( type ).auto( code );
 		
 		if (! (upToDate( (FileTree) zipDir.get("signature.txt.asc"), date ) || upToDate( (FileTree) zipDir.get("keys.asc"), date )) ) {
 			System.out.println( "Downloading and upacking ZIP..." );
@@ -82,13 +215,13 @@ public class EBibleToBibleLocal {
 				false // verbose
 			);
 		}
-		verifySHA256( zipDir.file() );
+		if (!verifyEBibleSHA256( zipDir.file() ) && !continueOnError) throw new Exception( "FAILED SHA256 CHECK!" );
 	}
 
-	public static void epubToDirectory ( String eBiblePath, FileTree ft, String language, String type, String code, String date ) throws Exception {
+	public void epubToDirectory ( String eBiblePath, String language, String type, String code, String date ) throws Exception {
 		System.out.println( "EPUB: "+eBiblePath+" -> "+language+"/"+type+"/"+code );
 		
-		FileTree epubDir = (FileTree) ft.auto( language ).auto( type ).auto( code );
+		FileTree epubDir = (FileTree) rootTree.auto( language ).auto( type ).auto( code );
 		String epubName = code+".epub";
 		
 		if (!upToDate( (FileTree) epubDir.get(epubName), date )) {
@@ -100,73 +233,8 @@ public class EBibleToBibleLocal {
 		}
 	}
 	
-	public static boolean verifySHA256 ( File dir ) throws Exception {
-		System.out.print( "Checking SHA256 sums" );
-		File signature = new File( dir, "signature.txt.asc" );
-		if (!signature.exists()) {
-			System.out.println( " -> MISSING signature.txt.asc" );
-			return false;
-		}
-		List<String> sumsFiles = Regex.groups( FileActions.read( signature ), "([a-zA-Z0-9]{64})\\s+(\\S+\\.[a-z]{3})" );
-		if (sumsFiles.size()==0) {
-			System.out.println( " -> No SHA256 sums found in signature.txt.asc" );
-			return false;
-		}
-		for (int i=0; i<sumsFiles.size(); i+=2) {
-			String recordedSHA256 = sumsFiles.get(i).toLowerCase();
-			String fileName = sumsFiles.get(i+1);
-			File file = new File( dir, fileName );
-			if (!file.exists()) {
-				System.out.print( " -> NOT FOUND: "+fileName );
-				continue;
-			}
-			byte[] fileData = FileActions.readBytes( file );
-			byte[] computedSHA256 = MessageDigest.getInstance( "SHA-256" ).digest( fileData );
-			String computedSHA256str = new Bytes( computedSHA256 ).toString().toLowerCase();
-			if (!recordedSHA256.equals( computedSHA256str )) {
-				System.out.println( fileName+": recorded "+recordedSHA256+" != computed "+computedSHA256str+" -> FAILED" );
-			}
-		}
-		System.out.println( " -> GOOD" );
-		return true;
-	}
-
 	public static void main ( String[] args ) throws Exception {
-		
-		CSV eBibleCSV = new CSV( new String( eBibleItem( "/Scriptures/translations.csv", true ) ) );
-		//System.out.println( eBibleCSV.data().get(0) ); // print first line
-		
-		LookupTable eBibleLookup = new LookupTable( eBibleCSV );
-		Set<String> langCodes = eBibleLookup.colLookup(1).keySet();
-		langCodes.remove( "translationId" );
-		
-		FileTree bibleLocalEBible = new FilesystemTree( args[0] );
-		
-		Set<String> skipSet = new HashSet<>();
-		
-		for (int i=1; i<args.length; i++) {
-			skipSet.add( args[i] );
-		}
-		
-		for (String code : langCodes) {
-		
-			if (skipSet.contains(code)) continue;
-		
-			// basic info
-			String date = eBibleLookup.lookup( 1, code, 0, "sourceDate" );
-			String title = eBibleLookup.lookup( 1, code, 0, "title" );
-			String name = eBibleLookup.lookup( 1, code, 0, "languageNameInEnglish" );
-			String description = eBibleLookup.lookup( 1, code, 0, "description" );
-			
-			// safe directory name
-			String language = safeLangName( name, description );
-			System.out.println( "\n*** Checking "+code+": ("+language+") ***" );
-			
-			// download into directory
-			zipToDirectory( "/Scriptures/"+code+"_html.zip", bibleLocalEBible, language, "html", code, date );
-			zipToDirectory( "/Scriptures/"+code+"_readaloud.zip", bibleLocalEBible, language, "text", code, date );
-			epubToDirectory( "/epub/"+code+".epub", bibleLocalEBible, language, "epub", code, date );
-		}
+		new EBibleToBibleLocal( args[0], ( args.length>1 ? Boolean.parseBoolean( args[1] ) : true ) );
 	}
 
 }
