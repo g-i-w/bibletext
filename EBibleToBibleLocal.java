@@ -21,10 +21,7 @@ public class EBibleToBibleLocal {
 	private Set<String> langCodes;
 	
 	private LookupTable translations;
-	private LookupTable countries;
-	private LookupTable regions;
-	
-	private Tree languageGrouping;
+	private Tree translationsData;
 	
 
 	// static methods
@@ -55,7 +52,7 @@ public class EBibleToBibleLocal {
 		return safeLangString;
 	}
 	
-	public static byte[] eBibleItem ( String path, boolean dataOnly ) throws Exception {
+	public static byte[] download ( String path, boolean dataOnly ) throws Exception {
 		Stats stats = new Stats();
 		System.out.println( "Downloading "+path+"..." );
 		OutboundHTTP http = new OutboundHTTP ( "ebible.org", path, 8*1024*1024, 100*1024*1024 ); // 8MiB, 100MiB
@@ -87,15 +84,15 @@ public class EBibleToBibleLocal {
 	}
 	
 	public static boolean verifyEBibleSHA256 ( File dir ) throws Exception {
-		System.out.print( "Checking SHA256 sums" );
+		System.out.print( "Checking SHA256 signatures for "+dir );
 		File signature = new File( dir, "signature.txt.asc" );
 		if (!signature.exists()) {
-			System.out.println( " -> ERROR: MISSING signature.txt.asc" );
+			System.out.println( " -> ERROR: MISSING signature.txt.asc -> FAIL" );
 			return false;
 		}
 		List<String> sumsFiles = Regex.groups( FileActions.read( signature ), "([a-zA-Z0-9]{64})\\s+(\\S+\\.[a-z]{3})" );
 		if (sumsFiles.size()==0) {
-			System.out.println( " -> ERROR: No SHA256 sums found in signature.txt.asc" );
+			System.out.println( " -> ERROR: No SHA256 sums found in signature.txt.asc -> FAIL" );
 			return false;
 		}
 		boolean ret = true;
@@ -115,16 +112,25 @@ public class EBibleToBibleLocal {
 			byte[] computedSHA256 = MessageDigest.getInstance( "SHA-256" ).digest( fileData );
 			String computedSHA256str = new Bytes( computedSHA256 ).toString().toLowerCase();
 			if (!recordedSHA256.equals( computedSHA256str )) {
-				System.out.println( fileName+": recorded "+recordedSHA256+" != computed "+computedSHA256str+" -> FAILED" );
+				System.out.println( " -> ERROR "+fileName+" recorded:"+recordedSHA256+" != computed:"+computedSHA256str );
+				ret = false;
 			}
 		}
-		if (ret) System.out.println( " -> GOOD" );
-		else System.out.println( " -> SOME FILES NOT FOUND" );
+		if (ret) System.out.println( " -> PASS" );
+		else System.out.println( " -> FAIL" );
 		return ret;
 	}
 	
 
 	// constructor
+
+	public EBibleToBibleLocal () throws Exception {
+		this( "ebible.org" ); // default directory name
+	}
+
+	public EBibleToBibleLocal ( String rootPath ) throws Exception {
+		this( rootPath, true ); // default to ignoring errors
+	}
 
 	public EBibleToBibleLocal ( String rootPath, boolean continueOnError ) throws Exception {
 	
@@ -135,82 +141,62 @@ public class EBibleToBibleLocal {
 		rootTree = new FilesystemTree( rootPath );
 			
 		// translations.csv
-		eBibleCSV = new CSV( new String( eBibleItem( "/Scriptures/translations.csv", true ) ) );
-		translations = new LookupTable( eBibleCSV );
+		eBibleCSV = new CSV( new String( download( "/Scriptures/translations.csv", true ) ) );
+		translations = new LookupTable( eBibleCSV );		
 		
-		// countries.csv
-		countries = new LookupTable( new CSV( rootTree.get("countries.csv").value() ) );
-
-		// regions.csv
-		regions = new LookupTable( new CSV( rootTree.get("regions.csv").value() ) );
-		
-		// links tree
-		languageGrouping = new JSON();
-		
-		
-		// code loop
-		Set<String> langCodes = translations.colLookup(1).keySet();
+		// language code set
+		langCodes = translations.colLookup(1).keySet();
 		langCodes.remove( "translationId" );
-		for (String code : langCodes) {
 		
-			// basic info
-			String date = translations.lookup( 1, code, 0, "sourceDate" );
-			String title = translations.lookup( 1, code, 0, "title" );
-			String name = translations.lookup( 1, code, 0, "languageNameInEnglish" );
+		// translation data tree
+		translationsData = new JSON( JSON.AUTO_ORDER );
+		for (String code : langCodes) {
+			// name & description
+			String languageNameInEnglish = translations.lookup( 1, code, 0, "languageNameInEnglish" );
 			String description = translations.lookup( 1, code, 0, "description" );
-			
-			// safe directory name
-			String language = safeLangName( name, description );
-			System.out.println( "\n*** Checking "+code+": ("+language+") ***" );
-			
-			// download into directory
-			zipToDirectory( "/Scriptures/"+code+"_html.zip", language, "html", code, date );
-			zipToDirectory( "/Scriptures/"+code+"_readaloud.zip", language, "text", code, date );
-			epubToDirectory( "/epub/"+code+".epub", language, "epub", code, date );
-			
-			// register in language grouping tree
-			groupLanguage( code, language );
+			String safeLangName = safeLangName( languageNameInEnglish, description );
+			// safeLangName FWD
+			translationsData.auto( "code" ).auto( code ).add( "safeLangName" , safeLangName );
+			translationsData.auto( "safeLangName" ).auto( safeLangName ).add( code );
+			// other data
+			translationsData.auto( "code" ).auto( code ).add( "title" , translations.lookup( 1, code, 0, "title" ) );
+			translationsData.auto( "code" ).auto( code ).add( "languageNameInEnglish" , languageNameInEnglish );
+			translationsData.auto( "code" ).auto( code ).add( "description" , description );
+			translationsData.auto( "code" ).auto( code ).add( "sourceDate" , translations.lookup( 1, code, 0, "sourceDate" ) );
 		}
 		
-		// save language groups
-		rootTree.add( "language-groups.json", languageGrouping.serialize() );
+		//System.out.println( translationsData.serialize() );
+
 	}
 	
 	
 	// instance methods
 	
-	public void groupLanguage ( String code, String langDir ) {
-		String name = translations.lookup( 1, code, 0, "languageName" );
-		String title = translations.lookup( 1, code, 0, "shortTitle" );
-		String country = countries.colLookup( 1, 0 ).get( name );
-		String region = null;
-		String flag = null;
-		
-		if (country!=null) {
-			region = regions.colLookup( 1, 2 ).get( country );
-			if (region==null) region = "UNKNOWN";
-			flag = regions.colLookup( 1, 0 ).get( country );
-			if (flag==null) flag = "UNKNOWN";
-		} else {
-			country = "UNKNOWN";
-			region = "UNKNOWN";
-			flag = "UNKNOWN";
-		}
-		
-		languageGrouping.auto( region ).auto( country ).auto( "translations" ).auto( title ).add( "dir", langDir ).add( "code", code );
-		languageGrouping.auto( region ).auto( country ).add( "flag", flag );
+	public Tree translationsData () {
+		return translationsData;
 	}
 	
-	public void zipToDirectory ( String eBiblePath, String language, String type, String code, String date ) throws Exception {
-		System.out.println( "ZIP: "+eBiblePath+" -> "+language+"/"+type+"/"+code );
-		
-		FileTree zipDir = (FileTree) rootTree.auto( language ).auto( type ).auto( code );
-		
-		if (! (upToDate( (FileTree) zipDir.get("signature.txt.asc"), date ) || upToDate( (FileTree) zipDir.get("keys.asc"), date )) ) {
+	public void downloadUpdates () throws Exception {
+		for (String code : langCodes) {
+			// status
+			System.out.println( "\n*** Checking "+code+": ("+translationsData.get( "code" ).get( code ).get( "languageNameInEnglish" ).value()+") ***" );	
+			// date
+			String date = translationsData.get( "code" ).get( code ).get( "sourceDate" ).value();
+			// target
+			zipToDirectory( "/Scriptures/"+code+"_html.zip", "html", code, date );
+			zipToDirectory( "/Scriptures/"+code+"_readaloud.zip", "text", code, date );
+			epubToDirectory( "/epub/"+code+".epub", "epub", code, date );
+		}
+	}
+	
+	public void zipToDirectory ( String path, String type, String code, String date ) throws Exception {
+		FileTree zipDir = targetDir( type, code );
+	
+		if (!upToDate( (FileTree) zipDir.get("signature.txt.asc"), date )) {
 			System.out.println( "Downloading and upacking ZIP..." );
 			ZipActions.toFiles(
 				zipDir.file(),
-				eBibleItem( eBiblePath, true ),
+				download( path, true ),
 				false, // forceOverwrite
 				false // verbose
 			);
@@ -218,23 +204,102 @@ public class EBibleToBibleLocal {
 		if (!verifyEBibleSHA256( zipDir.file() ) && !continueOnError) throw new Exception( "FAILED SHA256 CHECK!" );
 	}
 
-	public void epubToDirectory ( String eBiblePath, String language, String type, String code, String date ) throws Exception {
-		System.out.println( "EPUB: "+eBiblePath+" -> "+language+"/"+type+"/"+code );
+	public void epubToDirectory ( String path, String type, String code, String date ) throws Exception {
+		FileTree epubDir = targetDir( type, code );
 		
-		FileTree epubDir = (FileTree) rootTree.auto( language ).auto( type ).auto( code );
 		String epubName = code+".epub";
-		
-		if (!upToDate( (FileTree) epubDir.get(epubName), date )) {
+	
+		if (!upToDate( (FileTree) epubDir.get( epubName ), date )) {
 			System.out.println( "Downloading EPUB..." );
 			epubDir.write(
 				epubName,
-				eBibleItem( eBiblePath, true )
+				download( path, true )
 			);
 		}
 	}
 	
+	public FileTree targetDir ( String type, String code ) {
+		
+		String safeLangName = translationsData.get( "code" ).get( code ).get( "safeLangName" ).value();
+		if (safeLangName==null) safeLangName = "UNKNOWN";
+		
+		//System.out.println( "Target directory: -> "+safeLangName+"/"+type+"/"+code );
+		
+		return (FileTree) rootTree.auto( safeLangName ).auto( type ).auto( code );
+	}
+	
+	public String exportHTML ( String countriesCSV, String regionsCSV, String rootPath, String flagsPath ) throws Exception {
+		
+		// build links tree
+		
+		LookupTable countriesLookup = new LookupTable( new CSV( FileActions.read( countriesCSV ) ) );
+		LookupTable regionsLookup = new LookupTable( new CSV( FileActions.read( regionsCSV ) ) );
+		
+		Tree linksTree = new JSON();
+		
+		for (Map.Entry<String,Tree> safeFileNameEntry : translationsData.get( "safeLangName" ).map().entrySet()) {
+			for (String code : safeFileNameEntry.getValue().values()) {
+			
+				String safeFileName = safeFileNameEntry.getKey();
+				String language = translations.lookup( 1, code, 0, "languageName" );
+				String title = translations.lookup( 1, code, 0, "shortTitle" );
+				String country = countriesLookup.colLookup( 1, 0, language );
+				
+				System.err.println( "code:"+code+" -> language:"+language+" -> country:"+country );
+				
+				String region = regionsLookup.colLookup( 1, 2, country );
+				String flag = regionsLookup.colLookup( 1, 0, country );
+				
+				linksTree.auto( region ).auto( country ).auto( "translations" ).add( title, code );
+				linksTree.auto( region ).auto( country ).add( "flag", flag );
+				
+			}
+		}
+		
+		System.err.println( linksTree.serialize() );
+		
+		// build HTML
+		
+		StringBuilder html = new StringBuilder();
+		
+		for (Map.Entry<String,Tree> region : linksTree.map().entrySet()) {
+			html.append( "<div class=\"content\"><h3>"+region.getKey()+"</h3><div class=\"scroll-box\"><table class=\"compact-table\">\n" );
+			for (Map.Entry<String,Tree> country : region.getValue().map().entrySet()) {
+				// flag
+				String flag = country.getValue().get("flag").value();
+				int qty = country.getValue().get("translations").size();
+				String flagCell = "<td rowspan="+qty+"><img src='"+flagsPath+flag+"'><br>"+country.getKey()+"</td>";
+				// translations
+				for (Map.Entry<String,Tree> translationEntry : country.getValue().get("translations").map().entrySet()) {
+					String title = translationEntry.getKey();
+					String code = translationEntry.getValue().value();
+					String htmlPath = targetDir( "html", code ).file().getPath()+"/index.htm";
+					String epubPath = targetDir( "epub", code ).file().getPath()+"/"+code+".epub";
+					html.append( "<tr>"+flagCell+"<td><a href='"+htmlPath+"'>"+title+"</a></td><td><a href='"+epubPath+"'>eBook</a></td></tr>\n" );
+					flagCell = "";
+				}
+			}
+			html.append( "</table></div></div>\n" );
+		}
+		
+		return html.toString();
+	}
+
+	// main
 	public static void main ( String[] args ) throws Exception {
-		new EBibleToBibleLocal( args[0], ( args.length>1 ? Boolean.parseBoolean( args[1] ) : true ) );
+		EBibleToBibleLocal updateProcess = new EBibleToBibleLocal( args[0], ( args.length>1 ? Boolean.parseBoolean( args[1] ) : true ) );
+		updateProcess.downloadUpdates();
 	}
 
 }
+
+
+class EBibleToBiblesHTML {
+
+	public static void main ( String[] args ) throws Exception {
+		EBibleToBibleLocal dataProcess = new EBibleToBibleLocal( args[2] );
+		System.out.println( dataProcess.exportHTML( args[0], args[1], args[2], args[3] ) );
+	}
+
+}
+
