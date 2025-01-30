@@ -38,15 +38,20 @@ public class EBibleToBibleLocal {
 		String delim = "";
 		for (String word : words) {
 			safeLangName.append( delim ).append( sanitize( word ) );
-			delim = "-";
+			delim = "_";
 		}
 		String safeLangString = safeLangName.toString();
 		
-		// check if name starts with underscore and default to first word in description
-		if (safeLangString.length()>0 && safeLangString.substring(0,1).equals("_")) safeLangString = sanitize( Regex.first( description, "(\\w+)" ) );
-		
-		// check if somehow we still have an empty name
-		if (safeLangString==null || safeLangString.length()<2) safeLangString = "UNKNOWN";
+		// check for something sane and default to first word of description otherwise
+		if (safeLangString==null || safeLangString.length()<2 || safeLangString.substring(0,1).equals("_")) {
+			safeLangString = sanitize( Regex.first( description, "(\\w+)" ) );
+		}
+
+		// final check for something sane
+		if (safeLangString==null || safeLangString.length()<2) {
+			throw new Exception( "Unable to create a filesystem-safe name from '"+rawLangName+"' or from '"+description );
+			//safeLangString = "UNKNOWN";
+		}
 		
 		//System.out.println( "Converted name '"+rawLangName+"' to '"+safeLangString+"'" );
 		return safeLangString;
@@ -60,8 +65,8 @@ public class EBibleToBibleLocal {
 		byte[] item = null;
 		if (dataOnly) item = http.response().data();
 		else item = http.inboundMemory();
-		double MiBps = ((double)item.length/stats.delta())*10e9/(1024*1024);
-		System.out.println( "Rate: "+String.format("%.2f", MiBps)+" MiB/s" );
+		//double MiBps = ((double)item.length/stats.delta())*10e9/(1024*1024);
+		//System.out.println( "Rate: "+String.format("%.2f", MiBps)+" MiB/s" );
 		return item;
 	}
 	
@@ -151,6 +156,7 @@ public class EBibleToBibleLocal {
 		// translation data tree
 		translationsData = new JSON( JSON.AUTO_ORDER );
 		for (String code : langCodes) {
+			if (translations.lookup( 1, code, 0, "downloadable" ).equals("False")) continue;
 			// name & description
 			String languageNameInEnglish = translations.lookup( 1, code, 0, "languageNameInEnglish" );
 			String description = translations.lookup( 1, code, 0, "description" );
@@ -159,7 +165,7 @@ public class EBibleToBibleLocal {
 			translationsData.auto( "code" ).auto( code ).add( "safeLangName" , safeLangName );
 			translationsData.auto( "safeLangName" ).auto( safeLangName ).add( code );
 			// other data
-			translationsData.auto( "code" ).auto( code ).add( "title" , translations.lookup( 1, code, 0, "title" ) );
+			translationsData.auto( "code" ).auto( code ).add( "safeTitle" , safeLangName( translations.lookup( 1, code, 0, "shortTitle" ), description ) );
 			translationsData.auto( "code" ).auto( code ).add( "languageNameInEnglish" , languageNameInEnglish );
 			translationsData.auto( "code" ).auto( code ).add( "description" , description );
 			translationsData.auto( "code" ).auto( code ).add( "sourceDate" , translations.lookup( 1, code, 0, "sourceDate" ) );
@@ -219,13 +225,19 @@ public class EBibleToBibleLocal {
 	}
 	
 	public FileTree targetDir ( String type, String code ) {
+		String safeLangName = null;
+		String shortTitle = null;
 		
-		String safeLangName = translationsData.get( "code" ).get( code ).get( "safeLangName" ).value();
-		if (safeLangName==null) safeLangName = "UNKNOWN";
+		Tree codeBranch = translationsData.get( "code" ).get( code );
+		if (codeBranch!=null) {
+			safeLangName = codeBranch.get( "safeLangName" ).value();
+			shortTitle = codeBranch.get( "safeTitle" ).value();
+		} else {
+			safeLangName = "MISSING_LANGUAGE";
+			shortTitle = "MISSING_TITLE";
+		}
 		
-		//System.out.println( "Target directory: -> "+safeLangName+"/"+type+"/"+code );
-		
-		return (FileTree) rootTree.auto( safeLangName ).auto( type ).auto( code );
+		return (FileTree) rootTree.auto( safeLangName ).auto( shortTitle ).auto( type );
 	}
 	
 	public String exportHTML ( String countriesCSV, String regionsCSV, String rootPath, String flagsPath ) throws Exception {
@@ -235,7 +247,7 @@ public class EBibleToBibleLocal {
 		LookupTable countriesLookup = new LookupTable( new CSV( FileActions.read( countriesCSV ) ) );
 		LookupTable regionsLookup = new LookupTable( new CSV( FileActions.read( regionsCSV ) ) );
 		
-		Tree linksTree = new JSON();
+		Tree linksTree = new JSON( JSON.AUTO_ORDER );
 		
 		for (Map.Entry<String,Tree> safeFileNameEntry : translationsData.get( "safeLangName" ).map().entrySet()) {
 			for (String code : safeFileNameEntry.getValue().values()) {
@@ -263,23 +275,30 @@ public class EBibleToBibleLocal {
 		StringBuilder html = new StringBuilder();
 		
 		for (Map.Entry<String,Tree> region : linksTree.map().entrySet()) {
-			html.append( "<div class=\"content\"><h3>"+region.getKey()+"</h3><div class=\"scroll-box\"><table class=\"compact-table\">\n" );
+			html.append( "<div class=\"content\">\n<h3>"+region.getKey()+"</h3>\n\t<div class=\"scroll-box\">\n\t\t<table class=\"compact-table\">\n" );
 			for (Map.Entry<String,Tree> country : region.getValue().map().entrySet()) {
 				// flag
 				String flag = country.getValue().get("flag").value();
 				int qty = country.getValue().get("translations").size();
-				String flagCell = "<td rowspan="+qty+"><img src='"+flagsPath+flag+"'><br>"+country.getKey()+"</td>";
+				File flagFile = new File( new File( flagsPath ), flag );
+				flagFile.getParentFile().mkdir();
+				if (!flagFile.exists()) {
+					System.err.println( "Downloading /flags/"+flag );
+					FileActions.write( flagFile, download( "/flags/"+flag, true ) );
+				}
+				String flagCell = "<td rowspan="+qty+"><img src='"+flagFile.getPath()+"'><br>"+country.getKey()+"</td>";
 				// translations
 				for (Map.Entry<String,Tree> translationEntry : country.getValue().get("translations").map().entrySet()) {
 					String title = translationEntry.getKey();
 					String code = translationEntry.getValue().value();
 					String htmlPath = targetDir( "html", code ).file().getPath()+"/index.htm";
+					String textPath = targetDir( "text", code ).file().getPath()+"/";
 					String epubPath = targetDir( "epub", code ).file().getPath()+"/"+code+".epub";
-					html.append( "<tr>"+flagCell+"<td><a href='"+htmlPath+"'>"+title+"</a></td><td><a href='"+epubPath+"'>eBook</a></td></tr>\n" );
+					html.append( "\t\t\t<tr>"+flagCell+"<td><a href='"+htmlPath+"'>"+title+"</a></td><td>&nbsp;<a href='"+epubPath+"'  title='eBook (ePub)'>📖</a>&nbsp;</td><td>&nbsp;<a href='"+textPath+"' title='Text'>📄</a>&nbsp;</td></tr>\n" );
 					flagCell = "";
 				}
 			}
-			html.append( "</table></div></div>\n" );
+			html.append( "\t\t</table>\n\t</div>\n</div>\n" );
 		}
 		
 		return html.toString();
