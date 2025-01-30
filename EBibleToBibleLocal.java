@@ -19,6 +19,7 @@ public class EBibleToBibleLocal {
 	private FileTree rootTree;
 	
 	private Set<String> langCodes;
+	private Set<String> langCodesSkipped;
 	
 	private LookupTable translations;
 	private Tree translationsData;
@@ -152,11 +153,15 @@ public class EBibleToBibleLocal {
 		// language code set
 		langCodes = translations.colLookup(1).keySet();
 		langCodes.remove( "translationId" );
+		langCodesSkipped = new LinkedHashSet<String>();
 		
 		// translation data tree
 		translationsData = new JSON( JSON.AUTO_ORDER );
 		for (String code : langCodes) {
-			if (translations.lookup( 1, code, 0, "downloadable" ).equals("False")) continue;
+			if (translations.lookup( 1, code, 0, "downloadable" ).equals("False")) {
+				langCodesSkipped.add( code );
+				continue;
+			}
 			// name & description
 			String languageNameInEnglish = translations.lookup( 1, code, 0, "languageNameInEnglish" );
 			String description = translations.lookup( 1, code, 0, "description" );
@@ -184,6 +189,10 @@ public class EBibleToBibleLocal {
 	
 	public void downloadUpdates () throws Exception {
 		for (String code : langCodes) {
+			if (langCodesSkipped.contains( code )) {
+				System.out.println( "\nSKIPPED: "+code+"\n" );
+				continue;
+			}
 			// status
 			System.out.println( "\n*** Checking "+code+": ("+translationsData.get( "code" ).get( code ).get( "languageNameInEnglish" ).value()+") ***" );	
 			// date
