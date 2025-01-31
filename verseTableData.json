@@ -1,0 +1,17 @@
+{
+	"verses" : [
+		"GEN 1:1",
+		"ROM 5:12",
+		"ROM 3:23",
+		"ROM 5:8",
+		"ROM 6:23",
+		"ROM 10:13",
+		"JHN 3:16"
+	],
+	"bibles" : {
+		"engwebp": "English",
+		"cmn-ncvs": "Chinese" 
+	},
+	"rootPath" : "bibles/ebible.org/",
+	"htmlPath" : "bibles/ebible.org/"
+}

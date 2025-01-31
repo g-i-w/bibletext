@@ -187,7 +187,8 @@ public class EBibleToBibleLocal {
 		return translationsData;
 	}
 	
-	public void downloadUpdates () throws Exception {
+	public void downloadUpdates ( String types ) throws Exception {
+		types = types.toLowerCase();
 		for (String code : langCodes) {
 			if (langCodesSkipped.contains( code )) {
 				System.out.println( "\nSKIPPED: "+code+"\n" );
@@ -198,9 +199,9 @@ public class EBibleToBibleLocal {
 			// date
 			String date = translationsData.get( "code" ).get( code ).get( "sourceDate" ).value();
 			// target
-			zipToDirectory( "/Scriptures/"+code+"_html.zip", "html", code, date );
-			zipToDirectory( "/Scriptures/"+code+"_readaloud.zip", "text", code, date );
-			epubToDirectory( "/epub/"+code+".epub", "epub", code, date );
+			if (types.indexOf("html")>-1) zipToDirectory( "/Scriptures/"+code+"_html.zip", "html", code, date );
+			if (types.indexOf("text")>-1) zipToDirectory( "/Scriptures/"+code+"_readaloud.zip", "text", code, date );
+			if (types.indexOf("epub")>-1) epubToDirectory( "/epub/"+code+".epub", "epub", code, date );
 		}
 	}
 	
@@ -246,10 +247,11 @@ public class EBibleToBibleLocal {
 			shortTitle = "MISSING_TITLE";
 		}
 		
-		return (FileTree) rootTree.auto( safeLangName ).auto( shortTitle ).auto( type );
+		//return (FileTree) rootTree.auto( safeLangName ).auto( shortTitle ).auto( type );
+		return (FileTree) rootTree.auto( safeLangName ).auto( type ).auto( code );
 	}
 	
-	public String exportHTML ( String countriesCSV, String regionsCSV, String rootPath, String flagsPath ) throws Exception {
+	public String exportHTML ( String countriesCSV, String regionsCSV, String rootPath, String flagsPath, String types ) throws Exception {
 		
 		// build links tree
 		
@@ -282,6 +284,7 @@ public class EBibleToBibleLocal {
 		// build HTML
 		
 		StringBuilder html = new StringBuilder();
+		types = types.toLowerCase();
 		
 		for (Map.Entry<String,Tree> region : linksTree.map().entrySet()) {
 			html.append( "<div class=\"content\">\n<h3>"+region.getKey()+"</h3>\n\t<div class=\"scroll-box\">\n\t\t<table class=\"compact-table\">\n" );
@@ -300,10 +303,17 @@ public class EBibleToBibleLocal {
 				for (Map.Entry<String,Tree> translationEntry : country.getValue().get("translations").map().entrySet()) {
 					String title = translationEntry.getKey();
 					String code = translationEntry.getValue().value();
+					// html
 					String htmlPath = targetDir( "html", code ).file().getPath()+"/index.htm";
+					String htmlCell = ( types.indexOf("html")>-1 ? "<td><a href='"+htmlPath+"'>"+title+"</a></td><td>&nbsp;" : "" );
+					// text
 					String textPath = targetDir( "text", code ).file().getPath()+"/";
+					String textCell = ( types.indexOf("text")>-1 ? "<td>&nbsp;<a href='"+textPath+"' title='Text'>📄</a>&nbsp;</td>" : "" );
+					// epub
 					String epubPath = targetDir( "epub", code ).file().getPath()+"/"+code+".epub";
-					html.append( "\t\t\t<tr>"+flagCell+"<td><a href='"+htmlPath+"'>"+title+"</a></td><td>&nbsp;<a href='"+epubPath+"'  title='eBook (ePub)'>📖</a>&nbsp;</td><td>&nbsp;<a href='"+textPath+"' title='Text'>📄</a>&nbsp;</td></tr>\n" );
+					String epubCell = ( types.indexOf("epub")>-1 ? "<a href='"+epubPath+"'  title='eBook (ePub)'>📖</a>&nbsp;</td>" : "" );
+					// whole row
+					html.append( "\t\t\t<tr>"+flagCell+htmlCell+epubCell+textCell+"</tr>\n" );
 					flagCell = "";
 				}
 			}
@@ -316,7 +326,7 @@ public class EBibleToBibleLocal {
 	// main
 	public static void main ( String[] args ) throws Exception {
 		EBibleToBibleLocal updateProcess = new EBibleToBibleLocal( args[0], ( args.length>1 ? Boolean.parseBoolean( args[1] ) : true ) );
-		updateProcess.downloadUpdates();
+		updateProcess.downloadUpdates( args.length>2 ? args[2] : "html text epub" );
 	}
 
 }
@@ -326,7 +336,7 @@ class EBibleToBiblesHTML {
 
 	public static void main ( String[] args ) throws Exception {
 		EBibleToBibleLocal dataProcess = new EBibleToBibleLocal( args[2] );
-		System.out.println( dataProcess.exportHTML( args[0], args[1], args[2], args[3] ) );
+		System.out.println( dataProcess.exportHTML( args[0], args[1], args[2], args[3], args[4] ) );
 	}
 
 }
