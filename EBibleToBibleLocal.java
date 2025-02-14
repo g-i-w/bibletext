@@ -205,6 +205,16 @@ public class EBibleToBibleLocal {
 		}
 	}
 	
+	public void runRegionScript ( String countriesCSV, String regionsCSV, String region, String scriptPath ) throws Exception {
+		Tree regionTree = sortTree( countriesCSV, regionsCSV ).get( region ).get( "safeLangName" );
+		System.out.println( regionTree.serialize() );
+		for (String safeLangName : regionTree.keys()) {
+			String cmd = scriptPath+" "+region+" "+safeLangName;
+			System.out.println( "Running: '"+cmd+"'" );
+			System.out.println( new SystemCommand( cmd ).output() );
+		}
+	}
+	
 	public void zipToDirectory ( String path, String type, String code, String date ) throws Exception {
 		FileTree zipDir = targetDir( type, code );
 	
@@ -216,8 +226,8 @@ public class EBibleToBibleLocal {
 				false, // forceOverwrite
 				false // verbose
 			);
+			if (!verifyEBibleSHA256( zipDir.file() ) && !continueOnError) throw new Exception( "FAILED SHA256 CHECK!" );
 		}
-		if (!verifyEBibleSHA256( zipDir.file() ) && !continueOnError) throw new Exception( "FAILED SHA256 CHECK!" );
 	}
 
 	public void epubToDirectory ( String path, String type, String code, String date ) throws Exception {
@@ -251,14 +261,11 @@ public class EBibleToBibleLocal {
 		return (FileTree) rootTree.auto( safeLangName ).auto( type ).auto( code );
 	}
 	
-	public String exportHTML ( String countriesCSV, String regionsCSV, String rootPath, String flagsPath, String types ) throws Exception {
-		
-		// build links tree
-		
+	public Tree sortTree ( String countriesCSV, String regionsCSV ) throws Exception {
 		LookupTable countriesLookup = new LookupTable( new CSV( FileActions.read( countriesCSV ) ) );
 		LookupTable regionsLookup = new LookupTable( new CSV( FileActions.read( regionsCSV ) ) );
 		
-		Tree linksTree = new JSON( JSON.AUTO_ORDER );
+		Tree sortTree = new JSON( JSON.AUTO_ORDER );
 		
 		for (Map.Entry<String,Tree> safeFileNameEntry : translationsData.get( "safeLangName" ).map().entrySet()) {
 			for (String code : safeFileNameEntry.getValue().values()) {
@@ -273,20 +280,22 @@ public class EBibleToBibleLocal {
 				String region = regionsLookup.colLookup( 1, 2, country );
 				String flag = regionsLookup.colLookup( 1, 0, country );
 				
-				linksTree.auto( region ).auto( country ).auto( "translations" ).add( title, code );
-				linksTree.auto( region ).auto( country ).add( "flag", flag );
+				sortTree.auto( region ).auto( country ).auto( "translations" ).add( title, code );
+				sortTree.auto( region ).auto( country ).add( "flag", flag );
+				sortTree.auto( region ).auto( "safeLangName" ).auto( safeFileName );
 				
 			}
 		}
 		
-		System.err.println( linksTree.serialize() );
-		
-		// build HTML
+		return sortTree;
+	}
+	
+	public String exportHTML ( String countriesCSV, String regionsCSV, String rootPath, String flagsPath, String types ) throws Exception {
 		
 		StringBuilder html = new StringBuilder();
 		types = types.toLowerCase();
 		
-		for (Map.Entry<String,Tree> region : linksTree.map().entrySet()) {
+		for (Map.Entry<String,Tree> region : sortTree( countriesCSV, regionsCSV ).map().entrySet()) {
 			html.append( "<div class=\"content\">\n<h3>"+region.getKey()+"</h3>\n\t<div class=\"scroll-box\">\n\t\t<table class=\"compact-table\">\n" );
 			for (Map.Entry<String,Tree> country : region.getValue().map().entrySet()) {
 				// flag
@@ -323,13 +332,51 @@ public class EBibleToBibleLocal {
 		return html.toString();
 	}
 
+	public String exportHTMLCGI ( String countriesCSV, String regionsCSV, String rootPath, String flagsPath, String types ) throws Exception {
+		
+		StringBuilder html = new StringBuilder();
+		types = types.toLowerCase();
+		
+		for (Map.Entry<String,Tree> region : sortTree( countriesCSV, regionsCSV ).map().entrySet()) {
+			html.append( "<div class=\"content\">\n<h3>"+region.getKey()+"</h3>\n\t<div class=\"scroll-box\">\n\t\t<table class=\"compact-table\">\n" );
+			for (Map.Entry<String,Tree> country : region.getValue().map().entrySet()) {
+				// flag
+				String flag = country.getValue().get("flag").value();
+				int qty = country.getValue().get("translations").size();
+				File flagFile = new File( new File( flagsPath ), flag );
+				flagFile.getParentFile().mkdir();
+				if (!flagFile.exists()) {
+					System.err.println( "Downloading /flags/"+flag );
+					FileActions.write( flagFile, download( "/flags/"+flag, true ) );
+				}
+				String flagCell = "<td rowspan="+qty+"><img src='"+flagFile.getPath()+"'><br>"+country.getKey()+"</td>";
+				// translations
+				for (Map.Entry<String,Tree> translationEntry : country.getValue().get("translations").map().entrySet()) {
+					String title = translationEntry.getKey();
+					String code = translationEntry.getValue().value();
+					String safeLangName = translationsData.get( "code" ).get( code ).get( "safeLangName" ).value();
+					// html
+					String htmlCells =
+						"<td><a href='?type=text&lang="+safeLangName+"&ver="+code+"'>"+title+"</a></td>"+
+						"<td><a href='?type=cover&lang="+safeLangName+"&ver="+code+"'>Cover</a></td>";
+					// whole row
+					html.append( "\t\t\t<tr>"+flagCell+htmlCells+"</tr>\n" );
+					flagCell = "";
+				}
+			}
+			html.append( "\t\t</table>\n\t</div>\n</div>\n" );
+		}
+		
+		return html.toString();
+	}
+
 	// main
 	public static void main ( String[] args ) throws Exception {
 		EBibleToBibleLocal updateProcess = new EBibleToBibleLocal( args[0], ( args.length>1 ? Boolean.parseBoolean( args[1] ) : true ) );
 		updateProcess.downloadUpdates( args.length>2 ? args[2] : "html text epub" );
 	}
 
-}
+ }
 
 
 class EBibleToBiblesHTML {
@@ -337,6 +384,24 @@ class EBibleToBiblesHTML {
 	public static void main ( String[] args ) throws Exception {
 		EBibleToBibleLocal dataProcess = new EBibleToBibleLocal( args[2] );
 		System.out.println( dataProcess.exportHTML( args[0], args[1], args[2], args[3], args[4] ) );
+	}
+
+}
+
+class EBibleToBiblesHTMLCGI {
+
+	public static void main ( String[] args ) throws Exception {
+		EBibleToBibleLocal dataProcess = new EBibleToBibleLocal( args[2] );
+		System.out.println( dataProcess.exportHTMLCGI( args[0], args[1], args[2], args[3], args[4] ) );
+	}
+
+}
+
+class EBibleToBiblesRegionScript {
+
+	public static void main ( String[] args ) throws Exception {
+		EBibleToBibleLocal dataProcess = new EBibleToBibleLocal( args[2] );
+		dataProcess.runRegionScript( args[0], args[1], args[2], args[3] );
 	}
 
 }
